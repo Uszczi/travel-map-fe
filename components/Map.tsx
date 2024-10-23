@@ -4,21 +4,15 @@ import {
   MapContainer,
   TileLayer,
   Rectangle,
-  Marker,
   Polyline,
-  Popup,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import L from "leaflet";
-import {
-  createElementHook,
-  createElementObject,
-  useLeafletContext,
-} from "@react-leaflet/core";
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
-delete L.Icon.Default.prototype._getIconUrl;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -32,46 +26,31 @@ function Clear() {
 }
 
 const Map = () => {
+  const center: [number, number] = [51.6101241, 19.1999532];
+
   const [displayLastRec, setDisplayLastRec] = useState(false);
-  const [data, setData] = useState(null);
-  const [bounds, setBounds] = useState(null);
-  const [routes, setRoutes] = useState([]);
+  const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
+  const [routes, setRoutes] = useState<[number, number][][]>([]);
 
   const addRandomRoue = async () => {
-    const response = await fetch("http://localhost:8000/route/random");
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/route/random`);
     const result = await response.json();
 
-    setData(result);
     setBounds([
       [result.rec[1], result.rec[0]],
       [result.rec[3], result.rec[2]],
     ]);
 
-    // setRoutes([[result.y, result.x]])
-    // setRoutes([result.x, result.y])
-
-    let a = [];
+    const route: [number, number][] = [];
     for (let i = 0; i < result.x.length; i++) {
-      a.push([result.y[i], result.x[i]]);
+      route.push([result.y[i], result.x[i]]);
     }
-    setRoutes([a]);
+    setRoutes([route]);
   };
 
   const toggleDisplayLastRec = () => {
     setDisplayLastRec((prev) => !prev);
   };
-
-  useEffect(() => {
-    console.log(displayLastRec);
-  }, [displayLastRec]);
-  useEffect(() => {
-    console.log(routes);
-    routes.map((item, index) => {
-      console.log(item);
-    });
-  }, [routes]);
-
-  const center = [51.6101241, 19.1999532];
 
   return (
     <div>
