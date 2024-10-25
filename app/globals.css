@@ -27,3 +27,13 @@ body {
     text-wrap: balance;
   }
 }
+
+.leaflet-container {
+    height: 600px;
+}
+
+@media (min-height: 768px) {
+  .leaflet-container {
+    height: 800px;
+  }
+}

@@ -9,6 +9,9 @@ import {
 import "leaflet/dist/leaflet.css";
 import { useState } from "react";
 import L from "leaflet";
+import RouteDetils from "./RouteDetails";
+
+import ApiService from "@/components/services/api"
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,9 +24,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
 });
 
-function Clear() {
-  console.log("Clear");
-}
 
 const Map = () => {
   const center: [number, number] = [51.6101241, 19.1999532];
@@ -31,10 +31,12 @@ const Map = () => {
   const [displayLastRec, setDisplayLastRec] = useState(false);
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [routes, setRoutes] = useState<[number, number][][]>([]);
+  const [lastRoute, setLastRoute] = useState<Route | null>(null)
 
   const addRandomRoue = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/route/random`);
-    const result = await response.json();
+    const result = await ApiService.getRandomRoute();
+
+    setLastRoute(result)
 
     setBounds([
       [result.rec[1], result.rec[0]],
@@ -45,19 +47,23 @@ const Map = () => {
     for (let i = 0; i < result.x.length; i++) {
       route.push([result.y[i], result.x[i]]);
     }
-    setRoutes([route]);
+    setRoutes([...routes, route]);
   };
 
   const toggleDisplayLastRec = () => {
     setDisplayLastRec((prev) => !prev);
   };
 
+  const Clear = () => {
+    setRoutes([])
+  }
+
   return (
     <div>
       <MapContainer
         center={center}
         zoom={13}
-        style={{ height: "800px", width: "100%" }}
+        style={{ width: "100%" }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -105,6 +111,8 @@ const Map = () => {
           Add random route
         </button>
       </div>
+      { lastRoute &&  <RouteDetils route={lastRoute}/>}
+
     </div>
   );
 };
