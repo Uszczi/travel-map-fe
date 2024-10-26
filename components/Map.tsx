@@ -64,7 +64,7 @@ const Map = () => {
         />
         {displayLastRec && bounds && <Rectangle bounds={bounds} pathOptions={{ color: 'red', fill: false }} />}
 
-        {routes.length > 0 && routes.map((item, index) => <RouteWithArrows key={index} positions={item} color="red" />)}
+        {routes.length > 0 && routes.map((item, index) => <RouteWithArrows key={index} positions={item} />)}
       </MapContainer>
       <div className="flex flex-col items-center space-y-4 mt-4">
         <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={Clear}>
@@ -91,7 +91,7 @@ const Map = () => {
             min="0"
             max="20000"
             value={distance}
-            onChange={(event) => setDistance(event.target.value)}
+            onChange={(event) => setDistance(+event.target.value)}
           />
           <p>Odległość: {distance}</p>
         </div>

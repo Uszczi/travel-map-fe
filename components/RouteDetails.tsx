@@ -10,7 +10,7 @@ type RouteDetilsProps = {
 const RouteDetils: React.FC<RouteDetilsProps> = ({ route }) => {
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
 
-  let total_width = 1000;
+ const total_width = 1000;
 
   return (
     <div>
