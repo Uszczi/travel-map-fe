@@ -1,8 +1,13 @@
+export interface Segment {
+  new: boolean
+  distance: number
+}
 export interface Route {
   rec: [number, number, number, number];
   x: number[];
   y: number[];
   distance: number;
+  segments: Segment[];
 }
 
 export default class ApiService {
