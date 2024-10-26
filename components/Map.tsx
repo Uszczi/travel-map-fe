@@ -1,29 +1,25 @@
-"use client";
+'use client';
 
-import {
-  MapContainer,
-  TileLayer,
-  Rectangle,
-  Polyline,
-} from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { useState } from "react";
-import L from "leaflet";
-import RouteDetils from "./RouteDetails";
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { useState } from 'react';
+import { MapContainer, Rectangle, TileLayer } from 'react-leaflet';
 
-import ApiService from "@/components/services/api"
+import ApiService from '@/components/services/api';
+
+import RouteDetils from './RouteDetails';
+import RouteWithArrows from './RouteWithArrows';
+import { Route } from './services/api';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
-
 
 const Map = () => {
   const center: [number, number] = [51.6101241, 19.1999532];
@@ -31,12 +27,13 @@ const Map = () => {
   const [displayLastRec, setDisplayLastRec] = useState(false);
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [routes, setRoutes] = useState<[number, number][][]>([]);
-  const [lastRoute, setLastRoute] = useState<Route | null>(null)
+  const [lastRoute, setLastRoute] = useState<Route | null>(null);
+  const [distance, setDistance] = useState(1000);
 
   const addRandomRoue = async () => {
-    const result = await ApiService.getRandomRoute();
+    const result = await ApiService.getRandomRoute(distance);
 
-    setLastRoute(result)
+    setLastRoute(result);
 
     setBounds([
       [result.rec[1], result.rec[0]],
@@ -55,54 +52,48 @@ const Map = () => {
   };
 
   const Clear = () => {
-    setRoutes([])
-  }
+    setRoutes([]);
+  };
 
   return (
     <div>
-      <MapContainer
-        center={center}
-        zoom={13}
-        style={{ width: "100%" }}
-      >
+      <MapContainer center={center} zoom={13} style={{ width: '100%' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {displayLastRec && bounds && (
-          <Rectangle
-            bounds={bounds}
-            pathOptions={{ color: "red", fill: false }}
-          />
-        )}
+        {displayLastRec && bounds && <Rectangle bounds={bounds} pathOptions={{ color: 'red', fill: false }} />}
 
-        {routes.length > 0 &&
-          routes.map((item, index) => (
-            <Polyline key={index} positions={item} color="red" />
-          ))}
-
+        {routes.length > 0 && routes.map((item, index) => <RouteWithArrows key={index} positions={item} color="red" />)}
       </MapContainer>
       <div className="flex flex-col items-center space-y-4 mt-4">
-        <button
-          className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-          onClick={Clear}
-        >
+        <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={Clear}>
           Clear
         </button>
-        <div className={"flex items-center"}>
+        <div className={'flex items-center'}>
           <div
             onClick={toggleDisplayLastRec}
             className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
-              displayLastRec ? "bg-green-500" : "bg-gray-300"
+              displayLastRec ? 'bg-green-500' : 'bg-gray-300'
             }`}
           >
             <div
               className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                displayLastRec ? "translate-x-6" : "translate-x-0"
+                displayLastRec ? 'translate-x-6' : 'translate-x-0'
               }`}
             ></div>
           </div>
           <p>Display last border</p>
+        </div>
+        <div>
+          <input
+            type="range"
+            min="0"
+            max="20000"
+            value={distance}
+            onChange={(event) => setDistance(event.target.value)}
+          />
+          <p>Odległość: {distance}</p>
         </div>
         <button
           className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
@@ -111,8 +102,7 @@ const Map = () => {
           Add random route
         </button>
       </div>
-      { lastRoute &&  <RouteDetils route={lastRoute}/>}
-
+      {lastRoute && <RouteDetils route={lastRoute} />}
     </div>
   );
 };

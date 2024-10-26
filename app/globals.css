@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "leaflet/dist/leaflet.css";
+@import 'leaflet/dist/leaflet.css';
 
 :root {
   --background: #ffffff;
@@ -29,7 +29,7 @@ body {
 }
 
 .leaflet-container {
-    height: 600px;
+  height: 600px;
 }
 
 @media (min-height: 768px) {
