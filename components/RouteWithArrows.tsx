@@ -5,14 +5,17 @@ import { useEffect } from 'react';
 import React from 'react';
 import { useMap } from 'react-leaflet';
 
-const RouteWithArrows: React.FC<{ positions: [number, number][], focused: boolean}> = ({ positions, focused = false }) => {
+const RouteWithArrows: React.FC<{ positions: [number, number][]; focused: boolean }> = ({
+  positions,
+  focused = false,
+}) => {
   const map = useMap();
 
   useEffect(() => {
     if (!map) return;
 
     const polylineLayer = L.polyline(positions, {
-      color: focused ? 'green': 'blue',
+      color: focused ? 'green' : 'blue',
     }).addTo(map);
 
     const addArrowheads = (color: string) => {
@@ -24,7 +27,7 @@ const RouteWithArrows: React.FC<{ positions: [number, number][], focused: boolea
         color: color,
       });
     };
-    addArrowheads(focused ? 'red': 'blue');
+    addArrowheads(focused ? 'red' : 'blue');
 
     if (!focused) {
       polylineLayer.on('mouseover', () => {

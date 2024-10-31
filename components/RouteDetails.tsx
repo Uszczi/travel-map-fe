@@ -1,30 +1,52 @@
 import 'leaflet/dist/leaflet.css';
-import React, {useState} from 'react';
+import React, { useMemo, useState } from 'react';
 
-import { Route } from './services/api';
+import { Route, Segment } from './services/api';
 
 type RouteDetilsProps = {
   route: Route;
 };
 
+function combineSegmentsByNew(segments: Segment[]): Segment[] {
+  const result = [];
+  let lastSegment = { ...segments[0] };
+
+  for (let i = 1; i < segments.length; i++) {
+    const segment = segments[i];
+
+    if (lastSegment.new != segment.new) {
+      result.push(lastSegment);
+      lastSegment = { ...segment };
+    } else {
+      lastSegment.distance += segment.distance;
+    }
+  }
+
+  result.push(lastSegment);
+
+  return result;
+}
+
 const RouteDetils: React.FC<RouteDetilsProps> = ({ route }) => {
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
 
- const total_width = 1000;
+  const total_width = 1000;
+
+  const combinedSegments = useMemo(() => combineSegmentsByNew(route.segments), [route.segments]);
 
   return (
     <div>
       <p>Trasa</p>
       <p>Dystans: {Math.round(route.distance)}m</p>
       <div className="flex">
-        {route.segments.map((e, index) => (
+        {combinedSegments.map((e, index) => (
           <div
-          key={index}
+            key={index}
             style={{
               width: `${Math.round((e.distance * total_width) / route.distance)}px`,
               height: '20px',
               background: e.new ? 'green' : 'brown',
-              position: 'relative'
+              position: 'relative',
             }}
             onMouseEnter={() => setHoveredSegment(index)}
             onMouseLeave={() => setHoveredSegment(null)}
@@ -47,7 +69,6 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route }) => {
                 {Math.round(e.distance)}m
               </div>
             )}
-
           </div>
         ))}
       </div>

@@ -51,6 +51,7 @@ const Map = () => {
   };
 
   const clear = () => {
+    setRefactorRoutes([]);
     setRoutes([]);
   };
 

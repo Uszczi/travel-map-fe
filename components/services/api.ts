@@ -1,6 +1,6 @@
 export interface Segment {
-  new: boolean
-  distance: number
+  new: boolean;
+  distance: number;
 }
 export interface Route {
   rec: [number, number, number, number];
