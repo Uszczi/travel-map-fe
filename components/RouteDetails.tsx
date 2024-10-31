@@ -14,7 +14,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route }) => {
 
   return (
     <div>
-      <p>Ostatnia dodana trasa</p>
+      <p>Trasa</p>
       <p>Dystans: {Math.round(route.distance)}m</p>
       <div className="flex">
         {route.segments.map((e, index) => (
