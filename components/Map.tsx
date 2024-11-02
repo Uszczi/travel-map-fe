@@ -50,7 +50,8 @@ const Map = () => {
     setDisplayLastRec((prev) => !prev);
   };
 
-  const clear = () => {
+  const clear = async () => {
+    await ApiService.clear()
     setRefactorRoutes([]);
     setRoutes([]);
   };

@@ -16,4 +16,8 @@ export default class ApiService {
     const result = await response.json();
     return result;
   }
+
+  static async clear(): Promise<void> {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clear`);
+  }
 }
