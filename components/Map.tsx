@@ -50,8 +50,13 @@ const Map = () => {
     setDisplayLastRec((prev) => !prev);
   };
 
-  const clear = async () => {
+  const clearAll = async () => {
     await ApiService.clear()
+    setRefactorRoutes([]);
+    setRoutes([]);
+  };
+
+  const clear = async () => {
     setRefactorRoutes([]);
     setRoutes([]);
   };
@@ -71,9 +76,14 @@ const Map = () => {
           ))}
       </MapContainer>
       <div className="flex flex-col items-center space-y-4 mt-4">
-        <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
-          Clear
+        <div>
+        <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clearAll}>
+          Clear all
         </button>
+        <button className="ml-8 w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
+          Clear page
+        </button>
+        </div>
         <div className={'flex items-center'}>
           <div
             onClick={toggleDisplayLastRec}
@@ -89,7 +99,8 @@ const Map = () => {
           </div>
           <p>Display last border</p>
         </div>
-        <div>
+        <div className='flex'>
+          <p className='mr-4'>Odległość: {distance}</p>
           <input
             type="range"
             min="0"
@@ -97,7 +108,6 @@ const Map = () => {
             value={distance}
             onChange={(event) => setDistance(+event.target.value)}
           />
-          <p>Odległość: {distance}</p>
         </div>
         <button
           className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
