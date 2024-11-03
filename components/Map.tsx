@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
 import { MapContainer, Rectangle, TileLayer } from 'react-leaflet';
 
-import ApiService from '@/components/services/api';
+import ApiService, { StravaRoute } from '@/components/services/api';
 
 import RouteDetils from './RouteDetails';
 import RouteWithArrows from './RouteWithArrows';
@@ -26,14 +26,15 @@ const Map = () => {
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
-  const [refactorRoutes, setRefactorRoutes] = useState<Route[]>([]);
-  const [routes, setRoutes] = useState<[number, number][][]>([]);
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
+  const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
   const [distance, setDistance] = useState(1000);
 
   const addRandomRoute = async () => {
-    const result = await ApiService.getRandomRoute(distance);
+    const result = await ApiService.getStravaRoutes(distance);
 
-    setRefactorRoutes([result, ...refactorRoutes]);
+    setRoutes([result, ...routes]);
     setBounds([
       [result.rec[1], result.rec[0]],
       [result.rec[3], result.rec[2]],
@@ -43,7 +44,12 @@ const Map = () => {
     for (let i = 0; i < result.x.length; i++) {
       route.push([result.y[i], result.x[i]]);
     }
-    setRoutes([...routes, route]);
+    setDisplayRoutes([...displayRoutes, route]);
+  };
+
+  const displayStravaRoutes = async () => {
+    const result = await ApiService.getStravaRoutes()
+    setStravaRoutes(result)
   };
 
   const toggleDisplayLastRec = () => {
@@ -51,14 +57,14 @@ const Map = () => {
   };
 
   const clearAll = async () => {
-    await ApiService.clear()
-    setRefactorRoutes([]);
-    setRoutes([]);
+    await ApiService.clear();
+    clear();
   };
 
-  const clear = async () => {
-    setRefactorRoutes([]);
+  const clear = () => {
+    setStravaRoutes([]);
     setRoutes([]);
+    setDisplayRoutes([]);
   };
 
   return (
@@ -70,10 +76,15 @@ const Map = () => {
         />
         {displayLastRec && bounds && <Rectangle bounds={bounds} pathOptions={{ color: 'red', fill: false }} />}
 
-        {routes.length > 0 &&
-          routes.map((item, index) => (
-            <RouteWithArrows key={index} positions={item} focused={index + 1 === routes.length} />
+        {displayRoutes.length > 0 &&
+          displayRoutes.map((item, index) => (
+            <RouteWithArrows key={index} positions={item} focused={index + 1 === displayRoutes.length} />
           ))}
+
+        {stravaRoutes.map((item) => (
+          <RouteWithArrows key={item.id} positions={item.xy} focused={false}/>
+        ))}
+
       </MapContainer>
       <div className="flex flex-col items-center space-y-4 mt-4">
         <div>
@@ -115,9 +126,15 @@ const Map = () => {
         >
           Add random route
         </button>
+        <button
+          className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+          onClick={displayStravaRoutes}
+        >
+          Display raw Strava routes
+        </button>
       </div>
       <div style={{ overflow: 'auto', height: '250px' }}>
-        {refactorRoutes.map((route, index) => (
+        {routes.map((route, index) => (
           <RouteDetils key={index} route={route} />
         ))}
       </div>
