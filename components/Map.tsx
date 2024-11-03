@@ -28,6 +28,7 @@ const Map = () => {
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
+  const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
   const [distance, setDistance] = useState(1000);
 
@@ -52,6 +53,11 @@ const Map = () => {
     setStravaRoutes(result)
   };
 
+  const displayVisitedRoutes = async () => {
+    const result = await ApiService.getVisitedRoutes()
+    setVisitedRoutes(result)
+  };
+
   const toggleDisplayLastRec = () => {
     setDisplayLastRec((prev) => !prev);
   };
@@ -62,6 +68,7 @@ const Map = () => {
   };
 
   const clear = () => {
+    setVisitedRoutes([]);
     setStravaRoutes([]);
     setRoutes([]);
     setDisplayRoutes([]);
@@ -83,6 +90,10 @@ const Map = () => {
 
         {stravaRoutes.map((item) => (
           <RouteWithArrows key={item.id} positions={item.xy} focused={false}/>
+        ))}
+
+        {visitedRoutes.map((item, index) => (
+          <RouteWithArrows key={index} positions={item} focused={false}/>
         ))}
 
       </MapContainer>
@@ -131,6 +142,12 @@ const Map = () => {
           onClick={displayStravaRoutes}
         >
           Display raw Strava routes
+        </button>
+        <button
+          className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+          onClick={displayVisitedRoutes}
+        >
+          Display visited routes
         </button>
       </div>
       <div style={{ overflow: 'auto', height: '250px' }}>
