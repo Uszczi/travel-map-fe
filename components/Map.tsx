@@ -32,7 +32,7 @@ const Map = () => {
   const [distance, setDistance] = useState(1000);
 
   const addRandomRoute = async () => {
-    const result = await ApiService.getStravaRoutes(distance);
+    const result = await ApiService.getRandomRoute(distance);
 
     setRoutes([result, ...routes]);
     setBounds([
