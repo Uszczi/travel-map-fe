@@ -49,13 +49,13 @@ const Map = () => {
   };
 
   const displayStravaRoutes = async () => {
-    const result = await ApiService.getStravaRoutes()
-    setStravaRoutes(result)
+    const result = await ApiService.getStravaRoutes();
+    setStravaRoutes(result);
   };
 
   const displayVisitedRoutes = async () => {
-    const result = await ApiService.getVisitedRoutes()
-    setVisitedRoutes(result)
+    const result = await ApiService.getVisitedRoutes();
+    setVisitedRoutes(result);
   };
 
   const toggleDisplayLastRec = () => {
@@ -89,24 +89,24 @@ const Map = () => {
           ))}
 
         {stravaRoutes.map((item) => (
-          <RouteWithArrows key={item.id} positions={item.xy} focused={false}/>
+          <RouteWithArrows key={item.id} positions={item.xy} focused={false} />
         ))}
 
         {visitedRoutes.map((item, index) => (
-          <RouteWithArrows key={index} positions={item} focused={false}/>
+          <RouteWithArrows key={index} positions={item} focused={false} />
         ))}
-
       </MapContainer>
-      <div className="flex flex-col items-center space-y-4 mt-4">
-        <div>
-        <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clearAll}>
-          Clear all
-        </button>
-        <button className="ml-8 w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
-          Clear page
-        </button>
-        </div>
-        <div className={'flex items-center'}>
+      <div className="flex space-x-4 border-blue-300">
+        <div className="flex flex-1 flex-col items-center space-y-2">
+          <button
+            className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+            onClick={clearAll}
+          >
+            Clear all
+          </button>
+          <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
+            Clear page
+          </button>
           <div
             onClick={toggleDisplayLastRec}
             className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
@@ -121,8 +121,9 @@ const Map = () => {
           </div>
           <p>Display last border</p>
         </div>
-        <div className='flex'>
-          <p className='mr-4'>Odległość: {distance}</p>
+
+        <div className="flex flex-1 justify-center items-center">
+          <p className="mr-4">Odległość: {distance}</p>
           <input
             type="range"
             min="0"
@@ -131,24 +132,27 @@ const Map = () => {
             onChange={(event) => setDistance(+event.target.value)}
           />
         </div>
-        <button
-          className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-          onClick={addRandomRoute}
-        >
-          Add random route
-        </button>
-        <button
-          className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-          onClick={displayStravaRoutes}
-        >
-          Display raw Strava routes
-        </button>
-        <button
-          className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-          onClick={displayVisitedRoutes}
-        >
-          Display visited routes
-        </button>
+
+        <div className="flex flex-col flex-1 space-y-2">
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={addRandomRoute}
+          >
+            Add random route
+          </button>
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={displayStravaRoutes}
+          >
+            Display raw Strava routes
+          </button>
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={displayVisitedRoutes}
+          >
+            Display visited routes
+          </button>
+        </div>
       </div>
       <div style={{ overflow: 'auto', height: '250px' }}>
         {routes.map((route, index) => (
