@@ -107,19 +107,21 @@ const Map = () => {
           <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
             Clear page
           </button>
-          <div
-            onClick={toggleDisplayLastRec}
-            className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
-              displayLastRec ? 'bg-green-500' : 'bg-gray-300'
-            }`}
-          >
+          <div className='flex items-center'>
             <div
-              className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                displayLastRec ? 'translate-x-6' : 'translate-x-0'
+              onClick={toggleDisplayLastRec}
+              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
+                displayLastRec ? 'bg-green-500' : 'bg-gray-300'
               }`}
-            ></div>
+            >
+              <div
+                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                  displayLastRec ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              ></div>
+            </div>
+            <div className='ml-2'>Display last border</div>
           </div>
-          <p>Display last border</p>
         </div>
 
         <div className="flex flex-1 justify-center items-center">
