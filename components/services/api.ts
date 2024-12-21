@@ -27,6 +27,28 @@ export default class ApiService {
     return result;
   }
 
+  static async getNextRoute(): Promise<Route> {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/route/next`
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  }
+
+  static async getDFSRoute(distance: number, start: [number, number] | null, end: [number, number] | null): Promise<Route> {
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/dfs?distance=${distance}`
+
+    if (start) {
+      url += `&start_x=${start[1]}&start_y=${start[0]}`
+    }
+    if (end) {
+      url += `&end_x=${end[1]}&end_y=${end[0]}`
+    }
+
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  }
+
   static async getVisitedRoutes(): Promise<[number,number][][]> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/visited-routes`);
     const result = await response.json();

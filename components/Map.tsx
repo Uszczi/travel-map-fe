@@ -67,6 +67,30 @@ const Map = () => {
     setDisplayRoutes([...displayRoutes, route]);
   };
 
+  const addNextRoute = async () => {
+    const result = await ApiService.getNextRoute();
+
+    setRoutes([result, ...routes]);
+
+    const route: [number, number][] = [];
+    for (let i = 0; i < result.x.length; i++) {
+      route.push([result.y[i], result.x[i]]);
+    }
+    setDisplayRoutes([...displayRoutes, route]);
+  };
+
+  const addDFSRoute = async () => {
+    const result = await ApiService.getDFSRoute(distance, start, end);
+
+    setRoutes([result, ...routes]);
+
+    const route: [number, number][] = [];
+    for (let i = 0; i < result.x.length; i++) {
+      route.push([result.y[i], result.x[i]]);
+    }
+    setDisplayRoutes([...displayRoutes, route]);
+  };
+
   const displayStravaRoutes = async () => {
     const result = await ApiService.getStravaRoutes();
     setStravaRoutes(result);
@@ -214,6 +238,18 @@ const Map = () => {
             onClick={addRandomRoute}
           >
             Add random route
+          </button>
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={addDFSRoute}
+          >
+            Add DFS route
+          </button>
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={addNextRoute}
+          >
+            Add next route
           </button>
           <button
             className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
