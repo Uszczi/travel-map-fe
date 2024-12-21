@@ -82,10 +82,8 @@ const Map = () => {
   const removeRoute = (indexToRemove: number) => {
     setRoutes((prevRoutes) => prevRoutes.filter((_, index) => index !== indexToRemove));
 
-    indexToRemove = displayRoutes.length - indexToRemove - 1
-    setDisplayRoutes((prevDisplayRoutes) =>
-      prevDisplayRoutes.filter((_, index) => index !== indexToRemove)
-    );
+    indexToRemove = displayRoutes.length - indexToRemove - 1;
+    setDisplayRoutes((prevDisplayRoutes) => prevDisplayRoutes.filter((_, index) => index !== indexToRemove));
   };
 
   const addDFSRoute = async () => {
@@ -213,6 +211,16 @@ const Map = () => {
               value={distance}
               onChange={(event) => setDistance(+event.target.value)}
             />
+            <select
+              value={distance}
+              onChange={(event) => setDistance(+event.target.value)}
+              className="bg-white border border-gray-300 rounded px-4 py-2"
+            >
+              <option value={3000}>3 km</option>
+              <option value={5000}>5 km</option>
+              <option value={10000}>10 km</option>
+              <option value={15000}>15 km</option>
+            </select>
           </div>
           <div className="flex items-center">
             <div
@@ -276,11 +284,7 @@ const Map = () => {
       </div>
       <div style={{ overflow: 'auto', height: '250px' }}>
         {routes.map((route, index) => (
-          <RouteDetils
-            key={index}
-            route={route}
-            onRemove={() => removeRoute(index)}
-          />
+          <RouteDetils key={index} route={route} onRemove={() => removeRoute(index)} />
         ))}
       </div>
     </div>
