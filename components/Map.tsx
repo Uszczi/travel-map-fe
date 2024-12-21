@@ -52,7 +52,7 @@ const Map = () => {
   const [distance, setDistance] = useState(1000);
 
   const addRandomRoute = async () => {
-    const result = await ApiService.getRandomRoute(distance);
+    const result = await ApiService.getRandomRoute(distance, start);
 
     setRoutes([result, ...routes]);
     setBounds([
