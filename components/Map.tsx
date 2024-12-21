@@ -79,6 +79,15 @@ const Map = () => {
     setDisplayRoutes([...displayRoutes, route]);
   };
 
+  const removeRoute = (indexToRemove: number) => {
+    setRoutes((prevRoutes) => prevRoutes.filter((_, index) => index !== indexToRemove));
+
+    indexToRemove = displayRoutes.length - indexToRemove - 1
+    setDisplayRoutes((prevDisplayRoutes) =>
+      prevDisplayRoutes.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
   const addDFSRoute = async () => {
     const result = await ApiService.getDFSRoute(distance, start, end);
 
@@ -267,7 +276,11 @@ const Map = () => {
       </div>
       <div style={{ overflow: 'auto', height: '250px' }}>
         {routes.map((route, index) => (
-          <RouteDetils key={index} route={route} />
+          <RouteDetils
+            key={index}
+            route={route}
+            onRemove={() => removeRoute(index)}
+          />
         ))}
       </div>
     </div>

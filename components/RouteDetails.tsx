@@ -1,5 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import React, { useMemo, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Route, Segment } from './services/api';
 
@@ -27,7 +29,7 @@ function combineSegmentsByNew(segments: Segment[]): Segment[] {
   return result;
 }
 
-const RouteDetils: React.FC<RouteDetilsProps> = ({ route }) => {
+const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
 
   const total_width = 1000;
@@ -36,8 +38,19 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route }) => {
 
   return (
     <div>
-      <p>Trasa</p>
-      <p>Dystans: {Math.round(route.distance)}m</p>
+      <div className="flex justify-between items-center mb-1">
+        <p className="font-bold text-lg">Trasa</p>
+      </div>
+      <div className="flex items-center">
+        <p className="text-sm">Dystans: {Math.round(route.distance)}m</p>
+        <button
+          className="text-red-500 hover:text-red-700"
+          onClick={onRemove}
+          title="Usuń trasę"
+        >
+          <FontAwesomeIcon icon={faTrash} size="lg" />
+        </button>
+      </div>
       <div className="flex">
         {combinedSegments.map((e, index) => (
           <div
