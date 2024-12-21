@@ -3,7 +3,7 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
-import { MapContainer, Rectangle, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Rectangle, TileLayer, useMapEvents } from 'react-leaflet';
 
 import ApiService, { StravaRoute } from '@/components/services/api';
 
@@ -21,10 +21,29 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
 
+const startIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
+const endIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
 const Map = () => {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
+  const [routendTrip, setRoutendTrip] = useState(true);
+  const [start, setStart] = useState<[number, number] | null>(null);
+  const [end, setEnd] = useState<[number, number] | null>(null);
+  const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
+  const [selecting, setSelecting] = useState<'start' | 'end' | null>(null);
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
@@ -67,6 +86,28 @@ const Map = () => {
     clear();
   };
 
+  const MapClickHandler = () => {
+    useMapEvents({
+      mousemove(e) {
+        if (selecting) {
+          setTempPosition([e.latlng.lat, e.latlng.lng]);
+        }
+      },
+      click(e) {
+        if (selecting === 'start') {
+          setStart([e.latlng.lat, e.latlng.lng]);
+          setTempPosition(null);
+          setSelecting(null);
+        } else if (selecting === 'end') {
+          setEnd([e.latlng.lat, e.latlng.lng]);
+          setTempPosition(null);
+          setSelecting(null);
+        }
+      },
+    });
+    return null;
+  };
+
   const clear = () => {
     setVisitedRoutes([]);
     setStravaRoutes([]);
@@ -81,6 +122,11 @@ const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+        <MapClickHandler />
+        {start && <Marker position={start} icon={startIcon} />}
+        {end && <Marker position={end} icon={endIcon} />}
+        {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}
+
         {displayLastRec && bounds && <Rectangle bounds={bounds} pathOptions={{ color: 'red', fill: false }} />}
 
         {displayRoutes.length > 0 &&
@@ -107,7 +153,7 @@ const Map = () => {
           <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
             Clear page
           </button>
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <div
               onClick={toggleDisplayLastRec}
               className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
@@ -120,19 +166,46 @@ const Map = () => {
                 }`}
               ></div>
             </div>
-            <div className='ml-2'>Display last border</div>
+            <div className="ml-2">Display last border</div>
           </div>
         </div>
 
-        <div className="flex flex-1 justify-center items-center">
-          <p className="mr-4">Odległość: {distance}</p>
-          <input
-            type="range"
-            min="0"
-            max="20000"
-            value={distance}
-            onChange={(event) => setDistance(+event.target.value)}
-          />
+        <div className="flex flex-1 justify-center items-center flex-col space-y-2">
+          <div>
+            <p className="mr-4">Odległość: {distance}</p>
+            <input
+              type="range"
+              min="0"
+              max="20000"
+              value={distance}
+              onChange={(event) => setDistance(+event.target.value)}
+            />
+          </div>
+          <div className="flex items-center">
+            <div
+              onClick={() => setRoutendTrip((prev) => !prev)}
+              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer bg-gray-300`}
+            >
+              <div
+                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                  routendTrip ? 'translate-x-0' : 'translate-x-6'
+                }`}
+              ></div>
+            </div>
+            <div className="ml-2">{routendTrip ? 'Rounded trip' : 'Start - end'}</div>
+          </div>
+          <button
+            className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+            onClick={() => setSelecting('start')}
+          >
+            Select Start
+          </button>
+          <button
+            className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+            onClick={() => setSelecting('end')}
+          >
+            Select End
+          </button>
         </div>
 
         <div className="flex flex-col flex-1 space-y-2">
