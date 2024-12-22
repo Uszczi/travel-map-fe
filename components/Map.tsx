@@ -87,7 +87,12 @@ const Map = () => {
   };
 
   const addDFSRoute = async () => {
-    const result = await ApiService.getDFSRoute(distance, start, end);
+    let tmpEnd = end
+    if (routendTrip) {
+      tmpEnd = start
+    }
+
+    const result = await ApiService.getDFSRoute(distance, start, tmpEnd);
 
     setRoutes([result, ...routes]);
 
