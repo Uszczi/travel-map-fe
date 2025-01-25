@@ -281,6 +281,12 @@ const Map = () => {
           </button>
           <button
             className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={async () => await ApiService.stravaRoutesToVisited()}
+          >
+            Strava routes to visited routes
+          </button>
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
             onClick={displayVisitedRoutes}
           >
             Display visited routes

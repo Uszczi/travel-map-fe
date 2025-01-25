@@ -17,6 +17,11 @@ export interface StravaRoute {
 }
 
 export default class ApiService {
+  static async stravaRoutesToVisited(): Promise<void> {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/strava-to-visited`
+    await fetch(url);
+  }
+
   static async getRandomRoute(distance: number, start: [number, number] | null): Promise<Route> {
     let url = `${process.env.NEXT_PUBLIC_API_URL}/route/random?distance=${distance}`
     if (start) {
