@@ -27,7 +27,7 @@ const RouteWithArrows: React.FC<{ positions: [number, number][]; focused: boolea
         color: color,
       });
     };
-    addArrowheads(focused ? 'red' : 'blue');
+    addArrowheads(focused ? 'green' : 'blue');
 
     if (!focused) {
       polylineLayer.on('mouseover', () => {

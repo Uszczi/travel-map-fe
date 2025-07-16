@@ -49,7 +49,7 @@ const Map = () => {
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
-  const [distance, setDistance] = useState(1000);
+  const [distance, setDistance] = useState(3000);
 
   const addRandomRoute = async () => {
     const result = await ApiService.getRandomRoute(distance, start);
@@ -153,7 +153,7 @@ const Map = () => {
 
   return (
     <div>
-      <MapContainer center={center} zoom={13} style={{ width: '100%' }}>
+      <MapContainer center={center} zoom={13} style={{ width: '100%' , height: '1100px'}}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
