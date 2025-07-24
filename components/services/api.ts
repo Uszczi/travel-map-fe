@@ -22,10 +22,14 @@ export default class ApiService {
     await fetch(url);
   }
 
-  static async getRandomRoute(distance: number, start: [number, number] | null): Promise<Route> {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/random?distance=${distance}`
+  static async getRandomRoute(distance: number, start: [number, number] | null, end: [number, number] | null, preferNew: boolean): Promise<Route> {
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/random?distance=${distance}&prefer_new=${preferNew}`
     if (start) {
       url += `&start_x=${start[1]}&start_y=${start[0]}`
+    }
+
+    if (end) {
+      url += `&end_x=${end[1]}&end_y=${end[0]}`
     }
     const response = await fetch(url);
     const result = await response.json();

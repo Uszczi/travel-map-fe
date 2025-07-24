@@ -39,11 +39,16 @@ const Map = () => {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
+  const [preferNew, setPreferNew] = useState(false);
   const [routendTrip, setRoutendTrip] = useState(true);
+
   const [start, setStart] = useState<[number, number] | null>(null);
   const [end, setEnd] = useState<[number, number] | null>(null);
+  const [showStart, setShowStart] = useState(false);
+  const [showEnd, setShowEnd] = useState(false);
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
   const [selecting, setSelecting] = useState<'start' | 'end' | null>(null);
+
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
@@ -52,7 +57,7 @@ const Map = () => {
   const [distance, setDistance] = useState(3000);
 
   const addRandomRoute = async () => {
-    const result = await ApiService.getRandomRoute(distance, start);
+    const result = await ApiService.getRandomRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
 
     setRoutes([result, ...routes]);
     setBounds([
@@ -117,6 +122,10 @@ const Map = () => {
     setDisplayLastRec((prev) => !prev);
   };
 
+  const togglePreferNew = () => {
+    setPreferNew((prev) => !prev);
+  };
+
   const clearAll = async () => {
     await ApiService.clear();
     clear();
@@ -153,7 +162,7 @@ const Map = () => {
 
   return (
     <div>
-      <MapContainer center={center} zoom={13} style={{ width: '100%' , height: '1100px'}}>
+      <MapContainer center={center} zoom={13} style={{ width: '100%' , height: '900px'}}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -206,9 +215,27 @@ const Map = () => {
           </div>
         </div>
 
+        <div className="flex flex-1 flex-col items-center space-y-2">
+          <div className="flex items-center mt-4">
+            <div
+              onClick={togglePreferNew}
+              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
+                preferNew ? 'bg-green-500' : 'bg-gray-300'
+              }`}
+            >
+              <div
+                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                  preferNew ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              ></div>
+            </div>
+            <div className="ml-2">Prefer new</div>
+          </div>
+        </div>
+
         <div className="flex flex-1 justify-center items-center flex-col space-y-2">
           <div>
-            <p className="mr-4">Odległość: {distance}</p>
+            <p className="mr-4">Distance: {distance}</p>
             <input
               type="range"
               min="0"
@@ -240,18 +267,56 @@ const Map = () => {
             </div>
             <div className="ml-2">{routendTrip ? 'Rounded trip' : 'Start - end'}</div>
           </div>
+
+          <div className='flex'>
           <button
             className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
             onClick={() => setSelecting('start')}
           >
             Select Start
           </button>
+          <div className="flex items-center">
+            <div
+              onClick={() => setShowStart((prev) => !prev)}
+              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
+                showStart ? 'bg-green-500' : 'bg-gray-300'
+              }`}
+            >
+              <div
+                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                  showStart ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              ></div>
+            </div>
+            <div className="ml-2">Show start</div>
+          </div>
+
+          </div>
+
+
+          <div className='flex'>
           <button
             className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
             onClick={() => setSelecting('end')}
           >
             Select End
           </button>
+          <div className="flex items-center">
+            <div
+              onClick={() => setShowEnd((prev) => !prev)}
+              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
+                showEnd ? 'bg-green-500' : 'bg-gray-300'
+              }`}
+            >
+              <div
+                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                  showEnd ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              ></div>
+            </div>
+            <div className="ml-2">Show end</div>
+          </div>
+        </div>
         </div>
 
         <div className="flex flex-col flex-1 space-y-2">
