@@ -40,7 +40,7 @@ const Map = () => {
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
   const [preferNew, setPreferNew] = useState(false);
-  const [routendTrip, setRoutendTrip] = useState(true);
+  const [roundedTrip, setRoutendTrip] = useState(true);
 
   const [start, setStart] = useState<[number, number] | null>(null);
   const [end, setEnd] = useState<[number, number] | null>(null);
@@ -92,12 +92,7 @@ const Map = () => {
   };
 
   const addDFSRoute = async () => {
-    let tmpEnd = end
-    if (routendTrip) {
-      tmpEnd = start
-    }
-
-    const result = await ApiService.getDFSRoute(distance, start, tmpEnd);
+    const result = await ApiService.getDFSRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
 
     setRoutes([result, ...routes]);
 
@@ -261,11 +256,11 @@ const Map = () => {
             >
               <div
                 className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                  routendTrip ? 'translate-x-0' : 'translate-x-6'
+                  roundedTrip ? 'translate-x-0' : 'translate-x-6'
                 }`}
               ></div>
             </div>
-            <div className="ml-2">{routendTrip ? 'Rounded trip' : 'Start - end'}</div>
+            <div className="ml-2">{roundedTrip ? 'Rounded trip' : 'Start - end'}</div>
           </div>
 
           <div className='flex'>

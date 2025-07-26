@@ -43,8 +43,8 @@ export default class ApiService {
     return result;
   }
 
-  static async getDFSRoute(distance: number, start: [number, number] | null, end: [number, number] | null): Promise<Route> {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/dfs?distance=${distance}`
+  static async getDFSRoute(distance: number, start: [number, number] | null, end: [number, number] | null, preferNew: boolean): Promise<Route> {
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/dfs?distance=${distance}&prefer_new=${preferNew}`
 
     if (start) {
       url += `&start_x=${start[1]}&start_y=${start[0]}`
