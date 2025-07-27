@@ -91,6 +91,18 @@ const Map = () => {
     setDisplayRoutes((prevDisplayRoutes) => prevDisplayRoutes.filter((_, index) => index !== indexToRemove));
   };
 
+  const addAStarRoute = async () => {
+    const result = await ApiService.getAStarRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
+
+    setRoutes([result, ...routes]);
+
+    const route: [number, number][] = [];
+    for (let i = 0; i < result.x.length; i++) {
+      route.push([result.y[i], result.x[i]]);
+    }
+    setDisplayRoutes([...displayRoutes, route]);
+  };
+
   const addDFSRoute = async () => {
     const result = await ApiService.getDFSRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
 
@@ -326,6 +338,12 @@ const Map = () => {
             onClick={addDFSRoute}
           >
             Add DFS route
+          </button>
+          <button
+            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+            onClick={addAStarRoute}
+          >
+            Add AStar route
           </button>
           <button
             className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
