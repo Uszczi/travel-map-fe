@@ -8,6 +8,10 @@ export interface Route {
   y: number[];
   distance: number;
   segments: Segment[];
+  elevation: number[]
+  total_gain: number;
+  total_lose: number;
+
 }
 export interface StravaRoute {
     id: number

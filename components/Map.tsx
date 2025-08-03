@@ -54,7 +54,7 @@ const Map = () => {
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
-  const [distance, setDistance] = useState(3000);
+  const [distance, setDistance] = useState(5000);
 
   const addRandomRoute = async () => {
     const result = await ApiService.getRandomRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
@@ -376,6 +376,10 @@ const Map = () => {
           <RouteDetils key={index} route={route} onRemove={() => removeRoute(index)} />
         ))}
       </div>
+
+
+
+
     </div>
   );
 };

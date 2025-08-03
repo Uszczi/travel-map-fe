@@ -2,6 +2,7 @@ import 'leaflet/dist/leaflet.css';
 import React, { useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import ElevationChart from './ElevationChart';
 
 import { Route, Segment } from './services/api';
 
@@ -41,6 +42,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
       <div className="flex justify-between items-center mb-1">
         <p className="font-bold text-lg">Trasa</p>
       </div>
+
       <div className="flex items-center">
         <p className="text-sm">Dystans: {Math.round(route.distance)}m</p>
         <button
@@ -51,6 +53,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
           <FontAwesomeIcon icon={faTrash} size="lg" />
         </button>
       </div>
+
       <div className="flex">
         {combinedSegments.map((e, index) => (
           <div
@@ -84,6 +87,15 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
             )}
           </div>
         ))}
+      </div>
+
+      <div className='flex' style={{'height': '200px'}}>
+        <div>
+          <p className="text-2xl font-bold mb-4">Profil wysokości</p>
+          <p>Całkowity wznos: {route.total_gain}</p>
+          <p>Całkowity spadek: {route.total_lose}</p>
+        </div>
+        <ElevationChart elevation={route.elevation} />
       </div>
     </div>
   );
