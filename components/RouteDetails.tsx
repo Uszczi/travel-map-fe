@@ -1,13 +1,14 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'leaflet/dist/leaflet.css';
-import React, { useMemo, useState } from 'react';
+import React, { MouseEventHandler, useMemo, useState } from 'react';
 
 import ElevationChart from './ElevationChart';
 import { Route, Segment } from './services/api';
 
 type RouteDetilsProps = {
   route: Route;
+  onRemove: MouseEventHandler;
 };
 
 function combineSegmentsByNew(segments: Segment[]): Segment[] {

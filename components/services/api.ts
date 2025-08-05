@@ -47,7 +47,6 @@ export default class ApiService {
     return result;
   }
 
-
   static async getAStarRoute(
     distance: number,
     start: [number, number] | null,
