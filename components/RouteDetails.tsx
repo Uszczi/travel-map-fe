@@ -1,9 +1,9 @@
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'leaflet/dist/leaflet.css';
 import React, { useMemo, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import ElevationChart from './ElevationChart';
 
+import ElevationChart from './ElevationChart';
 import { Route, Segment } from './services/api';
 
 type RouteDetilsProps = {
@@ -45,11 +45,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
 
       <div className="flex items-center">
         <p className="text-sm">Dystans: {Math.round(route.distance)}m</p>
-        <button
-          className="text-red-500 hover:text-red-700"
-          onClick={onRemove}
-          title="Usuń trasę"
-        >
+        <button className="text-red-500 hover:text-red-700" onClick={onRemove} title="Usuń trasę">
           <FontAwesomeIcon icon={faTrash} size="lg" />
         </button>
       </div>
@@ -89,7 +85,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
         ))}
       </div>
 
-      <div className='flex' style={{'height': '200px'}}>
+      <div className="flex" style={{ height: '200px' }}>
         <div>
           <p className="text-2xl font-bold mb-4">Profil wysokości</p>
           <p>Całkowity wznos: {route.total_gain}</p>

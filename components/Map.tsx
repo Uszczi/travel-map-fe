@@ -57,7 +57,7 @@ const Map = () => {
   const [distance, setDistance] = useState(5000);
 
   const addRandomRoute = async () => {
-    const result = await ApiService.getRandomRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
+    const result = await ApiService.getRandomRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);
 
     setRoutes([result, ...routes]);
     setBounds([
@@ -92,7 +92,7 @@ const Map = () => {
   };
 
   const addAStarRoute = async () => {
-    const result = await ApiService.getAStarRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
+    const result = await ApiService.getAStarRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);
 
     setRoutes([result, ...routes]);
 
@@ -104,7 +104,7 @@ const Map = () => {
   };
 
   const addDFSRoute = async () => {
-    const result = await ApiService.getDFSRoute(distance, (showStart)? start : null, (showEnd)? end : null, preferNew);
+    const result = await ApiService.getDFSRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);
 
     setRoutes([result, ...routes]);
 
@@ -169,7 +169,7 @@ const Map = () => {
 
   return (
     <div>
-      <MapContainer center={center} zoom={13} style={{ width: '100%' , height: '900px'}}>
+      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '900px' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -275,55 +275,53 @@ const Map = () => {
             <div className="ml-2">{roundedTrip ? 'Rounded trip' : 'Start - end'}</div>
           </div>
 
-          <div className='flex'>
-          <button
-            className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-            onClick={() => setSelecting('start')}
-          >
-            Select Start
-          </button>
-          <div className="flex items-center">
-            <div
-              onClick={() => setShowStart((prev) => !prev)}
-              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
-                showStart ? 'bg-green-500' : 'bg-gray-300'
-              }`}
+          <div className="flex">
+            <button
+              className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+              onClick={() => setSelecting('start')}
             >
+              Select Start
+            </button>
+            <div className="flex items-center">
               <div
-                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                  showStart ? 'translate-x-6' : 'translate-x-0'
+                onClick={() => setShowStart((prev) => !prev)}
+                className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
+                  showStart ? 'bg-green-500' : 'bg-gray-300'
                 }`}
-              ></div>
+              >
+                <div
+                  className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                    showStart ? 'translate-x-6' : 'translate-x-0'
+                  }`}
+                ></div>
+              </div>
+              <div className="ml-2">Show start</div>
             </div>
-            <div className="ml-2">Show start</div>
           </div>
 
-          </div>
-
-
-          <div className='flex'>
-          <button
-            className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-            onClick={() => setSelecting('end')}
-          >
-            Select End
-          </button>
-          <div className="flex items-center">
-            <div
-              onClick={() => setShowEnd((prev) => !prev)}
-              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
-                showEnd ? 'bg-green-500' : 'bg-gray-300'
-              }`}
+          <div className="flex">
+            <button
+              className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+              onClick={() => setSelecting('end')}
             >
+              Select End
+            </button>
+            <div className="flex items-center">
               <div
-                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                  showEnd ? 'translate-x-6' : 'translate-x-0'
+                onClick={() => setShowEnd((prev) => !prev)}
+                className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
+                  showEnd ? 'bg-green-500' : 'bg-gray-300'
                 }`}
-              ></div>
+              >
+                <div
+                  className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+                    showEnd ? 'translate-x-6' : 'translate-x-0'
+                  }`}
+                ></div>
+              </div>
+              <div className="ml-2">Show end</div>
             </div>
-            <div className="ml-2">Show end</div>
           </div>
-        </div>
         </div>
 
         <div className="flex flex-col flex-1 space-y-2">
@@ -376,10 +374,6 @@ const Map = () => {
           <RouteDetils key={index} route={route} onRemove={() => removeRoute(index)} />
         ))}
       </div>
-
-
-
-
     </div>
   );
 };

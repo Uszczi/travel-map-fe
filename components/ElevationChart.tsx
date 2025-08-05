@@ -1,26 +1,18 @@
 'use client';
 
 import {
-  Chart as ChartJS,
-  LineElement,
   CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  Legend,
+  LineElement,
   LinearScale,
   PointElement,
-  Filler,
   Tooltip,
-  Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-ChartJS.register(
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Filler,
-  Tooltip,
-  Legend
-);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Filler, Tooltip, Legend);
 
 type Props = {
   elevation: number[];
@@ -67,5 +59,5 @@ export default function ElevationChart({ elevation }: Props) {
     },
   };
 
-  return <Line data={data} options={options} style={{'height': '200px'}}/>;
+  return <Line data={data} options={options} />;
 }
