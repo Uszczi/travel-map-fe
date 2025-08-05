@@ -72,18 +72,6 @@ const Map = () => {
     setDisplayRoutes([...displayRoutes, route]);
   };
 
-  const addNextRoute = async () => {
-    const result = await ApiService.getNextRoute();
-
-    setRoutes([result, ...routes]);
-
-    const route: [number, number][] = [];
-    for (let i = 0; i < result.x.length; i++) {
-      route.push([result.y[i], result.x[i]]);
-    }
-    setDisplayRoutes([...displayRoutes, route]);
-  };
-
   const removeRoute = (indexToRemove: number) => {
     setRoutes((prevRoutes) => prevRoutes.filter((_, index) => index !== indexToRemove));
 
@@ -342,12 +330,6 @@ const Map = () => {
             onClick={addAStarRoute}
           >
             Add AStar route
-          </button>
-          <button
-            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-            onClick={addNextRoute}
-          >
-            Add next route
           </button>
           <button
             className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"

@@ -44,12 +44,6 @@ export default class ApiService {
     return result;
   }
 
-  static async getNextRoute(): Promise<Route> {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/route/next`;
-    const response = await fetch(url);
-    const result = await response.json();
-    return result;
-  }
 
   static async getAStarRoute(
     distance: number,
