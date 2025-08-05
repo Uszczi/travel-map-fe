@@ -45,6 +45,9 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
 
       <div className="flex items-center">
         <p className="text-sm">Dystans: {Math.round(route.distance)}m</p>
+        <p className="text-sm ml-2">Nowe trasy: {Math.round(route.total_new)}m</p>
+        <p className="text-sm ml-2">Stare trasy: {Math.round(route.total_old)}m</p>
+        <p className="text-sm ml-2">Procent nowych: {Math.round(route.percent_of_new)}%</p>
         <button className="text-red-500 hover:text-red-700" onClick={onRemove} title="Usuń trasę">
           <FontAwesomeIcon icon={faTrash} size="lg" />
         </button>

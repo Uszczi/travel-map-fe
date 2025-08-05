@@ -11,6 +11,9 @@ export interface Route {
   elevation: number[];
   total_gain: number;
   total_lose: number;
+  total_new: number;
+  total_old: number;
+  percent_of_new: number;
 }
 export interface StravaRoute {
   id: number;
