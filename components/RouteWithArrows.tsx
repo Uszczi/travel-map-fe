@@ -19,6 +19,7 @@ const RouteWithArrows: React.FC<{ positions: [number, number][]; focused: boolea
     }).addTo(map);
 
     const addArrowheads = (color: string) => {
+      // @ts-expect-error – deleteArrowheads is not in the Polyline type
       polylineLayer.deleteArrowheads();
       polylineLayer.arrowheads({
         size: '10m',
