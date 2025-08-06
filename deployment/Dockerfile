@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json .
 
+RUN apt install git
 RUN npm install
 COPY . .
 RUN npm run build
