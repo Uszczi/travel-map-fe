@@ -9,6 +9,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build --no-lint
+RUN npm run build -- --no-lint
 
 CMD ["npm", "run", "start"]
