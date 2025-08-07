@@ -5,8 +5,6 @@ services:
       dockerfile: ./deployment/Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - ..:/app
     command: "npm run start"
     extra_hosts:
       - "host.docker.internal:host-gateway"
