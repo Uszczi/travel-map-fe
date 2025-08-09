@@ -4,8 +4,8 @@ export interface Segment {
 }
 export interface Route {
   rec: [number, number, number, number];
-  x: number[];
-  y: number[];
+  x: number[]; // lon[]
+  y: number[]; // lat[]
   distance: number;
   segments: Segment[];
   elevation: number[];
@@ -15,6 +15,7 @@ export interface Route {
   total_old: number;
   percent_of_new: number;
 }
+
 export interface StravaRoute {
   id: number;
   xy: [number, number][];
@@ -35,16 +36,12 @@ export default class ApiService {
     preferNew: boolean,
   ): Promise<Route> {
     let url = `${process.env.NEXT_PUBLIC_API_URL}/route/random?distance=${distance}&prefer_new=${preferNew}`;
-    if (start) {
-      url += `&start_x=${start[1]}&start_y=${start[0]}`;
-    }
+    if (start) url += `&start_x=${start[1]}&start_y=${start[0]}`;
+    if (end) url += `&end_x=${end[1]}&end_y=${end[0]}`;
 
-    if (end) {
-      url += `&end_x=${end[1]}&end_y=${end[0]}`;
-    }
     const response = await fetch(url);
-    const result = await response.json();
-    return result;
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
   }
 
   static async getAStarRoute(
@@ -54,18 +51,14 @@ export default class ApiService {
     preferNew: boolean,
   ): Promise<Route> {
     let url = `${process.env.NEXT_PUBLIC_API_URL}/route/astar?distance=${distance}&prefer_new=${preferNew}`;
-
-    if (start) {
-      url += `&start_x=${start[1]}&start_y=${start[0]}`;
-    }
-    if (end) {
-      url += `&end_x=${end[1]}&end_y=${end[0]}`;
-    }
+    if (start) url += `&start_x=${start[1]}&start_y=${start[0]}`;
+    if (end) url += `&end_x=${end[1]}&end_y=${end[0]}`;
 
     const response = await fetch(url);
-    const result = await response.json();
-    return result;
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
   }
+
   static async getDFSRoute(
     distance: number,
     start: [number, number] | null,
@@ -73,32 +66,70 @@ export default class ApiService {
     preferNew: boolean,
   ): Promise<Route> {
     let url = `${process.env.NEXT_PUBLIC_API_URL}/route/dfs?distance=${distance}&prefer_new=${preferNew}`;
-
-    if (start) {
-      url += `&start_x=${start[1]}&start_y=${start[0]}`;
-    }
-    if (end) {
-      url += `&end_x=${end[1]}&end_y=${end[0]}`;
-    }
+    if (start) url += `&start_x=${start[1]}&start_y=${start[0]}`;
+    if (end) url += `&end_x=${end[1]}&end_y=${end[0]}`;
 
     const response = await fetch(url);
-    const result = await response.json();
-    return result;
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
   }
 
   static async getVisitedRoutes(): Promise<[number, number][][]> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/visited-routes`);
-    const result = await response.json();
-    return result;
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
   }
 
   static async clear(): Promise<void> {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clear`);
+    const r = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clear`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
   }
 
   static async getStravaRoutes(): Promise<StravaRoute[]> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/strava/routes`);
-    const result = await response.json();
-    return result;
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
   }
+
+  static async downloadGPXFromRoute(route: Route, title: string): Promise<void> {
+    const hasEle = Array.isArray(route.elevation) && route.elevation.length === route.x.length;
+
+    // (lat, lon[, ele])
+    const points = route.y.map((lat, i) => {
+      const lon = route.x[i];
+      if (hasEle) return [lat, lon, route.elevation[i]];
+      return [lat, lon];
+    });
+
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/route-to-gpx`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ points, title }),
+    });
+
+    if (!resp.ok) {
+      const msg = await resp.text().catch(() => '');
+      throw new Error(`Nie udało się wygenerować GPX: ${resp.status} ${msg}`);
+    }
+
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${sanitizeFilename(title)}.gpx`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+}
+
+/** prosta sanityzacja nazw plików (Windows/macOS/Linux) */
+function sanitizeFilename(name: string): string {
+  return name
+    .trim()
+    .replace(/[/?%*:|"<>]/g, '-')
+    .replace(/\s+/g, '_')
+    .slice(0, 120);
 }
