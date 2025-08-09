@@ -11,7 +11,7 @@ type RouteDetilsProps = {
   onRemove: MouseEventHandler;
 };
 
-function combineSegmentsByNew(segments: Segment[]): Segment[] {
+function combineSegmentsIfNew(segments: Segment[]): Segment[] {
   const result = [];
   let lastSegment = { ...segments[0] };
 
@@ -36,7 +36,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
 
   const total_width = 1000;
 
-  const combinedSegments = useMemo(() => combineSegmentsByNew(route.segments), [route.segments]);
+  const combinedSegments = useMemo(() => combineSegmentsIfNew(route.segments), [route.segments]);
 
   return (
     <div>
