@@ -2,9 +2,9 @@
 
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
 
 export default function ThemeToggleButton({ className = '' }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();

@@ -51,7 +51,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop */}
-          <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden md:flex flex-1 justify-center items-center gap-6">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -61,10 +61,10 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+          </div>
 
-            <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800" />
-
-            {/* Language switch */}
+          {/* Language switch */}
+          <div className="hidden md:flex items-center gap-4 mr-4">
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" aria-hidden />
               <button
