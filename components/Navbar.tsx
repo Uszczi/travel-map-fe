@@ -16,7 +16,6 @@ export default function Navbar() {
   const { setTheme, resolvedTheme } = useTheme();
   const [open, setOpen] = useState(false);
 
-  // Zmiana locale z zachowaniem aktualnej ścieżki
   const switchLocale = (target: string) => {
     if (!pathname) return;
     const segments = pathname.split('/');
@@ -25,17 +24,14 @@ export default function Navbar() {
     router.push(nextPath);
   };
 
-  // Czy link jest aktywny?
   const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
 
-  // Linki nawigacji
   const base = useMemo(() => `/${locale}`, [locale]);
   const links = [
     { href: `${base}`, label: t('navhome') },
     { href: `${base}/mapa`, label: t('navmap') },
   ];
 
-  // Blokuj scroll, gdy mobile menu otwarte
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
@@ -48,8 +44,8 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60">
       <nav className="container flex h-14 items-center justify-between">
         {/* Logo */}
-        <Link href={base} className="font-semibold tracking-tight">
-          MyApp
+        <Link href={base} className="font-semibold tracking-tight ml-4">
+          City Travel
         </Link>
 
         {/* Desktop */}
@@ -86,13 +82,12 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Theme switch */}
+          {/* Theme */}
           <button
             onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-            className="rounded-md p-2 ring-offset-2 transition hover:bg-zinc-100 focus-visible:ring-2 dark:hover:bg-zinc-900"
-            aria-label={resolvedTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-            title={resolvedTheme === 'dark' ? 'Jasny' : 'Ciemny'}
+            className="flex items-center justify-between rounded-md px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 w-20"
           >
+            <span className='text-sm mr-5'>{resolvedTheme === 'dark' ? 'Jasny' : 'Ciemny'}</span>
             {resolvedTheme === 'dark' ? (
               <FontAwesomeIcon icon={faSun} className="h-4 w-4" />
             ) : (

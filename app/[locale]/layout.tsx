@@ -1,15 +1,10 @@
-import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from 'next-themes';
 import { notFound } from 'next/navigation';
 
-import Navbar from '../../components/Navbar';
+import Navbar from '@/components/Navbar';
 import '../globals.css';
 
-export const metadata: Metadata = {
-  title: 'Next 15 Navbar',
-  description: 'Responsive navbar with i18n and theme switch',
-};
 
 async function loadMessages(locale: string) {
   try {
@@ -32,7 +27,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh bg-white text-gray-900 dark:bg-zinc-950 dark:text-zinc-100">
+      <body className="min-h-dvh bg-white text-gray-800 dark:bg-zinc-800 dark:text-zinc-100">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Navbar />

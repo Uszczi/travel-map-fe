@@ -1,6 +1,16 @@
-import { useTranslations } from 'next-intl';
+'use client';
 
-export default function Page() {
-  const t = useTranslations();
-  return <h1 className="text-3xl font-semibold">{t('homepagetitle')}</h1>;
+import dynamic from 'next/dynamic';
+
+const Map = dynamic(() => import('@/components/Map'), {
+  ssr: false,
+});
+
+
+export default function Home() {
+  return (
+    <div className="">
+      <Map />
+    </div>
+  );
 }
