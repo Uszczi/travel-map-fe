@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
-export default function ThemeToggleButton({ className = '' }: { className?: string }) {
+export default function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const t = useTranslations();
@@ -16,7 +16,7 @@ export default function ThemeToggleButton({ className = '' }: { className?: stri
   return (
     <button
       onClick={() => mounted && setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      className={`flex items-center gap-x-2 rounded-md px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 ${className}`}
+      className={`flex items-center gap-x-2 rounded-md px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900`}
       aria-label="Przełącz motyw"
     >
       <span className="text-sm min-w-[6ch]" suppressHydrationWarning>

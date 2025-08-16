@@ -51,7 +51,7 @@ export default function Navbar() {
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60">
         <nav className="mx-auto container flex h-14 items-center justify-between px-5">
           {/* Logo */}
-          <Link href={base} className="font-semibold tracking-tight">
+          <Link href={base} className="font-bold tracking-tight">
             City Travel
           </Link>
 
@@ -63,12 +63,12 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`
-    block rounded-md px-3 py-2 text-sm transition
-    hover:bg-green-500 hover:text-white
-    active:bg-green-600 active:text-white
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-    ${isActive(link.href) ? 'font-semibold' : ''}
-  `}
+                    block rounded-md px-3 py-2  transition
+                    hover:bg-green-500 hover:text-white
+                    active:bg-green-600 active:text-white
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                    ${isActive(link.href) ? 'font-bold' : ''}
+                  `}
               >
                 {link.label}
               </Link>
@@ -113,13 +113,12 @@ export default function Navbar() {
       {open && (
         <Portal>
           <div className="fixed inset-0 z-[99999] md:hidden" role="dialog" aria-modal="true">
-            {/* overlay (zamyka po kliknięciu) */}
             <div className="absolute inset-0 bg-black/40 z-[99998]" onClick={() => setOpen(false)} aria-hidden />
 
             {/* panel */}
             <div className="absolute right-0 top-0 z-[100000] h-full w-screen max-w-[85%] border-l border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
               <div className="mb-4 flex items-center justify-between">
-                <span className="font-semibold">Menu</span>
+                <span className="font-bold">Menu</span>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
@@ -137,12 +136,12 @@ export default function Navbar() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={`
-    block rounded-md px-3 py-2 text-sm transition
-    hover:bg-green-500 hover:text-white
-    active:bg-green-600 active:text-white
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-    ${isActive(link.href) ? 'font-semibold' : ''}
-  `}
+                        block rounded-md px-3 py-2 text-sm transition
+                        hover:bg-green-500 hover:text-white
+                        active:bg-green-600 active:text-white
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                        ${isActive(link.href) ? 'font-bold' : ''}
+                      `}
                   >
                     {link.label}
                   </Link>
