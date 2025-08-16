@@ -116,7 +116,7 @@ export default function Navbar() {
             <div className="absolute inset-0 bg-black/40 z-[99998]" onClick={() => setOpen(false)} aria-hidden />
 
             {/* panel */}
-            <div className="absolute right-0 top-0 z-[100000] h-full w-screen max-w-[85%] border-l border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+              <div className="fixed inset-y-0 right-0 z-[100000] h-full w-full max-w-[85%] border-l border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
               <div className="mb-4 flex items-center justify-between">
                 <span className="font-bold">Menu</span>
                 <button
