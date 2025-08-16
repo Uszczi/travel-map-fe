@@ -35,7 +35,10 @@ const endIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-const Map = () => {
+type MapProps = {
+  className?: string;
+};
+const Map = ({ className }: MapProps) => {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
@@ -156,8 +159,8 @@ const Map = () => {
   };
 
   return (
-    <div>
-      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '900px' }}>
+    <div className={{ className }}>
+      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '800px' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

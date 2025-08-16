@@ -8,8 +8,8 @@ const Map = dynamic(() => import('@/components/Map'), {
 
 export default function Home() {
   return (
-    <div className="">
-      <Map />
+    <div className="w-full">
+      <Map className="w-full" />
     </div>
   );
 }

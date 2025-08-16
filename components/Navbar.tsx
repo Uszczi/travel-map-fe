@@ -21,12 +21,17 @@ export default function Navbar() {
     if (!pathname) return;
     const segments = pathname.split('/');
     segments[1] = target; // ['', 'pl', ...] → ['', 'en', ...]
-    const nextPath = segments.join('/') || `/${target}`;
+    const nextPath = segments.join('/');
     router.push(nextPath);
   };
 
-  const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
-
+  const isActive = (href: string) => {
+    if (!pathname) return false;
+    if (href === base) {
+      return pathname === href;
+    }
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
   const base = useMemo(() => `/${locale}`, [locale]);
   const links = [
     { href: `${base}`, label: t('navhome') },
@@ -44,19 +49,26 @@ export default function Navbar() {
   return (
     <div>
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60">
-        <nav className="mx-auto container flex h-14 items-center justify-between mx-auto">
+        <nav className="mx-auto container flex h-14 items-center justify-between px-5">
           {/* Logo */}
-          <Link href={base} className="font-semibold tracking-tight ml-4">
+          <Link href={base} className="font-semibold tracking-tight">
             City Travel
           </Link>
 
           {/* Desktop */}
-          <div className="hidden md:flex flex-1 justify-center items-center gap-6">
+          <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-6">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm transition hover:opacity-80 ${isActive(link.href) ? 'font-semibold' : 'opacity-80'}`}
+                onClick={() => setOpen(false)}
+                className={`
+    block rounded-md px-3 py-2 text-sm transition
+    hover:bg-green-500 hover:text-white
+    active:bg-green-600 active:text-white
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+    ${isActive(link.href) ? 'font-semibold' : ''}
+  `}
               >
                 {link.label}
               </Link>
@@ -64,7 +76,7 @@ export default function Navbar() {
           </div>
 
           {/* Language switch */}
-          <div className="hidden md:flex items-center gap-4 mr-4">
+          <div className="hidden md:flex items-center gap-4">
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" aria-hidden />
               <button
@@ -105,7 +117,7 @@ export default function Navbar() {
             <div className="absolute inset-0 bg-black/40 z-[99998]" onClick={() => setOpen(false)} aria-hidden />
 
             {/* panel */}
-            <div className="absolute right-0 top-0 z-[100000] h-full w-100 max-w-[85%] border-l border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+            <div className="absolute right-0 top-0 z-[100000] h-full w-screen max-w-[85%] border-l border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
               <div className="mb-4 flex items-center justify-between">
                 <span className="font-semibold">Menu</span>
                 <button
@@ -114,7 +126,7 @@ export default function Navbar() {
                   className="rounded-md p-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-700 hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-white"
                   aria-label="Close menu"
                 >
-                  <FontAwesomeIcon icon={faXmark} className="h-5 w-5 mr-5" />
+                  <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
                 </button>
               </div>
 
@@ -124,7 +136,13 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className={`rounded-md px-2 py-2 text-sm transition hover:bg-zinc-100 dark:hover:bg-zinc-900 ${isActive(link.href) ? 'font-semibold' : ''}`}
+                    className={`
+    block rounded-md px-3 py-2 text-sm transition
+    hover:bg-green-500 hover:text-white
+    active:bg-green-600 active:text-white
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+    ${isActive(link.href) ? 'font-semibold' : ''}
+  `}
                   >
                     {link.label}
                   </Link>
@@ -138,7 +156,7 @@ export default function Navbar() {
                     <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" />
                     <span className="text-sm">Language</span>
                   </div>
-                  <div className="flex items-center gap-2 ml-5">
+                  <div className="flex items-center gap-2 ml-8">
                     <button
                       type="button"
                       onClick={() => switchLocale('pl')}

@@ -31,7 +31,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Navbar />
-            <main className="mx-auto  py-8">{children}</main>
+            <main>{children}</main>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
