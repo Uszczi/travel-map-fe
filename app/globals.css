@@ -38,3 +38,9 @@ body {
     height: 800px;
   }
 }
+
+
+/* Todo do sprawdzenia */
+/* Opcjonalnie: ładniejsze focusy */
+:root { --ring: 2px solid rgb(59 130 246 / 50%); }
+:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,.5); }

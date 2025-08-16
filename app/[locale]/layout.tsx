@@ -1,0 +1,43 @@
+import type {Metadata} from 'next';
+import {NextIntlClientProvider} from 'next-intl';
+import {ThemeProvider} from 'next-themes';
+import Navbar from '../../components/Navbar';
+import '../globals.css';
+import {notFound} from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'Next 15 Navbar',
+  description: 'Responsive navbar with i18n and theme switch'
+};
+
+async function loadMessages(locale: string) {
+  try {
+    const messages = (await import(`../../messages/${locale}.json`)).default;
+    return messages;
+  } catch {
+    notFound();
+  }
+}
+
+export default async function RootLayout({
+  children,
+  params: {locale}
+}: {
+  children: React.ReactNode;
+  params: {locale: string};
+}) {
+  const messages = await loadMessages(locale);
+
+  return (
+    <html lang={locale} suppressHydrationWarning>
+      <body className="min-h-dvh bg-white text-gray-900 dark:bg-zinc-950 dark:text-zinc-100">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Navbar />
+            <main className="container py-8">{children}</main>
+          </NextIntlClientProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
