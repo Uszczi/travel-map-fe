@@ -4,10 +4,13 @@ import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function ThemeToggleButton({ className = '' }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations();
+
   useEffect(() => setMounted(true), []);
 
   return (
@@ -17,7 +20,7 @@ export default function ThemeToggleButton({ className = '' }: { className?: stri
       aria-label="Przełącz motyw"
     >
       <span className="text-sm min-w-[6ch]" suppressHydrationWarning>
-        {mounted ? (resolvedTheme === 'dark' ? 'Jasny' : 'Ciemny') : '\u00A0'}
+        {mounted ? (resolvedTheme === 'dark' ? t('bright_theme') : t('dark_theme')) : '\u00A0'}
       </span>
 
       {mounted && <FontAwesomeIcon icon={resolvedTheme === 'dark' ? faSun : faMoon} className="h-4 w-4" />}

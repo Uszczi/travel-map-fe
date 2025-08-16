@@ -8,5 +8,7 @@
   "themedark": "Ciemny",
   "homepagetitle": "Witaj!",
   "abouttitle": "O projekcie",
-  "maptitle": "Mapa"
+  "maptitle": "Mapa",
+  "bright_theme": "Jasny",
+  "dark_theme": "Ciemny"
 }

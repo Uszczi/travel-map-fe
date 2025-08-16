@@ -6,5 +6,7 @@
   "themelight": "Light",
   "themedark": "Dark",
   "homepagetitle": "Welcome!",
-  "maptitle": "Map"
+  "maptitle": "Map",
+  "bright_theme": "Bright",
+  "dark_theme": "Dark"
 }
