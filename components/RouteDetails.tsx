@@ -43,8 +43,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
       setDownloading(true);
       const title = `route_${Math.round(route.distance)}m_${Math.round(route.percent_of_new)}pct`;
       await ApiService.downloadGPXFromRoute(route, title);
-    } catch (e) {
-      console.error(e);
+    } catch {
       alert('Błąd podczas pobierania GPX');
     } finally {
       setDownloading(false);

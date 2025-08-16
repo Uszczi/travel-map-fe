@@ -1,13 +1,14 @@
-import type {Metadata} from 'next';
-import {NextIntlClientProvider} from 'next-intl';
-import {ThemeProvider} from 'next-themes';
+import type { Metadata } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
+import { ThemeProvider } from 'next-themes';
+import { notFound } from 'next/navigation';
+
 import Navbar from '../../components/Navbar';
 import '../globals.css';
-import {notFound} from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Next 15 Navbar',
-  description: 'Responsive navbar with i18n and theme switch'
+  description: 'Responsive navbar with i18n and theme switch',
 };
 
 async function loadMessages(locale: string) {
@@ -21,12 +22,12 @@ async function loadMessages(locale: string) {
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 }) {
-  const {locale} = await params;
+  const { locale } = await params;
   const messages = await loadMessages(locale);
 
   return (
