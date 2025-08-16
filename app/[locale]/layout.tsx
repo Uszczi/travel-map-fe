@@ -3,8 +3,8 @@ import { ThemeProvider } from 'next-themes';
 import { notFound } from 'next/navigation';
 
 import Navbar from '@/components/Navbar';
-import '../globals.css';
 
+import '../globals.css';
 
 async function loadMessages(locale: string) {
   try {
@@ -27,11 +27,11 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh bg-white text-gray-800 dark:bg-zinc-800 dark:text-zinc-100">
+      <body className="min-h-dvh bg-white text-gray-800 dark:bg-zinc-800 dark:text-zinc-100" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Navbar />
-            <main className="container py-8">{children}</main>
+            <main className="mx-auto  py-8">{children}</main>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
