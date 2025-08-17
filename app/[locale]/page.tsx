@@ -7,7 +7,7 @@ export default function Home() {
   const locale = useLocale();
 
   return (
-    <div className="flex h-screen w-full flex-col">
+    <div className="flex h-full w-full flex-col">
       <div className="flex flex-col items-center mt-2 md:mt-8">
         <h1 className="text-4xl font-bold text-center">City Travel</h1>
         <p>City Travel jest aplikacją ...</p>

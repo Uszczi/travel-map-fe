@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from 'next-themes';
 import { notFound } from 'next/navigation';
 
-import Navbar from '@/components/Navbar';
+import ClientNavbar from '@/components/ClientNavbar';
 
 import '../globals.css';
 
@@ -20,9 +20,9 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
   const messages = await loadMessages(locale);
 
   return (
@@ -30,7 +30,7 @@ export default async function RootLayout({
       <body className="min-h-dvh bg-white text-gray-800 dark:bg-zinc-800 dark:text-zinc-100" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Navbar />
+            <ClientNavbar />
             <main>{children}</main>
           </NextIntlClientProvider>
         </ThemeProvider>
