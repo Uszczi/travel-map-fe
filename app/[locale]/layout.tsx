@@ -4,11 +4,11 @@ import { notFound } from 'next/navigation';
 
 import ClientNavbar from '@/components/ClientNavbar';
 
-import '../globals.css';
+import '@/app/globals.css';
 
 async function loadMessages(locale: string) {
   try {
-    const messages = (await import(`../../messages/${locale}.json`)).default;
+    const messages = (await import(`@/messages/${locale}.json`)).default;
     return messages;
   } catch {
     notFound();
