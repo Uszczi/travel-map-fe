@@ -34,4 +34,3 @@ export default function OptionsPanel({ options, onChange }: Props) {
     </div>
   );
 }
-

@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
 import { MapContainer, Marker, Rectangle, TileLayer, useMapEvents } from 'react-leaflet';
 
-import RouteDetils from '@/components/RouteDetails';
 import RouteWithArrows from '@/components/RouteWithArrows';
 import ApiService, { StravaRoute } from '@/components/services/api';
 import { Route } from '@/components/services/api';
@@ -72,12 +71,12 @@ export default function Map({ _options }: { options: MapOptions }) {
     setDisplayRoutes([...displayRoutes, route]);
   };
 
-  const removeRoute = (indexToRemove: number) => {
-    setRoutes((prevRoutes) => prevRoutes.filter((_, index) => index !== indexToRemove));
-
-    indexToRemove = displayRoutes.length - indexToRemove - 1;
-    setDisplayRoutes((prevDisplayRoutes) => prevDisplayRoutes.filter((_, index) => index !== indexToRemove));
-  };
+  // const removeRoute = (indexToRemove: number) => {
+  //   setRoutes((prevRoutes) => prevRoutes.filter((_, index) => index !== indexToRemove));
+  //
+  //   indexToRemove = displayRoutes.length - indexToRemove - 1;
+  //   setDisplayRoutes((prevDisplayRoutes) => prevDisplayRoutes.filter((_, index) => index !== indexToRemove));
+  // };
 
   const addAStarRoute = async () => {
     const result = await ApiService.getAStarRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);

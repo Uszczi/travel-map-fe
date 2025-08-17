@@ -1,7 +1,9 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+
 import type { MapOptions } from '@/components/types';
+
 import OptionsPanelClient from './OptionsPanelClient';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
@@ -17,7 +19,7 @@ export default function MapWithSidebar() {
 
       <main className="min-h-0 border rounded-lg overflow-hidden flex flex-col">
         <div className="min-h-0 flex-1">
-          <Map options={initial}  />
+          <Map options={initial} />
         </div>
       </main>
     </div>
