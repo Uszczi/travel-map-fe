@@ -2,6 +2,11 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
+html,
+body,
+#__next {
+  height: 100%;
+}
 
 @layer utilities {
   .text-balance {
@@ -9,15 +14,6 @@
   }
 }
 
-.leaflet-container {
-  height: 600px;
-}
-
-@media (min-height: 768px) {
-  .leaflet-container {
-    height: 800px;
-  }
-}
 
 
 :root { --ring: 2px solid rgb(59 130 246 / 50%); }

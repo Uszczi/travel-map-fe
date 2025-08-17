@@ -27,11 +27,11 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh bg-white text-gray-800 dark:bg-zinc-800 dark:text-zinc-100" suppressHydrationWarning>
+      <body className="min-h-dvh flex flex-col bg-white text-gray-800 dark:bg-zinc-800 dark:text-zinc-100" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ClientNavbar />
-            <main>{children}</main>
+            <main className='flex-1'>{children}</main>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

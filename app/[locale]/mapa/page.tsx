@@ -1,15 +1,5 @@
-'use client';
+import MapWithSidebar from '@/components/Map/MapWithSidebar';
 
-import dynamic from 'next/dynamic';
-
-const Map = dynamic(() => import('@/components/Map'), {
-  ssr: false,
-});
-
-export default function Home() {
-  return (
-    <div className="w-full">
-      <Map className="w-full" />
-    </div>
-  );
+export default function MapPage() {
+  return <MapWithSidebar />;
 }

@@ -75,13 +75,13 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Language switch */}
-          <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" aria-hidden />
+          {/* Language */}
+          <div className="hidden md:flex items-center gap-4 ">
+            <div className="flex items-center gap-2 cursor-pointer">
+              <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80 " aria-hidden />
               <button
                 onClick={() => switchLocale('pl')}
-                className={`text-sm ${locale === 'pl' ? 'font-semibold' : 'opacity-70'} hover:opacity-100`}
+                className={`text-sm ${locale === 'pl' ? 'font-semibold' : 'opacity-70'} hover:opacity-100 cursor-pointer`}
                 aria-label="Polski"
               >
                 PL
@@ -89,7 +89,7 @@ export default function Navbar() {
               <span className="opacity-30">/</span>
               <button
                 onClick={() => switchLocale('en')}
-                className={`text-sm ${locale === 'en' ? 'font-semibold' : 'opacity-70'} hover:opacity-100`}
+                className={`text-sm ${locale === 'en' ? 'font-semibold' : 'opacity-70'} hover:opacity-100 cursor-pointer`}
                 aria-label="English"
               >
                 EN
@@ -150,7 +150,7 @@ export default function Navbar() {
                 <div className="my-2 h-px bg-zinc-200 dark:bg-zinc-800" />
 
                 {/* Language */}
-                <div className="flex">
+                <div className="flex cursor-pointer">
                   <div className="flex items-center gap-2">
                     <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" />
                     <span className="text-sm">Language</span>

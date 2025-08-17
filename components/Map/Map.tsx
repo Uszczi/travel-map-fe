@@ -1,5 +1,6 @@
 'use client';
 
+import type { MapOptions } from '@components/Map/MapWithSidebar';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
@@ -7,9 +8,9 @@ import { MapContainer, Marker, Rectangle, TileLayer, useMapEvents } from 'react-
 
 import ApiService, { StravaRoute } from '@/components/services/api';
 
-import RouteDetils from './RouteDetails';
-import RouteWithArrows from './RouteWithArrows';
-import { Route } from './services/api';
+import RouteDetils from '@/components/RouteDetails';
+import RouteWithArrows from '@/components/RouteWithArrows';
+import { Route } from '@/components/services/api';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,6 +38,7 @@ const endIcon = new L.Icon({
 
 type MapProps = {
   className?: string;
+  options: MapOptions;
 };
 export default function Map({ className = '' }: MapProps) {
   const center: [number, number] = [51.6101241, 19.1999532];
@@ -159,8 +161,8 @@ export default function Map({ className = '' }: MapProps) {
   };
 
   return (
-    <div className={`h-full w-full ${className}`}>
-      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '800px' }}>
+    <div className={`h-full w-full flex flex-col ${className}`}>
+      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '1000px', flexGrow: 1}}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
