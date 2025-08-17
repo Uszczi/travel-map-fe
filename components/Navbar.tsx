@@ -48,10 +48,14 @@ export default function Navbar() {
 
   return (
     <div>
-      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60">
+      <header
+        className="sticky top-2 z-40 rounded-lg border bg-white/70 backdrop-blur m-2
+             supports-[backdrop-filter]:bg-white/60
+             dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60"
+      >
         <nav className="mx-auto container flex h-20 items-center justify-between px-5">
           {/* Logo */}
-          <Link href={base} className="font-bold tracking-tight">
+          <Link href={base} className="font-bold tracking-tight text-xl">
             City Travel
           </Link>
 
