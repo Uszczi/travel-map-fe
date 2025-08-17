@@ -34,12 +34,11 @@ const endIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-export default function Map({ _options }: { _options: MapOptions }) {
+export default function Map() {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
   const [preferNew, setPreferNew] = useState(false);
-  const [roundedTrip, setRoutendTrip] = useState(true);
 
   const [start, setStart] = useState<[number, number] | null>(null);
   const [end, setEnd] = useState<[number, number] | null>(null);
@@ -156,7 +155,7 @@ export default function Map({ _options }: { _options: MapOptions }) {
 
   return (
     <div className={`h-full w-full flex flex-col `}>
-      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '1000px', flexGrow: 1 }}>
+      <MapContainer center={center} zoom={13} style={{ flexGrow: 1 }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -247,19 +246,6 @@ export default function Map({ _options }: { _options: MapOptions }) {
               <option value={10000}>10 km</option>
               <option value={15000}>15 km</option>
             </select>
-          </div>
-          <div className="flex items-center">
-            <div
-              onClick={() => setRoutendTrip((prev) => !prev)}
-              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer bg-gray-300`}
-            >
-              <div
-                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                  roundedTrip ? 'translate-x-0' : 'translate-x-6'
-                }`}
-              ></div>
-            </div>
-            <div className="ml-2">{roundedTrip ? 'Rounded trip' : 'Start - end'}</div>
           </div>
 
           <div className="flex">

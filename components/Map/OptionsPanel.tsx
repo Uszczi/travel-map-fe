@@ -1,36 +1,26 @@
 'use client';
 
-import type { Dispatch, SetStateAction } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
-import type { MapOptions } from '@/components/types';
+import { useMapOptions } from '@/src/store/useMapOptions';
 
-type Props = {
-  options: MapOptions;
-  onChange: Dispatch<SetStateAction<MapOptions>>;
-};
+import PointPickerSection from './PointPickerSection';
 
-export default function OptionsPanel({ options, onChange }: Props) {
+export default function OptionsPanel() {
+  const { start, end } = useMapOptions(useShallow((s) => ({ start: s.options.start, end: s.options.end })));
+
+  const setStart = useMapOptions((s) => s.setStart);
+  const setEnd = useMapOptions((s) => s.setEnd);
+
   return (
-    <div className="space-y-4">
-      <h2></h2>
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={options.showRoutes}
-          onChange={(e) => onChange((prev) => ({ ...prev, showRoutes: e.target.checked }))}
-        />
-        Pokaż trasy
-      </label>
+    <section>
+      <header className="mt-2 mb-8">
+        <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
+      </header>
 
-      <label className="block">
-        <span className="block text-sm mb-1">Zoom</span>
-        <input
-          className="border rounded px-2 py-1 w-full"
-          type="number"
-          value={options.zoomLevel}
-          onChange={(e) => onChange((prev) => ({ ...prev, zoomLevel: Number(e.target.value) }))}
-        />
-      </label>
-    </div>
+      <PointPickerSection className="mb-5" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
+
+      <PointPickerSection legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
+    </section>
   );
 }
