@@ -34,7 +34,7 @@ const endIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-export default function Map({ _options }: { options: MapOptions }) {
+export default function Map({ _options }: { _options: MapOptions }) {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
