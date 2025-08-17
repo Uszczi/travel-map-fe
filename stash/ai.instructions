@@ -1,0 +1,12 @@
+This is going to be app called Cover Planner.
+It allows creating new routes so they are unique allowing to visit all streets in the city.
+Design page with map, where at the to is header with logo at the left links at the middle and at the right theme language login.
+Below header to the left are should be option like start/end/distance/etc and at right the map.
+Under the map or under the options I want to diisplay some info about generetad route and allow to change with arrows.
+
+
+Cover Planner is an app for creating unique routes that cover every street in a city.
+Design a page with a map:
+At the top, include a header with the logo on the left, navigation links in the center, and theme, language, and login controls on the right.
+Below the header, place an options panel on the left (e.g., start, end, distance, etc.), including a switch to set the end point to be the same as the start point, and the map on the right.
+Below the map (or below the options panel on smaller screens), display information about the generated route and provide arrow controls to switch between route variations.
