@@ -1,16 +1,15 @@
 'use client';
 
-import type { MapOptions } from '@components/Map/MapWithSidebar';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
 import { MapContainer, Marker, Rectangle, TileLayer, useMapEvents } from 'react-leaflet';
 
-import ApiService, { StravaRoute } from '@/components/services/api';
-
 import RouteDetils from '@/components/RouteDetails';
 import RouteWithArrows from '@/components/RouteWithArrows';
+import ApiService, { StravaRoute } from '@/components/services/api';
 import { Route } from '@/components/services/api';
+import type { MapOptions } from '@/components/types';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,10 +35,7 @@ const endIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-type MapProps = {
-  options: MapOptions;
-};
-export default function Map({ options }: MapProps) {
+export default function Map({ _options }: { options: MapOptions }) {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
@@ -161,7 +157,7 @@ export default function Map({ options }: MapProps) {
 
   return (
     <div className={`h-full w-full flex flex-col `}>
-      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '1000px', flexGrow: 1}}>
+      <MapContainer center={center} zoom={13} style={{ width: '100%', height: '1000px', flexGrow: 1 }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -354,11 +350,6 @@ export default function Map({ options }: MapProps) {
             Display visited routes
           </button>
         </div>
-      </div>
-      <div style={{ overflow: 'auto', height: '250px' }}>
-        {routes.map((route, index) => (
-          <RouteDetils key={index} route={route} onRemove={() => removeRoute(index)} />
-        ))}
       </div>
     </div>
   );
