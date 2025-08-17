@@ -37,10 +37,9 @@ const endIcon = new L.Icon({
 });
 
 type MapProps = {
-  className?: string;
   options: MapOptions;
 };
-export default function Map({ className = '' }: MapProps) {
+export default function Map({ options }: MapProps) {
   const center: [number, number] = [51.6101241, 19.1999532];
 
   const [displayLastRec, setDisplayLastRec] = useState(false);
@@ -161,7 +160,7 @@ export default function Map({ className = '' }: MapProps) {
   };
 
   return (
-    <div className={`h-full w-full flex flex-col ${className}`}>
+    <div className={`h-full w-full flex flex-col `}>
       <MapContainer center={center} zoom={13} style={{ width: '100%', height: '1000px', flexGrow: 1}}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -187,7 +186,7 @@ export default function Map({ className = '' }: MapProps) {
           <RouteWithArrows key={index} positions={item} focused={false} />
         ))}
       </MapContainer>
-      <div className="flex space-x-4 border-blue-300">
+      <div className="flex space-x-4">
         <div className="flex flex-1 flex-col items-center space-y-2">
           <button
             className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"

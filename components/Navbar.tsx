@@ -49,7 +49,7 @@ export default function Navbar() {
   return (
     <div>
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60">
-        <nav className="mx-auto container flex h-14 items-center justify-between px-5">
+        <nav className="mx-auto container flex h-20 items-center justify-between px-5">
           {/* Logo */}
           <Link href={base} className="font-bold tracking-tight">
             City Travel
@@ -76,21 +76,52 @@ export default function Navbar() {
           </div>
 
           {/* Language */}
-          <div className="hidden md:flex items-center gap-4 ">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80 " aria-hidden />
+          <div className="hidden md:flex items-center gap-4">
+            <div className="flex items-center gap-2 select-none mr-4" role="group" aria-label="Language">
+              <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80 pointer-events-none" aria-hidden />
+
               <button
+                type="button"
                 onClick={() => switchLocale('pl')}
-                className={`text-sm ${locale === 'pl' ? 'font-semibold' : 'opacity-70'} hover:opacity-100 cursor-pointer`}
                 aria-label="Polski"
+                className={`
+                  relative text-sm cursor-pointer px-3 py-2 rounded-md transition
+                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                  focus-visible:outline-zinc-500/40 dark:focus-visible:outline-zinc-400/30
+
+                  hover:bg-zinc-100 hover:text-zinc-900
+                  dark:hover:bg-zinc-800/80 dark:hover:text-white
+
+                  after:content-[''] after:absolute after:left-1 after:right-1 after:bottom-0
+                  after:h-0.5 after:rounded-full after:bg-current after:scale-x-0
+                  hover:after:scale-x-100 after:origin-left after:transition
+
+                  ${locale === 'pl' ? 'font-semibold bg-zinc-100 dark:bg-zinc-800 dark:text-white' : 'opacity-70 hover:opacity-100'}
+                `}
               >
                 PL
               </button>
-              <span className="opacity-30">/</span>
+
+              <span className="opacity-30 pointer-events-none">/</span>
+
               <button
+                type="button"
                 onClick={() => switchLocale('en')}
-                className={`text-sm ${locale === 'en' ? 'font-semibold' : 'opacity-70'} hover:opacity-100 cursor-pointer`}
                 aria-label="English"
+                className={`
+                  relative text-sm cursor-pointer px-2 py-1 rounded-md transition
+                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                  focus-visible:outline-zinc-500/40 dark:focus-visible:outline-zinc-400/30
+
+                  hover:bg-zinc-100 hover:text-zinc-900
+                  dark:hover:bg-zinc-800/80 dark:hover:text-white
+
+                  after:content-[''] after:absolute after:left-1 after:right-1 after:bottom-0
+                  after:h-0.5 after:rounded-full after:bg-current after:scale-x-0
+                  hover:after:scale-x-100 after:origin-left after:transition
+
+                  ${locale === 'en' ? 'font-semibold bg-zinc-100 dark:bg-zinc-800 dark:text-white' : 'opacity-70 hover:opacity-100'}
+                `}
               >
                 EN
               </button>

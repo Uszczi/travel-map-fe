@@ -14,7 +14,4 @@ body,
   }
 }
 
-
-
-:root { --ring: 2px solid rgb(59 130 246 / 50%); }
-:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,.5); }
+.leaflet-container { width: 100%; height: 100%; }
