@@ -62,7 +62,7 @@ type MapStore = {
  * Helpers
  * =======================*/
 
-const isWhich = (x: any): x is Which => x === 'start' || x === 'end';
+const isWhich = (x: unknown): x is Which => x === 'start' || x === 'end';
 
 /* =========================
  * Initial state
@@ -203,8 +203,8 @@ export const useMapOptions = create<MapStore>()((set, get) => ({
         }),
         false,
       );
-    } catch (e: any) {
-      if (e?.name === 'AbortError') return;
+    } catch (e: unknown) {
+      if (e instanceof Error && e.name === 'AbortError') return;
       set(
         (s) => ({
           search: {

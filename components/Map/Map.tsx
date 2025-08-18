@@ -8,7 +8,6 @@ import { MapContainer, Marker, Rectangle, TileLayer, useMapEvents } from 'react-
 import RouteWithArrows from '@/components/RouteWithArrows';
 import ApiService, { StravaRoute } from '@/components/services/api';
 import { Route } from '@/components/services/api';
-import type { MapOptions } from '@/components/types';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

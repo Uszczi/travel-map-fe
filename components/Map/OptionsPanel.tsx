@@ -1,14 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
+import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
+import type { Algorithm } from '@/components/types';
 import { useMapOptions } from '@/src/store/useMapOptions';
 
 import PointPickerSection from './PointPickerSection';
 
 export default function OptionsPanel() {
-  const { start, end } = useMapOptions(useShallow((s) => ({ start: s.options.start, end: s.options.end })));
+  const [algo, setAlgo] = useState<Algorithm>('dfs');
 
+  const { start, end } = useMapOptions(useShallow((s) => ({ start: s.options.start, end: s.options.end })));
   const setStart = useMapOptions((s) => s.setStart);
   const setEnd = useMapOptions((s) => s.setEnd);
 
@@ -19,8 +23,9 @@ export default function OptionsPanel() {
       </header>
 
       <PointPickerSection className="mb-5" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
+      <PointPickerSection className="mb-5" legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
 
-      <PointPickerSection legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
+      <AlgorithmPicker value={algo} onChange={setAlgo} />
     </section>
   );
 }

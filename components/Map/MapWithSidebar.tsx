@@ -15,7 +15,7 @@ export default function MapWithSidebar() {
 
       <main className="min-h-0 h-full border rounded-lg overflow-hidden flex flex-col">
         <div className="min-h-0 flex-1">
-          <Map  />
+          <Map />
         </div>
       </main>
     </div>
