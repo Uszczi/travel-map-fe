@@ -1,6 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 export type LatLng = { lat: number; lng: number };
 
@@ -48,7 +49,7 @@ const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
 let autoDelay = 300; // ms
 
-export const useMapOptions = create<MapStore>()((set, get) => ({
+export const useMapOptions = create<MapStore>()(devtools((set, get) => ({
   start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
   end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
 
@@ -190,4 +191,4 @@ export const useMapOptions = create<MapStore>()((set, get) => ({
   setAutoDelay: (ms) => {
     autoDelay = Math.max(0, ms | 0);
   },
-}));
+})));
