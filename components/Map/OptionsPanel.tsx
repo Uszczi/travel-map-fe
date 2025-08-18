@@ -12,7 +12,7 @@ import PointPickerSection from './PointPickerSection';
 export default function OptionsPanel() {
   const [algo, setAlgo] = useState<Algorithm>('dfs');
 
-  const { start, end } = useMapOptions(useShallow((s) => ({ start: s.options.start, end: s.options.end })));
+  const { start, end } = useMapOptions(useShallow((s) => ({ start: s.start, end: s.end })));
   const setStart = useMapOptions((s) => s.setStart);
   const setEnd = useMapOptions((s) => s.setEnd);
 

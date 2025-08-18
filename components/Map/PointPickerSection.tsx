@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function PointPickerSection({ className, legend, which, point, setPoint }: Props) {
-  const search = useMapOptions((s) => s.search[which]);
+  const search = useMapOptions((s) => s[which]);
   const setQuery = useMapOptions((s) => s.setQuery);
   const geocode = useMapOptions((s) => s.geocode);
   const pickResult = useMapOptions((s) => s.pickResult);

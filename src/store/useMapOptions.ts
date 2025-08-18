@@ -2,24 +2,7 @@
 
 import { create } from 'zustand';
 
-/* =========================
- * Types
- * =======================*/
-
 export type LatLng = { lat: number; lng: number };
-
-export type Endpoint = {
-  method: 'search' | 'pin';
-  query: string;
-  coords?: LatLng;
-  awaitingClick: boolean;
-};
-
-export type MapOptions = {
-  zoomLevel: number;
-  start: Endpoint;
-  end: Endpoint;
-};
 
 export type GeocodeItem = {
   id: number | string;
@@ -32,6 +15,9 @@ export type GeocodeItem = {
 };
 
 type SearchState = {
+  method: 'search' | 'pin';
+  coords?: LatLng;
+  awaitingClick: boolean;
   query: string;
   results: GeocodeItem[];
   loading: boolean;
@@ -41,16 +27,13 @@ type SearchState = {
 type Which = 'start' | 'end';
 
 type MapStore = {
-  options: MapOptions;
-  search: { start: SearchState; end: SearchState };
+  start: SearchState;
+  end: SearchState;
 
-  // options actions
-  setOption: <K extends keyof MapOptions>(key: K, value: MapOptions[K]) => void;
-  setStart: <K extends keyof Endpoint>(key: K, value: Endpoint[K]) => void;
-  setEnd: <K extends keyof Endpoint>(key: K, value: Endpoint[K]) => void;
+  setStart: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
+  setEnd: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
   setCoords: (coords: LatLng | undefined) => void;
 
-  // search actions (per which)
   setQuery: (which: Which, q: string) => void;
   geocode: (which: Which) => Promise<void>;
   pickResult: (which: Which, item: GeocodeItem) => void;
@@ -58,94 +41,55 @@ type MapStore = {
   setAutoDelay: (ms: number) => void;
 };
 
-/* =========================
- * Helpers
- * =======================*/
-
 const isWhich = (x: unknown): x is Which => x === 'start' || x === 'end';
-
-/* =========================
- * Initial state
- * =======================*/
-
-const initial: MapOptions = {
-  zoomLevel: 12,
-  start: { method: 'search', query: '', coords: undefined, awaitingClick: false },
-  end: { method: 'search', query: '', coords: undefined, awaitingClick: false },
-};
-
-/* =========================
- * Per-endpoint runtime holders
- * =======================*/
 
 const debounceId: Partial<Record<Which, ReturnType<typeof setTimeout>>> = {};
 const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
-let autoDelay = 500; // ms
-
-/* =========================
- * Store
- * =======================*/
+let autoDelay = 300; // ms
 
 export const useMapOptions = create<MapStore>()((set, get) => ({
-  options: initial,
-  search: {
-    start: { query: '', results: [], loading: false, error: null },
-    end: { query: '', results: [], loading: false, error: null },
-  },
+  start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
+  end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
 
-  /* ---------- Options ---------- */
+  setStart: (key, value) => set((s) => ({ start: { ...s.start, [key]: value } as SearchState }), false),
 
-  setOption: (key, value) => set((s) => ({ options: { ...s.options, [key]: value } }), false),
+  setEnd: (key, value) => set((s) => ({ end: { ...s.end, [key]: value } as SearchState }), false),
 
-  setStart: (key, value) =>
-    set((s) => ({ options: { ...s.options, start: { ...s.options.start, [key]: value } } }), false),
-
-  setEnd: (key, value) => set((s) => ({ options: { ...s.options, end: { ...s.options.end, [key]: value } } }), false),
-
-  // Ustawia coords na tym endpoint’cie, który „czeka na klik” lub jest w trybie 'pin'
-  setCoords: (coords) =>
+  setCoords: (coords?: LatLng) =>
     set((s) => {
-      const { start, end } = s.options;
+      const { start, end } = s;
 
       if (start.awaitingClick) {
-        return { options: { ...s.options, start: { ...start, coords, awaitingClick: false } } };
+        return { start: { ...start, coords, awaitingClick: false } };
       }
       if (end.awaitingClick) {
-        return { options: { ...s.options, end: { ...end, coords, awaitingClick: false } } };
+        return { end: { ...end, coords, awaitingClick: false } };
       }
       if (start.method === 'pin') {
-        return { options: { ...s.options, start: { ...start, coords } } };
+        return { start: { ...start, coords } };
       }
       if (end.method === 'pin') {
-        return { options: { ...s.options, end: { ...end, coords } } };
+        return { end: { ...end, coords } };
       }
       // fallback: start
-      return { options: { ...s.options, start: { ...start, coords } } };
+      return { start: { ...start, coords } };
     }, false),
-
-  /* ---------- Search (per which) ---------- */
 
   setQuery: (which, q) => {
     if (!isWhich(which)) return;
 
-    // ustal query
     set(
       (s) => ({
-        search: {
-          ...s.search,
-          [which]: { ...s.search[which], query: q },
-        },
+        [which]: { ...s[which], query: q },
       }),
       false,
     );
 
-    // auto-geocode tylko dla sekcji w trybie 'search'
-    const { options } = get();
-    const section = options?.[which];
+    const section = get()[which];
+
     if (!section || section.method !== 'search') return;
 
-    // reset debounce
     if (debounceId[which]) {
       clearTimeout(debounceId[which]!);
       delete debounceId[which];
@@ -162,26 +106,21 @@ export const useMapOptions = create<MapStore>()((set, get) => ({
   geocode: async (which) => {
     if (!isWhich(which)) return;
 
-    // cancel scheduled debounce
     if (debounceId[which]) {
       clearTimeout(debounceId[which]!);
       delete debounceId[which];
     }
 
-    const q = get().search[which]?.query?.trim?.() ?? '';
+    const q = get()[which]?.query?.trim?.() ?? '';
     if (q.length < 3) return;
-    if (q === lastFetchedQuery[which]) return; // nie duplikuj zapytań
+    if (q === lastFetchedQuery[which]) return;
 
-    // cancel previous fetch
     abortCtrl[which]?.abort();
     abortCtrl[which] = new AbortController();
 
     set(
       (s) => ({
-        search: {
-          ...s.search,
-          [which]: { ...s.search[which], loading: true, error: null, results: [] },
-        },
+        [which]: { ...s[which], loading: true, error: null, results: [] },
       }),
       false,
     );
@@ -196,10 +135,7 @@ export const useMapOptions = create<MapStore>()((set, get) => ({
       lastFetchedQuery[which] = q;
       set(
         (s) => ({
-          search: {
-            ...s.search,
-            [which]: { ...s.search[which], results: data.items ?? [], loading: false },
-          },
+          [which]: { ...s[which], results: data.items ?? [], loading: false },
         }),
         false,
       );
@@ -207,10 +143,7 @@ export const useMapOptions = create<MapStore>()((set, get) => ({
       if (e instanceof Error && e.name === 'AbortError') return;
       set(
         (s) => ({
-          search: {
-            ...s.search,
-            [which]: { ...s.search[which], loading: false, error: 'Błąd wyszukiwania' },
-          },
+          [which]: { ...s[which], loading: false, error: 'Błąd wyszukiwania' },
         }),
         false,
       );
@@ -224,25 +157,18 @@ export const useMapOptions = create<MapStore>()((set, get) => ({
 
     set(
       (s) => ({
-        options: {
-          ...s.options,
-          [which]: {
-            ...s.options[which],
-            method: 'search',
-            query: item.label,
-            coords: { lat: item.lat, lng: item.lng },
-            awaitingClick: false,
-          },
-        },
-        search: {
-          ...s.search,
-          [which]: { ...s.search[which], results: [] },
+        [which]: {
+          ...s[which],
+          method: 'search',
+          query: item.label,
+          coords: { lat: item.lat, lng: item.lng },
+          awaitingClick: false,
+          results: [],
         },
       }),
       false,
     );
 
-    // cleanup
     if (debounceId[which]) {
       clearTimeout(debounceId[which]!);
       delete debounceId[which];
