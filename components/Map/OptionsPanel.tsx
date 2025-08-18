@@ -17,12 +17,12 @@ export default function OptionsPanel() {
 
   return (
     <section>
-      <header className="mt-2 mb-8">
+      <header className="mt-2 mb-4">
         <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
       </header>
 
-      <PointPickerSection className="mb-5" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
-      <PointPickerSection className="mb-5" legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
+      <PointPickerSection className="mb-2" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
+      <PointPickerSection className="mb-2" legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
 
       <AlgorithmPicker value={algo} onChange={setAlgo} />
     </section>

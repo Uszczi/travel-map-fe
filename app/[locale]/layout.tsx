@@ -24,10 +24,7 @@ async function loadMessages(locale: string) {
   }
 }
 
-export default async function RootLayout(props: {
-  children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
-}) {
+export default async function RootLayout(props: { children: React.ReactNode; params: Promise<{ locale: Locale }> }) {
   const { locale } = await props.params;
   const messages = await loadMessages(locale);
 
