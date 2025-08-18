@@ -5,6 +5,16 @@ import { notFound } from 'next/navigation';
 import '@/app/globals.css';
 import ClientNavbar from '@/components/ClientNavbar';
 
+import type { Locale } from '../locales';
+import { locales } from '../locales';
+
+export const dynamicParams = false;
+export const dynamic = 'force-static';
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 async function loadMessages(locale: string) {
   try {
     const messages = (await import(`@/messages/${locale}.json`)).default;
@@ -14,14 +24,11 @@ async function loadMessages(locale: string) {
   }
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
+export default async function RootLayout(props: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }) {
-  const { locale } = await params;
+  const { locale } = await props.params;
   const messages = await loadMessages(locale);
 
   return (
@@ -33,7 +40,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ClientNavbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">{props.children}</main>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
