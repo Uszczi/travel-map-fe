@@ -1,9 +1,9 @@
 'use client';
-
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useMapOptions } from '@/src/store/useMapOptions';
+import type { SearchState } from '@/src/store/useMapOptions';
 
 type Props = {
   className?: string;
@@ -15,7 +15,7 @@ type Props = {
     coords?: { lat: number; lng: number };
     awaitingClick: boolean;
   };
-  setPoint: <K extends keyof Props['point']>(key: K, value: Props['point'][K]) => void;
+  setPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
 };
 
 export default function PointPickerSection({ className, legend, which, point, setPoint }: Props) {

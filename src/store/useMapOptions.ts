@@ -15,7 +15,7 @@ export type GeocodeItem = {
   class?: string;
 };
 
-type SearchState = {
+export type SearchState = {
   method: 'search' | 'pin';
   coords?: LatLng;
   awaitingClick: boolean;
