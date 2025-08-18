@@ -7,7 +7,7 @@ import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
 import type { Algorithm } from '@/components/types';
 import { useMapOptions } from '@/src/store/useMapOptions';
 
-import PointPickerSection from './PointPickerSection';
+import PointPickerSection from '@/components/RouteOptions/PointPickerSection';
 
 export default function OptionsPanel() {
   const [algo, setAlgo] = useState<Algorithm>('dfs');
