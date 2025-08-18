@@ -49,146 +49,148 @@ const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
 let autoDelay = 300; // ms
 
-export const useMapOptions = create<MapStore>()(devtools((set, get) => ({
-  start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
-  end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
+export const useMapOptions = create<MapStore>()(
+  devtools((set, get) => ({
+    start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
+    end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
 
-  setStart: (key, value) => set((s) => ({ start: { ...s.start, [key]: value } as SearchState }), false),
+    setStart: (key, value) => set((s) => ({ start: { ...s.start, [key]: value } as SearchState }), false),
 
-  setEnd: (key, value) => set((s) => ({ end: { ...s.end, [key]: value } as SearchState }), false),
+    setEnd: (key, value) => set((s) => ({ end: { ...s.end, [key]: value } as SearchState }), false),
 
-  setCoords: (coords?: LatLng) =>
-    set((s) => {
-      const { start, end } = s;
+    setCoords: (coords?: LatLng) =>
+      set((s) => {
+        const { start, end } = s;
 
-      if (start.awaitingClick) {
-        return { start: { ...start, coords, awaitingClick: false } };
-      }
-      if (end.awaitingClick) {
-        return { end: { ...end, coords, awaitingClick: false } };
-      }
-      if (start.method === 'pin') {
+        if (start.awaitingClick) {
+          return { start: { ...start, coords, awaitingClick: false } };
+        }
+        if (end.awaitingClick) {
+          return { end: { ...end, coords, awaitingClick: false } };
+        }
+        if (start.method === 'pin') {
+          return { start: { ...start, coords } };
+        }
+        if (end.method === 'pin') {
+          return { end: { ...end, coords } };
+        }
+        // fallback: start
         return { start: { ...start, coords } };
-      }
-      if (end.method === 'pin') {
-        return { end: { ...end, coords } };
-      }
-      // fallback: start
-      return { start: { ...start, coords } };
-    }, false),
+      }, false),
 
-  setQuery: (which, q) => {
-    if (!isWhich(which)) return;
+    setQuery: (which, q) => {
+      if (!isWhich(which)) return;
 
-    set(
-      (s) => ({
-        [which]: { ...s[which], query: q },
-      }),
-      false,
-    );
-
-    const section = get()[which];
-
-    if (!section || section.method !== 'search') return;
-
-    if (debounceId[which]) {
-      clearTimeout(debounceId[which]!);
-      delete debounceId[which];
-    }
-
-    const trimmed = q.trim();
-    if (trimmed.length < 3) return;
-
-    debounceId[which] = setTimeout(() => {
-      get().geocode(which);
-    }, autoDelay);
-  },
-
-  geocode: async (which) => {
-    if (!isWhich(which)) return;
-
-    if (debounceId[which]) {
-      clearTimeout(debounceId[which]!);
-      delete debounceId[which];
-    }
-
-    const q = get()[which]?.query?.trim?.() ?? '';
-    if (q.length < 3) return;
-    if (q === lastFetchedQuery[which]) return;
-
-    abortCtrl[which]?.abort();
-    abortCtrl[which] = new AbortController();
-
-    set(
-      (s) => ({
-        [which]: { ...s[which], loading: true, error: null, results: [] },
-      }),
-      false,
-    );
-
-    try {
-      const res = await fetch(`/api/geocode?q=${encodeURIComponent(q)}`, {
-        signal: abortCtrl[which]!.signal,
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data: { items: GeocodeItem[] } = await res.json();
-
-      lastFetchedQuery[which] = q;
       set(
         (s) => ({
-          [which]: { ...s[which], results: data.items ?? [], loading: false },
+          [which]: { ...s[which], query: q },
         }),
         false,
       );
-    } catch (e: unknown) {
-      if (e instanceof Error && e.name === 'AbortError') return;
+
+      const section = get()[which];
+
+      if (!section || section.method !== 'search') return;
+
+      if (debounceId[which]) {
+        clearTimeout(debounceId[which]!);
+        delete debounceId[which];
+      }
+
+      const trimmed = q.trim();
+      if (trimmed.length < 3) return;
+
+      debounceId[which] = setTimeout(() => {
+        get().geocode(which);
+      }, autoDelay);
+    },
+
+    geocode: async (which) => {
+      if (!isWhich(which)) return;
+
+      if (debounceId[which]) {
+        clearTimeout(debounceId[which]!);
+        delete debounceId[which];
+      }
+
+      const q = get()[which]?.query?.trim?.() ?? '';
+      if (q.length < 3) return;
+      if (q === lastFetchedQuery[which]) return;
+
+      abortCtrl[which]?.abort();
+      abortCtrl[which] = new AbortController();
+
       set(
         (s) => ({
-          [which]: { ...s[which], loading: false, error: 'Błąd wyszukiwania' },
+          [which]: { ...s[which], loading: true, error: null, results: [] },
         }),
         false,
       );
-    }
-  },
 
-  pickResult: (which, item) => {
-    if (!isWhich(which)) return;
+      try {
+        const res = await fetch(`/api/geocode?q=${encodeURIComponent(q)}`, {
+          signal: abortCtrl[which]!.signal,
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data: { items: GeocodeItem[] } = await res.json();
 
-    lastFetchedQuery[which] = item.label;
-
-    set(
-      (s) => ({
-        [which]: {
-          ...s[which],
-          method: 'search',
-          query: item.label,
-          coords: { lat: item.lat, lng: item.lng },
-          awaitingClick: false,
-          results: [],
-        },
-      }),
-      false,
-    );
-
-    if (debounceId[which]) {
-      clearTimeout(debounceId[which]!);
-      delete debounceId[which];
-    }
-    abortCtrl[which]?.abort();
-  },
-
-  cancelAutoGeocode: (which) => {
-    const keys: Which[] = isWhich(which) ? [which] : ['start', 'end'];
-    for (const k of keys) {
-      if (debounceId[k]) {
-        clearTimeout(debounceId[k]!);
-        delete debounceId[k];
+        lastFetchedQuery[which] = q;
+        set(
+          (s) => ({
+            [which]: { ...s[which], results: data.items ?? [], loading: false },
+          }),
+          false,
+        );
+      } catch (e: unknown) {
+        if (e instanceof Error && e.name === 'AbortError') return;
+        set(
+          (s) => ({
+            [which]: { ...s[which], loading: false, error: 'Błąd wyszukiwania' },
+          }),
+          false,
+        );
       }
-      abortCtrl[k]?.abort();
-    }
-  },
+    },
 
-  setAutoDelay: (ms) => {
-    autoDelay = Math.max(0, ms | 0);
-  },
-})));
+    pickResult: (which, item) => {
+      if (!isWhich(which)) return;
+
+      lastFetchedQuery[which] = item.label;
+
+      set(
+        (s) => ({
+          [which]: {
+            ...s[which],
+            method: 'search',
+            query: item.label,
+            coords: { lat: item.lat, lng: item.lng },
+            awaitingClick: false,
+            results: [],
+          },
+        }),
+        false,
+      );
+
+      if (debounceId[which]) {
+        clearTimeout(debounceId[which]!);
+        delete debounceId[which];
+      }
+      abortCtrl[which]?.abort();
+    },
+
+    cancelAutoGeocode: (which) => {
+      const keys: Which[] = isWhich(which) ? [which] : ['start', 'end'];
+      for (const k of keys) {
+        if (debounceId[k]) {
+          clearTimeout(debounceId[k]!);
+          delete debounceId[k];
+        }
+        abortCtrl[k]?.abort();
+      }
+    },
+
+    setAutoDelay: (ms) => {
+      autoDelay = Math.max(0, ms | 0);
+    },
+  })),
+);

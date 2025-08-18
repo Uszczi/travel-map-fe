@@ -46,59 +46,12 @@ export default function Map() {
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
   const [selecting, setSelecting] = useState<'start' | 'end' | null>(null);
 
-  const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
-  const [routes, setRoutes] = useState<Route[]>([]);
+  const [bounds, _setBounds] = useState<[[number, number], [number, number]] | null>(null);
+  const [_routes, setRoutes] = useState<Route[]>([]);
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
   const [distance, setDistance] = useState(5000);
-
-  const addRandomRoute = async () => {
-    const result = await ApiService.getRandomRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);
-
-    setRoutes([result, ...routes]);
-    setBounds([
-      [result.rec[1], result.rec[0]],
-      [result.rec[3], result.rec[2]],
-    ]);
-
-    const route: [number, number][] = [];
-    for (let i = 0; i < result.x.length; i++) {
-      route.push([result.y[i], result.x[i]]);
-    }
-    setDisplayRoutes([...displayRoutes, route]);
-  };
-
-  // const removeRoute = (indexToRemove: number) => {
-  //   setRoutes((prevRoutes) => prevRoutes.filter((_, index) => index !== indexToRemove));
-  //
-  //   indexToRemove = displayRoutes.length - indexToRemove - 1;
-  //   setDisplayRoutes((prevDisplayRoutes) => prevDisplayRoutes.filter((_, index) => index !== indexToRemove));
-  // };
-
-  const addAStarRoute = async () => {
-    const result = await ApiService.getAStarRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);
-
-    setRoutes([result, ...routes]);
-
-    const route: [number, number][] = [];
-    for (let i = 0; i < result.x.length; i++) {
-      route.push([result.y[i], result.x[i]]);
-    }
-    setDisplayRoutes([...displayRoutes, route]);
-  };
-
-  const addDFSRoute = async () => {
-    const result = await ApiService.getDFSRoute(distance, showStart ? start : null, showEnd ? end : null, preferNew);
-
-    setRoutes([result, ...routes]);
-
-    const route: [number, number][] = [];
-    for (let i = 0; i < result.x.length; i++) {
-      route.push([result.y[i], result.x[i]]);
-    }
-    setDisplayRoutes([...displayRoutes, route]);
-  };
 
   const displayStravaRoutes = async () => {
     const result = await ApiService.getStravaRoutes();
