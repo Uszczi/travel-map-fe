@@ -1,14 +1,14 @@
 'use client';
-import { useMapOptions } from '@/src/store/useMapOptions';
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
-import { MapContainer, Marker, Rectangle, TileLayer, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import RouteWithArrows from '@/components/RouteWithArrows';
 import ApiService, { StravaRoute } from '@/components/services/api';
 import { Route } from '@/components/services/api';
+import { useMapOptions } from '@/src/store/useMapOptions';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,26 +36,14 @@ const endIcon = new L.Icon({
 
 export default function Map() {
   const center: [number, number] = [51.6101241, 19.1999532];
-
-  const [displayLastRec, setDisplayLastRec] = useState(false);
-  const [preferNew, setPreferNew] = useState(false);
-
-  const [showStart, setShowStart] = useState(false);
-  const [showEnd, setShowEnd] = useState(false);
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
-  const { start: startSec, end: endSec, setStart: setStartSec, setEnd: setEndSec, setCoords } = useMapOptions();
+  const { start: startSec, end: endSec, setCoords } = useMapOptions();
+  const start = startSec.coords ? ([startSec.coords.lat, startSec.coords.lng] as [number, number]) : null;
+  const end = endSec.coords ? ([endSec.coords.lat, endSec.coords.lng] as [number, number]) : null;
 
-  const start = startSec.coords ? [startSec.coords.lat, startSec.coords.lng] as [number, number] : null;
-  const end   = endSec.coords   ? [endSec.coords.lat,   endSec.coords.lng]   as [number, number] : null;
+  const selecting: 'start' | 'end' | null = startSec.awaitingClick ? 'start' : endSec.awaitingClick ? 'end' : null;
 
-  const selecting: 'start' | 'end' | null = startSec.awaitingClick
-    ? 'start'
-    : endSec.awaitingClick
-    ? 'end'
-    : null;
-
-  const [bounds, _setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [_routes, setRoutes] = useState<Route[]>([]);
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
@@ -70,14 +58,6 @@ export default function Map() {
   const displayVisitedRoutes = async () => {
     const result = await ApiService.getVisitedRoutes();
     setVisitedRoutes(result);
-  };
-
-  const toggleDisplayLastRec = () => {
-    setDisplayLastRec((prev) => !prev);
-  };
-
-  const togglePreferNew = () => {
-    setPreferNew((prev) => !prev);
   };
 
   const clearAll = async () => {
@@ -96,7 +76,7 @@ export default function Map() {
         if (!selecting) return;
         setCoords({ lat: e.latlng.lat, lng: e.latlng.lng });
         setTempPosition(null);
-        }
+      },
     });
     return null;
   };
@@ -119,8 +99,6 @@ export default function Map() {
         {start && <Marker position={start} icon={startIcon} />}
         {end && <Marker position={end} icon={endIcon} />}
         {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}
-
-        {displayLastRec && bounds && <Rectangle bounds={bounds} pathOptions={{ color: 'red', fill: false }} />}
 
         {displayRoutes.length > 0 &&
           displayRoutes.map((item, index) => (
@@ -146,39 +124,6 @@ export default function Map() {
           <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
             Clear page
           </button>
-          <div className="flex items-center">
-            <div
-              onClick={toggleDisplayLastRec}
-              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
-                displayLastRec ? 'bg-green-500' : 'bg-gray-300'
-              }`}
-            >
-              <div
-                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                  displayLastRec ? 'translate-x-6' : 'translate-x-0'
-                }`}
-              ></div>
-            </div>
-            <div className="ml-2">Display last border</div>
-          </div>
-        </div>
-
-        <div className="flex flex-1 flex-col items-center space-y-2">
-          <div className="flex items-center mt-4">
-            <div
-              onClick={togglePreferNew}
-              className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer ${
-                preferNew ? 'bg-green-500' : 'bg-gray-300'
-              }`}
-            >
-              <div
-                className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${
-                  preferNew ? 'translate-x-6' : 'translate-x-0'
-                }`}
-              ></div>
-            </div>
-            <div className="ml-2">Prefer new</div>
-          </div>
         </div>
 
         <div className="flex flex-1 justify-center items-center flex-col space-y-2">
