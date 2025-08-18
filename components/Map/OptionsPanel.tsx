@@ -4,10 +4,9 @@ import { useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
+import PointPickerSection from '@/components/RouteOptions/PointPickerSection';
 import type { Algorithm } from '@/components/types';
 import { useMapOptions } from '@/src/store/useMapOptions';
-
-import PointPickerSection from '@/components/RouteOptions/PointPickerSection';
 
 export default function OptionsPanel() {
   const [algo, setAlgo] = useState<Algorithm>('dfs');
