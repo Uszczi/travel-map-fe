@@ -8,7 +8,7 @@ import PointPickerSection from '@/components/RouteOptions/PointPickerSection';
 import type { Algorithm } from '@/components/types';
 import { useMapOptions } from '@/src/store/useMapOptions';
 
-export default function OptionsPanel() {
+export default function RouteOptions() {
   const [algo, setAlgo] = useState<Algorithm>('dfs');
 
   const { start, end } = useMapOptions(useShallow((s) => ({ start: s.start, end: s.end })));
