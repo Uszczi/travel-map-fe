@@ -8,22 +8,19 @@ import { useEffect, useState } from 'react';
 
 export default function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const t = useTranslations();
-
-  useEffect(() => setMounted(true), []);
 
   return (
     <button
-      onClick={() => mounted && setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       className={`flex items-center gap-x-2 rounded-md px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer`}
       aria-label="Przełącz motyw"
     >
       <span className="text-sm min-w-[6ch]" suppressHydrationWarning>
-        {mounted ? (resolvedTheme === 'dark' ? t('bright_theme') : t('dark_theme')) : '\u00A0'}
+      {    resolvedTheme === 'dark' ? t('bright_theme') : t('dark_theme')}
       </span>
 
-      {mounted && <FontAwesomeIcon icon={resolvedTheme === 'dark' ? faSun : faMoon} className="h-4 w-4" />}
+      <FontAwesomeIcon icon={resolvedTheme === 'dark' ? faSun : faMoon} className="h-4 w-4" />
     </button>
   );
 }
