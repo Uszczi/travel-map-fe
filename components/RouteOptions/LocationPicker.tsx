@@ -26,8 +26,17 @@ export default function LocationPicker({ className, legend, which, point, setPoi
   const pickResult = useMapOptions((s) => s.pickResult);
 
   const canSearch = (search.query ?? '').trim().length >= 3;
+  const isPicking = point.method === 'pin' && point.awaitingClick;
 
-  const handlePickOnMap = () => {
+  const handlePickOnMap = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isPicking) {
+      setPoint('method', 'search');
+      setPoint('awaitingClick', false);
+      return;
+    }
     if (point.method !== 'pin') setPoint('method', 'pin');
     if (!point.awaitingClick) setPoint('awaitingClick', true);
   };
@@ -107,17 +116,19 @@ export default function LocationPicker({ className, legend, which, point, setPoi
         <div className="flex items-center gap-2">
           <button
             type="button"
+            data-pick-toggle
             onClick={handlePickOnMap}
-            aria-pressed={point.method === 'pin' && point.awaitingClick}
+            aria-pressed={isPicking}
+            title={isPicking ? 'Anuluj wybieranie na mapie' : 'Wybierz na mapie'}
             className={[
               'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
               'border transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
               point.method === 'pin' && point.awaitingClick
-                ? 'border-indigo-500 ring-1 ring-inset ring-indigo-500 bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900'
+                ? 'border-indigo-500 ring-1 ring-inset ring-indigo-500 dark:bg-zinc-100 dark:text-zinc-900'
                 : '',
             ].join(' ')}
           >
-            Wybierz na mapie
+            {isPicking ? 'Anuluj' : 'Wybierz na mapie'}
           </button>
 
           {point.coords && (

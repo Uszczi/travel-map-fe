@@ -2,7 +2,7 @@
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import RouteWithArrows from '@/components/RouteWithArrows';
@@ -34,10 +34,12 @@ const endIcon = new L.Icon({
 });
 
 export default function Map() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   const center: [number, number] = [51.6101241, 19.1999532];
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
-  const { start: startSec, end: endSec, setCoords } = useMapOptions();
+  const { start: startSec, end: endSec, setCoords, setStart, setEnd } = useMapOptions();
   const start = startSec.coords ? ([startSec.coords.lat, startSec.coords.lng] as [number, number]) : null;
   const end = endSec.coords ? ([endSec.coords.lat, endSec.coords.lng] as [number, number]) : null;
 
@@ -47,6 +49,27 @@ export default function Map() {
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
+
+  useEffect(() => {
+    if (!selecting) return;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      if (wrapperRef.current?.contains(target)) return;
+
+      if (target.closest('[data-pick-toggle]')) return;
+
+      if (startSec.awaitingClick) setStart('awaitingClick', false);
+      if (endSec.awaitingClick) setEnd('awaitingClick', false);
+      setTempPosition(null);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, { capture: true });
+    return () =>
+      document.removeEventListener('pointerdown', handlePointerDown, { capture: true } as EventListenerOptions);
+  }, [selecting, startSec.awaitingClick, endSec.awaitingClick, setEnd, setStart]);
 
   const _displayStravaRoutes = async () => {
     const result = await ApiService.getStravaRoutes();
@@ -87,7 +110,7 @@ export default function Map() {
   };
 
   return (
-    <div className={`h-full w-full flex flex-col `}>
+    <div ref={wrapperRef} className="h-full w-full flex flex-col">
       <MapContainer center={center} zoom={13} style={{ flexGrow: 1 }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
