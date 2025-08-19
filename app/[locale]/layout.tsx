@@ -3,7 +3,7 @@ import { ThemeProvider } from 'next-themes';
 import { notFound } from 'next/navigation';
 
 import '@/app/globals.css';
-import ClientNavbar from '@/components/ClientNavbar';
+import ClientNavbar from '@/components/Navbar/ClientNavbar';
 
 import type { Locale } from '../locales';
 import { locales } from '../locales';

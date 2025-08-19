@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false });
+const Navbar = dynamic(() => import('@/components/Navbar/Navbar'), { ssr: false });
 
 export default function ClientNavbar() {
   return <Navbar />;

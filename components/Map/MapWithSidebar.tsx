@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-import OptionsPanelClient from './OptionsPanelClient';
+import OptionsPanelClient from '@/components/RouteOptions/OptionsPanelClient';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
 
