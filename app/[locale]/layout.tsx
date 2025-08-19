@@ -1,7 +1,5 @@
-import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
-config.autoAddCss = false;
-
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from 'next-themes';
 import { notFound } from 'next/navigation';
@@ -11,6 +9,8 @@ import ClientNavbar from '@/components/Navbar/ClientNavbar';
 
 import type { Locale } from '../locales';
 import { locales } from '../locales';
+
+config.autoAddCss = false;
 
 export const dynamicParams = false;
 export const dynamic = 'force-static';

@@ -2,7 +2,6 @@
 
 import { faRoute, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMemo } from 'react';
 
 type Props = {
   className?: string;
@@ -10,7 +9,6 @@ type Props = {
   loadingLegend?: string;
   disabled?: boolean;
   loading?: boolean;
-  progress?: number | null; // 0–100
   title?: string; // tooltip
   onClick: () => void;
   fullWidth?: boolean;
@@ -22,17 +20,10 @@ export default function GenerateButton({
   loadingLegend = 'Generuję…',
   disabled,
   loading,
-  progress = null,
   title = 'Wygeneruj trasę',
   onClick,
   fullWidth = true,
 }: Props) {
-  // Uporządkuj progress
-  const pct = useMemo(() => {
-    if (progress == null || Number.isNaN(progress)) return null;
-    return Math.min(100, Math.max(0, Math.round(progress)));
-  }, [progress]);
-
   return (
     <div className={`space-y-2 ${className ?? ''}`}>
       <button
@@ -53,12 +44,12 @@ export default function GenerateButton({
       >
         {loading ? (
           <>
-            <FontAwesomeIcon icon={faSpinner} className='text-sm' />
+            <FontAwesomeIcon icon={faSpinner} className="text-sm" />
             <span className="font-medium">{loadingLegend}</span>
           </>
         ) : (
           <>
-            <FontAwesomeIcon icon={faRoute} className='text-sm' />
+            <FontAwesomeIcon icon={faRoute} className="text-sm" />
             <span className="font-medium">{legend}</span>
           </>
         )}

@@ -9,12 +9,7 @@ type Props = {
   setPreferNewRoads: (value: boolean) => void;
 };
 
-export default function AdditionalPicker({
-  className,
-  legend,
-  preferNewRoads,
-  setPreferNewRoads,
-}: Props) {
+export default function AdditionalPicker({ className, legend, preferNewRoads, setPreferNewRoads }: Props) {
   const checkboxId = 'prefer-new-roads';
   const hintId = 'prefer-new-roads-hint';
 
