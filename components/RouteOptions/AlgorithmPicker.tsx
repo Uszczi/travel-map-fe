@@ -87,6 +87,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ value = 'astar', onChange, cl
                 'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl min-w-14',
                 'border border-zinc-800 cursor-pointer outline-none',
                 'transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
+                'dark:bg-zinc-700',
                 'focus-visible:ring-2 focus-visible:ring-indigo-400/40 focus-visible:ring-offset-0',
                 // active state
                 isActive ? 'border-indigo-500 ring-1 ring-inset ring-indigo-500' : '',
