@@ -119,7 +119,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
             aria-pressed={isPicking}
             title={isPicking ? 'Anuluj wybieranie na mapie' : 'Wybierz na mapie'}
             className={[
-              'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+              'w-44 relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
               'border transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
               point.method === 'pin' && point.awaitingClick
                 ? 'border-indigo-500 ring-1 ring-inset ring-indigo-500 dark:bg-zinc-100 dark:text-zinc-900'

@@ -3,66 +3,143 @@ import { NextResponse } from 'next/server';
 type NominatimResponseItem = {
   place_id: number | string;
   display_name: string;
-  lat: string; // Nominatim zwraca jako string
+  lat: string;
   lon: string;
   type?: string;
   class?: string;
   boundingbox?: [string, string, string, string];
 };
 
-const NOMINATIM_URL = process.env.NOMINATIM_URL ?? 'https://nominatim.openstreetmap.org/search';
+const NOMINATIM_URL =
+  process.env.NOMINATIM_URL ?? 'https://nominatim.openstreetmap.org/search';
+const NOMINATIM_REVERSE_URL =
+  process.env.NOMINATIM_REVERSE_URL ?? 'https://nominatim.openstreetmap.org/reverse';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get('q')?.trim();
+  const latParam = searchParams.get('lat')?.trim();
+  const lngParam = searchParams.get('lng')?.trim();
 
-  if (!q) {
-    return NextResponse.json({ error: 'Missing query param: q' }, { status: 400 });
+  if (q && (latParam || lngParam)) {
+    return NextResponse.json(
+      { error: 'Użyj albo q (search), albo lat+lng (reverse), nie obu naraz.' },
+      { status: 400 },
+    );
   }
 
-  // Uproszczone proxy do Nominatim (JSON, 5 wyników, format przyjazny dla UI)
-  const url = new URL(NOMINATIM_URL);
-  url.searchParams.set('q', q);
-  url.searchParams.set('format', 'jsonv2');
-  url.searchParams.set('limit', '5');
-  url.searchParams.set('addressdetails', '1');
+  if (!q && (!latParam || !lngParam)){
+    return NextResponse.json(
+      { error: 'Podaj q (search) lub lat i lng (reverse).' },
+      { status: 400 },
+    );
 
-  try {
-    const res = await fetch(url.toString(), {
-      // Nominatim wymaga sensownego UA
-      headers: {
-        'User-Agent': 'CityTravelApp/1.0 (contact: your-email@example.com)',
-        Accept: 'application/json',
-      },
-      // lekkie cachowanie po stronie Vercel/Next (opcjonalnie)
-      next: { revalidate: 300 },
-    });
+  }
 
-    if (!res.ok) {
-      return NextResponse.json({ error: 'Upstream error' }, { status: 502 });
+
+  if (q) {
+    const url = new URL(NOMINATIM_URL);
+    url.searchParams.set('q', q);
+    url.searchParams.set('format', 'jsonv2');
+    url.searchParams.set('limit', '5');
+    url.searchParams.set('addressdetails', '1');
+
+    try {
+      const res = await fetch(url.toString(), {
+        headers: {
+          'User-Agent': 'CityTravelApp/1.0 (contact: mateuszpapuga24@gmail.com)',
+          Accept: 'application/json',
+          'Accept-Language': 'pl,en;q=0.8',
+        },
+        next: { revalidate: 300 },
+      });
+
+      if (!res.ok) {
+        return NextResponse.json({ error: 'Upstream error' }, { status: 502 });
+      }
+
+      const raw: NominatimResponseItem[] = await res.json();
+
+      const items = raw.map((r) => ({
+        id: r.place_id,
+        label: r.display_name,
+        lat: Number(r.lat),
+        lng: Number(r.lon),
+        type: r.type,
+        class: r.class,
+        bbox: r.boundingbox
+          ? {
+              south: Number(r.boundingbox[0]),
+              north: Number(r.boundingbox[1]),
+              west: Number(r.boundingbox[2]),
+              east: Number(r.boundingbox[3]),
+            }
+          : undefined,
+      }));
+
+      return NextResponse.json({ items });
+    } catch {
+      return NextResponse.json({ error: 'Fetch failed' }, { status: 500 });
+    }
+  }
+
+  if (latParam && lngParam) {
+    const lat = Number(latParam);
+    const lng = Number(lngParam);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      return NextResponse.json(
+        { error: 'Parametry lat i lng muszą być liczbami.' },
+        { status: 400 },
+      );
     }
 
-    const raw: NominatimResponseItem[] = await res.json();
-    const items = raw.map((r) => ({
-      id: r.place_id,
-      label: r.display_name as string,
-      lat: Number(r.lat),
-      lng: Number(r.lon),
-      type: r.type as string | undefined,
-      class: r.class as string | undefined,
-      // przyda się dla dopasowania widoku mapy, jeśli chcesz:
-      bbox: r.boundingbox
-        ? {
-            south: Number(r.boundingbox[0]),
-            north: Number(r.boundingbox[1]),
-            west: Number(r.boundingbox[2]),
-            east: Number(r.boundingbox[3]),
-          }
-        : undefined,
-    }));
+    const url = new URL(NOMINATIM_REVERSE_URL);
+    url.searchParams.set('format', 'jsonv2');
+    url.searchParams.set('lat', String(lat));
+    url.searchParams.set('lon', String(lng));
+    url.searchParams.set('addressdetails', '1');
 
-    return NextResponse.json({ items });
-  } catch (_err) {
-    return NextResponse.json({ error: 'Fetch failed' }, { status: 500 });
+    try {
+      const res = await fetch(url.toString(), {
+        headers: {
+          'User-Agent': 'CityTravelApp/1.0 (contact: mateuszpapuga24@gmail.com)',
+          Accept: 'application/json',
+          'Accept-Language': 'pl,en;q=0.8',
+        },
+        next: { revalidate: 300 },
+      });
+
+      if (!res.ok) {
+        return NextResponse.json({ error: 'Upstream error' }, { status: 502 });
+      }
+
+      const raw = (await res.json()) as Partial<NominatimResponseItem> & {
+        error?: string;
+      };
+
+      console.log(raw)
+
+      if (!raw || (raw as any).error) {
+        return NextResponse.json(
+          { error: (raw as any)?.error ?? 'Nie znaleziono adresu dla tych współrzędnych.' },
+          { status: 404 },
+        );
+      }
+
+      const item: NominatimResponseItem = {
+        place_id: raw.place_id as number | string,
+        display_name: raw.display_name as string,
+        lat: raw.lat as string,
+        lon: raw.lon as string,
+        type: raw.type,
+        class: raw.class,
+        boundingbox: raw.boundingbox as [string, string, string, string] | undefined,
+      };
+
+      return NextResponse.json(item);
+    } catch {
+      return NextResponse.json({ error: 'Fetch failed' }, { status: 500 });
+    }
   }
+
 }
