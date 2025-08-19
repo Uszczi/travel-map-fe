@@ -21,15 +21,18 @@ export default function RouteOptions() {
   const setEnd = useMapOptions((s) => s.setEnd);
 
   return (
-    <section>
+    <section className="flex flex-col gap-2">
       <header className="mt-2 mb-4">
         <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
       </header>
 
-      <LocationPicker className="mb-2" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
-      <LocationPicker className="mb-2" legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
-      <AlgorithmPicker className="mb-2" legend="Algorytm" value={algo} onChange={setAlgo} />
-      <DistancePicker className="mb-2" legend="Maksymalny dystans" value={distance} onChange={setDistance} />
+      <LocationPicker legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
+      <LocationPicker legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
+
+      <AlgorithmPicker legend="Algorytm" value={algo} onChange={setAlgo} />
+
+      <DistancePicker legend="Dystans" value={distance} onChange={setDistance} />
+
       <GenerateButton loading={loading} progress={progress} onClick={() => {}} />
     </section>
   );
