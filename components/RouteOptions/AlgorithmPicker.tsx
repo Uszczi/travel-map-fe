@@ -4,7 +4,7 @@ import type { Algorithm } from '@/components/types';
 
 type Props = {
   value: Algorithm;
-  label: string;
+  legend: string;
   onChange?: (algo: Algorithm) => void;
   className?: string;
 };
