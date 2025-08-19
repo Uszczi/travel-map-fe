@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMapOptions } from '@/src/store/useMapOptions';
 import type { SearchState } from '@/src/store/useMapOptions';
 
-import './PointPickerSection.css';
-
 type Props = {
   className?: string;
   legend: string;
@@ -35,7 +33,7 @@ export default function PointPickerSection({ className, legend, which, point, se
   };
 
   return (
-    <fieldset className={`space-y-3 p-3 ${className ?? ''}`}>
+    <fieldset className={`border dark:bg-zinc-900 space-y-3 p-3 ${className ?? ''}`}>
       <legend className="translate-y-4 pl-2 text-sm font-medium">{legend}</legend>
       {/* Sekcja wyszukiwania – tylko gdy method === 'search' */}
       {point.method === 'search' && (
