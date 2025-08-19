@@ -25,8 +25,8 @@ export default function RouteOptions() {
       <header className="mt-2 mb-4">
         <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
       </header>
-      <LocationPicker legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
-      <LocationPicker legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
+      <LocationPicker legend="Punkt początkowy" which="start" point={start} setPoint={setStart} setOtherPoint={setEnd}/>
+      <LocationPicker legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} setOtherPoint={setStart}/>
       <AlgorithmPicker legend="Algorytm" value={algo} onChange={setAlgo} />
       <DistancePicker legend="Dystans" value={distance} onChange={setDistance} />
       <AdditionalPicker legend="dodatkowe opcje todo" preferNewRoads={true} setPreferNewRoads={(_v: boolean) => {}} />

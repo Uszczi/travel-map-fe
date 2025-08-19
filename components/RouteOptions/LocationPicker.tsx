@@ -12,9 +12,10 @@ type Props = {
   which: 'start' | 'end';
   point: SearchState,
   setPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
+  setOtherPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
 };
 
-export default function LocationPicker({ className, legend, which, point, setPoint }: Props) {
+export default function LocationPicker({ className, legend, which, point, setOtherPoint, setPoint }: Props) {
   const setQuery = useMapOptions((s) => s.setQuery);
   const geocode = useMapOptions((s) => s.geocode);
   const pickResult = useMapOptions((s) => s.pickResult);
@@ -25,6 +26,9 @@ export default function LocationPicker({ className, legend, which, point, setPoi
   const handlePickOnMap = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
+
+    setOtherPoint('method', 'search')
+    setOtherPoint('awaitingClick', false)
 
     if (isPicking) {
       setPoint('method', 'search');
@@ -60,7 +64,7 @@ export default function LocationPicker({ className, legend, which, point, setPoi
               aria-label="Wyszukaj miejsce"
             />
 
-            {point.query && (
+            {(point.query || point.coords) && (
               <button
                 type="button"
                 onClick={() => setQuery(which, '')}
