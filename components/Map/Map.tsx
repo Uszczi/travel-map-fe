@@ -6,8 +6,7 @@ import { useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import RouteWithArrows from '@/components/RouteWithArrows';
-import ApiService, { StravaRoute } from '@/components/services/api';
-import { Route } from '@/components/services/api';
+import ApiService, { Route, StravaRoute } from '@/src/services/api';
 import { useMapOptions } from '@/src/store/useMapOptions';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet

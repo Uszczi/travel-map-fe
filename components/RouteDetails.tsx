@@ -3,10 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'leaflet/dist/leaflet.css';
 import React, { MouseEventHandler, useMemo, useState } from 'react';
 
-import ApiService from '@/components/services/api';
+import ApiService, { Route, Segment } from '@/src/services/api';
 
 import ElevationChart from './ElevationChart';
-import { Route, Segment } from './services/api';
 
 type RouteDetilsProps = {
   route: Route;

@@ -4,7 +4,7 @@ services:
       context: ..
       dockerfile: ./deployment/Dockerfile
     ports:
-      - "3000:3000"
-    command: "npm run start"
+      - '3000:3000'
+    command: 'npm run start'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
