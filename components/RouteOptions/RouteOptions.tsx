@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
-import PointPickerSection from '@/components/RouteOptions/PointPickerSection';
+import LocationPicker from '@/components/RouteOptions/LocationPicker';
 import type { Algorithm } from '@/components/types';
 import { useMapOptions } from '@/src/store/useMapOptions';
 
@@ -21,8 +21,9 @@ export default function RouteOptions() {
         <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
       </header>
 
-      <PointPickerSection className="mb-2" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
-      <PointPickerSection className="mb-2" legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
+      <LocationPicker className="mb-2" legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
+
+      <LocationPicker className="mb-2" legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
 
       <AlgorithmPicker value={algo} onChange={setAlgo} />
     </section>

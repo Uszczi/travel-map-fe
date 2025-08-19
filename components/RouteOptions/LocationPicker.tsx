@@ -19,7 +19,7 @@ type Props = {
   setPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
 };
 
-export default function PointPickerSection({ className, legend, which, point, setPoint }: Props) {
+export default function LocationPicker({ className, legend, which, point, setPoint }: Props) {
   const search = useMapOptions((s) => s[which]);
   const setQuery = useMapOptions((s) => s.setQuery);
   const geocode = useMapOptions((s) => s.geocode);
