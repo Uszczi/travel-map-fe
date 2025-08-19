@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { faBars, faGlobe, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
-import Portal from '@/components/Portal';
 import ThemeToggleButton from '@/components/Navbar/ThemeToggleButton';
+import Portal from '@/components/Portal';
 
 export default function Navbar() {
   const t = useTranslations();

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import type { Algorithm } from '@/components/types';
 
 type Props = {
-  value?: Algorithm;
+  value: Algorithm;
+  label: string;
   onChange?: (algo: Algorithm) => void;
   className?: string;
 };
@@ -34,7 +35,7 @@ const ShuffleIcon = () => (
   </svg>
 );
 
-export const AlgorithmPicker: React.FC<Props> = ({ value = 'astar', onChange, className }) => {
+export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, className }) => {
   const [selected, setSelected] = useState<Algorithm>(value);
   useEffect(() => setSelected(value), [value]);
 
@@ -53,7 +54,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ value = 'astar', onChange, cl
 
   return (
     <div className={`w-full rounded-xl border p-3 bg-white dark:bg-zinc-900 ${className ?? ''}`}>
-      <div className="text-sm font-semibold mb-2.5">Algorytm</div>
+      <div className="text-sm font-semibold mb-2.5">{legend}</div>
 
       <div
         className="flex gap-2"

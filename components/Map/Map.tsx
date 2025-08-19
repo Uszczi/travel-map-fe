@@ -48,19 +48,18 @@ export default function Map() {
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
-  const [distance, setDistance] = useState(5000);
 
-  const displayStravaRoutes = async () => {
+  const _displayStravaRoutes = async () => {
     const result = await ApiService.getStravaRoutes();
     setStravaRoutes(result);
   };
 
-  const displayVisitedRoutes = async () => {
+  const _displayVisitedRoutes = async () => {
     const result = await ApiService.getVisitedRoutes();
     setVisitedRoutes(result);
   };
 
-  const clearAll = async () => {
+  const _clearAll = async () => {
     await ApiService.clear();
     clear();
   };
@@ -113,63 +112,6 @@ export default function Map() {
           <RouteWithArrows key={index} positions={item} focused={false} />
         ))}
       </MapContainer>
-      <div className="flex space-x-4">
-        <div className="flex flex-1 flex-col items-center space-y-2">
-          <button
-            className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-            onClick={clearAll}
-          >
-            Clear all
-          </button>
-          <button className="w-32 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={clear}>
-            Clear page
-          </button>
-        </div>
-
-        <div className="flex flex-1 justify-center items-center flex-col space-y-2">
-          <div>
-            <p className="mr-4">Distance: {distance}</p>
-            <input
-              type="range"
-              min="0"
-              max="20000"
-              value={distance}
-              onChange={(event) => setDistance(+event.target.value)}
-            />
-            <select
-              value={distance}
-              onChange={(event) => setDistance(+event.target.value)}
-              className="bg-white border border-gray-300 rounded px-4 py-2"
-            >
-              <option value={3000}>3 km</option>
-              <option value={5000}>5 km</option>
-              <option value={10000}>10 km</option>
-              <option value={15000}>15 km</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="flex flex-col flex-1 space-y-2">
-          <button
-            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-            onClick={displayStravaRoutes}
-          >
-            Display raw Strava routes
-          </button>
-          <button
-            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-            onClick={async () => await ApiService.stravaRoutesToVisited()}
-          >
-            Strava routes to visited routes
-          </button>
-          <button
-            className="w-64 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
-            onClick={displayVisitedRoutes}
-          >
-            Display visited routes
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
