@@ -10,10 +10,8 @@ type NominatimResponseItem = {
   boundingbox?: [string, string, string, string];
 };
 
-const NOMINATIM_URL =
-  process.env.NOMINATIM_URL ?? 'https://nominatim.openstreetmap.org/search';
-const NOMINATIM_REVERSE_URL =
-  process.env.NOMINATIM_REVERSE_URL ?? 'https://nominatim.openstreetmap.org/reverse';
+const NOMINATIM_URL = process.env.NOMINATIM_URL ?? 'https://nominatim.openstreetmap.org/search';
+const NOMINATIM_REVERSE_URL = process.env.NOMINATIM_REVERSE_URL ?? 'https://nominatim.openstreetmap.org/reverse';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -28,14 +26,9 @@ export async function GET(req: Request) {
     );
   }
 
-  if (!q && (!latParam || !lngParam)){
-    return NextResponse.json(
-      { error: 'Podaj q (search) lub lat i lng (reverse).' },
-      { status: 400 },
-    );
-
+  if (!q && (!latParam || !lngParam)) {
+    return NextResponse.json({ error: 'Podaj q (search) lub lat i lng (reverse).' }, { status: 400 });
   }
-
 
   if (q) {
     const url = new URL(NOMINATIM_URL);
@@ -87,10 +80,7 @@ export async function GET(req: Request) {
     const lat = Number(latParam);
     const lng = Number(lngParam);
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      return NextResponse.json(
-        { error: 'Parametry lat i lng muszą być liczbami.' },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: 'Parametry lat i lng muszą być liczbami.' }, { status: 400 });
     }
 
     const url = new URL(NOMINATIM_REVERSE_URL);
@@ -113,15 +103,13 @@ export async function GET(req: Request) {
         return NextResponse.json({ error: 'Upstream error' }, { status: 502 });
       }
 
-      const raw = (await res.json()) as Partial<NominatimResponseItem> & {
-        error?: string;
-      };
+      type ResponseType = Partial<NominatimResponseItem> & { error?: string };
 
-      console.log(raw)
+      const raw = (await res.json()) as ResponseType;
 
-      if (!raw || (raw as any).error) {
+      if (!raw || (raw as ResponseType).error) {
         return NextResponse.json(
-          { error: (raw as any)?.error ?? 'Nie znaleziono adresu dla tych współrzędnych.' },
+          { error: (raw as ResponseType)?.error ?? 'Nie znaleziono adresu dla tych współrzędnych.' },
           { status: 404 },
         );
       }
@@ -141,5 +129,4 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Fetch failed' }, { status: 500 });
     }
   }
-
 }

@@ -10,7 +10,7 @@ type Props = {
   className?: string;
   legend: string;
   which: 'start' | 'end';
-  point: SearchState,
+  point: SearchState;
   setPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
   setOtherPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
 };
@@ -27,8 +27,8 @@ export default function LocationPicker({ className, legend, which, point, setOth
     e.preventDefault();
     e.stopPropagation();
 
-    setOtherPoint('method', 'search')
-    setOtherPoint('awaitingClick', false)
+    setOtherPoint('method', 'search');
+    setOtherPoint('awaitingClick', false);
 
     if (isPicking) {
       setPoint('method', 'search');
