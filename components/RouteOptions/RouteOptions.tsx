@@ -7,6 +7,7 @@ import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
 import DistancePicker from '@/components/RouteOptions/DistancePicker';
 import GenerateButton from '@/components/RouteOptions/GenerateButton';
 import LocationPicker from '@/components/RouteOptions/LocationPicker';
+import AdditionalPicker from '@/components/RouteOptions/AdditionalPicker';
 import type { Algorithm } from '@/components/types';
 import { useMapOptions } from '@/src/store/useMapOptions';
 
@@ -25,15 +26,12 @@ export default function RouteOptions() {
       <header className="mt-2 mb-4">
         <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
       </header>
-
       <LocationPicker legend="Punkt początkowy" which="start" point={start} setPoint={setStart} />
       <LocationPicker legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} />
-
       <AlgorithmPicker legend="Algorytm" value={algo} onChange={setAlgo} />
-
       <DistancePicker legend="Dystans" value={distance} onChange={setDistance} />
-
-      <GenerateButton loading={loading} progress={progress} onClick={() => {}} />
+      <AdditionalPicker legend='dodatkowe opcje todo' preferNewRoads={true} setPreferNewRoads={(v: boolean) => {} } />
+      <GenerateButton legend="TODO" loadingLegend="TODO" loading={loading} progress={progress} onClick={() => {}} />
     </section>
   );
 }

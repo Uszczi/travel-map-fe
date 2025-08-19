@@ -6,8 +6,8 @@ import { useMemo } from 'react';
 
 type Props = {
   className?: string;
-  label?: string;
-  loadingLabel?: string;
+  legend?: string;
+  loadingLegend?: string;
   disabled?: boolean;
   loading?: boolean;
   progress?: number | null; // 0–100
@@ -18,8 +18,8 @@ type Props = {
 
 export default function GenerateButton({
   className,
-  label = 'Generuj trasę',
-  loadingLabel = 'Generuję…',
+  legend = 'Generuj trasę',
+  loadingLegend = 'Generuję…',
   disabled,
   loading,
   progress = null,
@@ -54,12 +54,12 @@ export default function GenerateButton({
         {loading ? (
           <>
             <FontAwesomeIcon icon={faSpinner} className='text-sm' />
-            <span className="font-medium">{loadingLabel}</span>
+            <span className="font-medium">{loadingLegend}</span>
           </>
         ) : (
           <>
             <FontAwesomeIcon icon={faRoute} className='text-sm' />
-            <span className="font-medium">{label}</span>
+            <span className="font-medium">{legend}</span>
           </>
         )}
       </button>
