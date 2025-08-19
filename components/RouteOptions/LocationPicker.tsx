@@ -10,22 +10,16 @@ type Props = {
   className?: string;
   legend: string;
   which: 'start' | 'end';
-  point: {
-    method: 'search' | 'pin';
-    query: string;
-    coords?: { lat: number; lng: number };
-    awaitingClick: boolean;
-  };
+  point: SearchState,
   setPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
 };
 
 export default function LocationPicker({ className, legend, which, point, setPoint }: Props) {
-  const search = useMapOptions((s) => s[which]);
   const setQuery = useMapOptions((s) => s.setQuery);
   const geocode = useMapOptions((s) => s.geocode);
   const pickResult = useMapOptions((s) => s.pickResult);
 
-  const canSearch = (search.query ?? '').trim().length >= 3;
+  const canSearch = (point.query ?? '').trim().length >= 3;
   const isPicking = point.method === 'pin' && point.awaitingClick;
 
   const handlePickOnMap = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -54,7 +48,7 @@ export default function LocationPicker({ className, legend, which, point, setPoi
           <div className="relative flex-1">
             <input
               type="search"
-              value={search.query}
+              value={point.query}
               onChange={(e) => setQuery(which, e.target.value)}
               onFocus={() => setPoint('method', 'search')}
               onKeyDown={(e) => {
@@ -66,7 +60,7 @@ export default function LocationPicker({ className, legend, which, point, setPoi
               aria-label="Wyszukaj miejsce"
             />
 
-            {search.query && (
+            {point.query && (
               <button
                 type="button"
                 onClick={() => setQuery(which, '')}
@@ -80,24 +74,24 @@ export default function LocationPicker({ className, legend, which, point, setPoi
 
           <button
             type="button"
-            disabled={!canSearch || search.loading}
+            disabled={!canSearch || point.loading}
             onClick={() => geocode(which)}
             className={[
               'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl min-w-14',
               'border transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
-              !canSearch || search.loading ? 'opacity-60 cursor-not-allowed' : '',
+              !canSearch || point.loading ? 'opacity-60 cursor-not-allowed' : '',
             ].join(' ')}
             title="Wyszukaj"
           >
-            {search.loading ? 'Szukam…' : 'Szukaj'}
+            {point.loading ? 'Szukam…' : 'Szukaj'}
           </button>
         </div>
 
-        {search.error && <p className="text-xs text-red-600">{search.error}</p>}
+        {point.error && <p className="text-xs text-red-600">{point.error}</p>}
 
-        {search.results.length > 0 && (
+        {point.results.length > 0 && (
           <ul className="max-h-56 overflow-auto rounded-xl border divide-y divide-zinc-800">
-            {search.results.map((r) => (
+            {point.results.map((r) => (
               <li key={r.id}>
                 <button
                   type="button"
