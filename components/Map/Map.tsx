@@ -96,7 +96,7 @@ export default function Map() {
       click(e) {
         if (!selecting) return;
         setCoords({ lat: e.latlng.lat, lng: e.latlng.lng });
-        pinToAddress(selecting)
+        pinToAddress(selecting);
         setTempPosition(null);
       },
     });
