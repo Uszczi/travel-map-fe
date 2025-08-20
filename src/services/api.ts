@@ -125,7 +125,6 @@ export default class ApiService {
   }
 }
 
-/** prosta sanityzacja nazw plików (Windows/macOS/Linux) */
 function sanitizeFilename(name: string): string {
   return name
     .trim()

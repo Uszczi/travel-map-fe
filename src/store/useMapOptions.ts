@@ -3,6 +3,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { geocodeReverse, geocodeSearch } from '@/src/services/geocode';
+
 export type LatLng = { lat: number; lng: number };
 
 export type GeocodeItem = {
@@ -131,11 +133,7 @@ export const useMapOptions = create<MapStore>()(
       );
 
       try {
-        const res = await fetch(`/api/geocode?q=${encodeURIComponent(q)}`, {
-          signal: abortCtrl[which]!.signal,
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data: { items: GeocodeItem[] } = await res.json();
+        const data = await geocodeSearch(q);
 
         lastFetchedQuery[which] = q;
         set(
@@ -217,22 +215,8 @@ export const useMapOptions = create<MapStore>()(
       );
 
       try {
-        const url = `/api/geocode?lat=${encodeURIComponent(coords.lat)}&lng=${encodeURIComponent(coords.lng)}`;
-        const res = await fetch(url, { signal: abortCtrl[which]!.signal });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-
-        type NominatimResponseItem = {
-          place_id: number | string;
-          display_name: string;
-          lat: string;
-          lon: string;
-          type?: string;
-          class?: string;
-          boundingbox?: [string, string, string, string];
-        };
-
-        const item: NominatimResponseItem = await res.json();
-        const label = item.display_name;
+        const item = await geocodeReverse(coords.lat, coords.lng);
+        const label = item.label;
 
         lastFetchedQuery[which] = label;
 
@@ -243,7 +227,7 @@ export const useMapOptions = create<MapStore>()(
               loading: false,
               error: null,
               query: label,
-              coords: { lat: Number(item.lat), lng: Number(item.lon) },
+              coords: { lat: Number(item.lat), lng: Number(item.lng) },
               results: [],
             },
           }),
