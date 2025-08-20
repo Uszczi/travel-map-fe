@@ -80,11 +80,12 @@ export default function LocationPicker({ className, legend, which, point, setOth
             type="button"
             // disabled={!canSearch || point.loading}
             disabled={true}
-            onClick={() => geocode(which)}
+            onClick={true ? undefined : () => geocode(which)}
             className={[
               'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl min-w-14',
-              'border transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
-              !canSearch || point.loading ? 'opacity-60 cursor-not-allowed' : '',
+              'border transition-transform duration-100 active:translate-y-px cursor-not-allowed',
+              // !canSearch || point.loading ? 'opacity-60 cursor-not-allowed' : '',
+              true ? 'opacity-60 cursor-not-allowed' : '',
             ].join(' ')}
             title="Wyszukaj"
           >
