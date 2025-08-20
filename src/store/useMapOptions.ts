@@ -69,16 +69,16 @@ export const useMapOptions = create<MapStore>()(
           };
         }
         if (end.awaitingClick) {
-          return { end: { ...end, coords, awaitingClick: false, query: coords && `${coords.lat},${coords.lng}` } };
+          return { end: { ...end, coords, awaitingClick: false, query: coords ? `${coords.lat},${coords.lng}` : '' } };
         }
         if (start.method === 'pin') {
-          return { start: { ...start, coords, query: coords && `${coords.lat},${coords.lng}` } };
+          return { start: { ...start, coords, query: coords ? `${coords.lat},${coords.lng}` : '' } };
         }
         if (end.method === 'pin') {
-          return { end: { ...end, coords, query: coords && `${coords.lat},${coords.lng}` } };
+          return { end: { ...end, coords, query: coords ? `${coords.lat},${coords.lng}` : '' } };
         }
         // fallback: start
-        return { start: { ...start, coords, query: coords && `${coords.lat},${coords.lng}` } };
+        return { start: { ...start, coords, query: coords ? `${coords.lat},${coords.lng}` : '' } };
       }, false),
 
     setQuery: (which, q) => {
