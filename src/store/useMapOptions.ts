@@ -50,7 +50,7 @@ const isWhich = (x: unknown): x is Which => x === 'start' || x === 'end';
 const debounceId: Partial<Record<Which, ReturnType<typeof setTimeout>>> = {};
 const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
-let autoDelay = 300; // ms
+let autoDelay = 1500; // ms
 
 export const useMapOptions = create<MapStore>()(
   devtools((set, get) => ({
