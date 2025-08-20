@@ -16,7 +16,7 @@ export default function ThemeToggleButton() {
       aria-label="Przełącz motyw"
     >
       <span className="text-sm min-w-[6ch]" suppressHydrationWarning>
-        {resolvedTheme === 'dark' ? t('bright_theme') : t('dark_theme')}
+        {resolvedTheme === 'dark' ? t('light_theme') : t('dark_theme')}
       </span>
 
       <FontAwesomeIcon icon={resolvedTheme === 'dark' ? faSun : faMoon} className="h-4 w-4" />
