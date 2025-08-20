@@ -40,6 +40,7 @@ type MapStore = {
   pickResult: (which: Which, item: GeocodeItem) => void;
   cancelAutoGeocode: (which?: Which) => void;
   setAutoDelay: (ms: number) => void;
+  pinToAddress: (which: Which) => Promise<void>;
 };
 
 const isWhich = (x: unknown): x is Which => x === 'start' || x === 'end';
@@ -193,6 +194,70 @@ export const useMapOptions = create<MapStore>()(
 
     setAutoDelay: (ms) => {
       autoDelay = Math.max(0, ms | 0);
+    },
+
+    pinToAddress: async (which) => {
+      if (!isWhich(which)) return;
+
+      const coords = get()[which]?.coords;
+      if (!coords) return;
+
+      if (debounceId[which]) {
+        clearTimeout(debounceId[which]!);
+        delete debounceId[which];
+      }
+      abortCtrl[which]?.abort();
+      abortCtrl[which] = new AbortController();
+
+      set(
+        (s) => ({
+          [which]: { ...s[which], loading: true, error: null, results: [] },
+        }),
+        false,
+      );
+
+      try {
+        const url = `/api/geocode?lat=${encodeURIComponent(coords.lat)}&lng=${encodeURIComponent(coords.lng)}`;
+        const res = await fetch(url, { signal: abortCtrl[which]!.signal });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        type NominatimResponseItem = {
+          place_id: number | string;
+          display_name: string;
+          lat: string;
+          lon: string;
+          type?: string;
+          class?: string;
+          boundingbox?: [string, string, string, string];
+        };
+
+        const item: NominatimResponseItem = await res.json();
+        const label = item.display_name;
+
+        lastFetchedQuery[which] = label;
+
+        set(
+          (s) => ({
+            [which]: {
+              ...s[which],
+              loading: false,
+              error: null,
+              query: label,
+              coords: { lat: Number(item.lat), lng: Number(item.lon) },
+              results: [],
+            },
+          }),
+          false,
+        );
+      } catch (e: unknown) {
+        if (e instanceof Error && e.name === 'AbortError') return;
+        set(
+          (s) => ({
+            [which]: { ...s[which], loading: false, error: 'Błąd reverse geokodowania' },
+          }),
+          false,
+        );
+      }
     },
   })),
 );

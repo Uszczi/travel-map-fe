@@ -39,7 +39,7 @@ export default function Map() {
   const center: [number, number] = [51.6101241, 19.1999532];
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
-  const { start: startSec, end: endSec, setCoords, setStart, setEnd } = useMapOptions();
+  const { start: startSec, end: endSec, setCoords, setStart, setEnd, pinToAddress } = useMapOptions();
   const start = startSec.coords ? ([startSec.coords.lat, startSec.coords.lng] as [number, number]) : null;
   const end = endSec.coords ? ([endSec.coords.lat, endSec.coords.lng] as [number, number]) : null;
 
@@ -96,6 +96,7 @@ export default function Map() {
       click(e) {
         if (!selecting) return;
         setCoords({ lat: e.latlng.lat, lng: e.latlng.lng });
+        pinToAddress(selecting)
         setTempPosition(null);
       },
     });
