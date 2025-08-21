@@ -21,10 +21,10 @@ export type SearchState = {
 
 type Which = 'start' | 'end';
 
-type RouteOptionsState = {
+interface RouteOptionsState {
   start: SearchState;
   end: SearchState;
-};
+}
 
 interface RouteOptionsActions {
   setQuery: (which: Which, q: string) => void;
@@ -35,6 +35,8 @@ interface RouteOptionsActions {
   pinToAddress: (which: Which) => Promise<void>;
 }
 
+interface RouteOptionsStore extends RouteOptionsState, RouteOptionsActions {}
+
 const isWhich = (x: unknown): x is Which => x === 'start' || x === 'end';
 
 const debounceId: Partial<Record<Which, ReturnType<typeof setTimeout>>> = {};
@@ -42,7 +44,7 @@ const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
 let autoDelay = 1500; // ms
 
-export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOptionsActions> = (set, get) => ({
+export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, get) => ({
   start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
   end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
 
@@ -63,38 +65,51 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOpti
       `mapOptions/end/set/${key}`,
     ),
 
-  // TODO use immer everywhere here
+  setCoords: (coords) =>
+    set(
+      produce((s) => {
+        const toStr = (c?: LatLng) => (c ? `${c.lat},${c.lng}` : '');
+        const { start, end } = s;
 
-  setCoords: (coords?: LatLng) =>
-    set((s) => {
-      const { start, end } = s;
-
-      if (start.awaitingClick) {
-        return {
-          start: { ...start, coords, awaitingClick: false, query: coords ? `${coords.lat},${coords.lng}` : '' },
-        };
-      }
-      if (end.awaitingClick) {
-        return { end: { ...end, coords, awaitingClick: false, query: coords ? `${coords.lat},${coords.lng}` : '' } };
-      }
-      if (start.method === 'pin') {
-        return { start: { ...start, coords, query: coords ? `${coords.lat},${coords.lng}` : '' } };
-      }
-      if (end.method === 'pin') {
-        return { end: { ...end, coords, query: coords ? `${coords.lat},${coords.lng}` : '' } };
-      }
-      // fallback: start
-      return { start: { ...start, coords, query: coords ? `${coords.lat},${coords.lng}` : '' } };
-    }, false),
+        if (start.awaitingClick) {
+          start.coords = coords;
+          start.awaitingClick = false;
+          start.query = toStr(coords);
+          return;
+        }
+        if (end.awaitingClick) {
+          end.coords = coords;
+          end.awaitingClick = false;
+          end.query = toStr(coords);
+          return;
+        }
+        if (start.method === 'pin') {
+          start.coords = coords;
+          start.query = toStr(coords);
+          return;
+        }
+        if (end.method === 'pin') {
+          end.coords = coords;
+          end.query = toStr(coords);
+          return;
+        }
+        // fallback: start
+        start.coords = coords;
+        start.query = toStr(coords);
+      }),
+      false,
+      'mapOptions/setCoords',
+    ),
 
   setQuery: (which, q) => {
     if (!isWhich(which)) return;
 
     set(
-      (s) => ({
-        [which]: { ...s[which], query: q },
+      produce((s) => {
+        s[which].query = q;
       }),
       false,
+      `mapOptions/${which}/setQuery`,
     );
 
     const section = get()[which];
@@ -130,10 +145,13 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOpti
     abortCtrl[which] = new AbortController();
 
     set(
-      (s) => ({
-        [which]: { ...s[which], loading: true, error: null, results: [] },
+      produce((s) => {
+        s[which].loading = true;
+        s[which].error = null;
+        s[which].results = [];
       }),
       false,
+      `mapOptions/${which}/geocode/start`,
     );
 
     try {
@@ -141,18 +159,23 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOpti
 
       lastFetchedQuery[which] = q;
       set(
-        (s) => ({
-          [which]: { ...s[which], results: data.items ?? [], loading: false },
+        produce<RouteOptionsStore>((s) => {
+          s[which].results = data.items ?? [];
+          s[which].loading = false;
         }),
         false,
+        `mapOptions/${which}/geocode/success`,
       );
     } catch (e: unknown) {
       if (e instanceof Error && e.name === 'AbortError') return;
+
       set(
-        (s) => ({
-          [which]: { ...s[which], loading: false, error: 'Błąd wyszukiwania' },
+        produce<RouteOptionsStore>((s) => {
+          s[which].loading = false;
+          s[which].error = 'Błąd wyszukiwania';
         }),
         false,
+        `mapOptions/${which}/geocode/error`,
       );
     }
   },
@@ -163,17 +186,16 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOpti
     lastFetchedQuery[which] = item.label;
 
     set(
-      (s) => ({
-        [which]: {
-          ...s[which],
-          method: 'search',
-          query: item.label,
-          coords: { lat: item.lat, lng: item.lng },
-          awaitingClick: false,
-          results: [],
-        },
+      produce<RouteOptionsStore>((s) => {
+        const sec = s[which];
+        sec.method = 'search';
+        sec.query = item.label;
+        sec.coords = { lat: item.lat, lng: item.lng };
+        sec.awaitingClick = false;
+        sec.results = [];
       }),
       false,
+      `mapOptions/${which}/pickResult`,
     );
 
     if (debounceId[which]) {
@@ -212,10 +234,13 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOpti
     abortCtrl[which] = new AbortController();
 
     set(
-      (s) => ({
-        [which]: { ...s[which], loading: true, error: null, results: [] },
+      produce<RouteOptionsStore>((s) => {
+        s[which].loading = true;
+        s[which].error = null;
+        s[which].results = [];
       }),
       false,
+      `mapOptions/${which}/pinToAddress/start`,
     );
 
     try {
@@ -225,31 +250,33 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsState & RouteOpti
       lastFetchedQuery[which] = label;
 
       set(
-        (s) => ({
-          [which]: {
-            ...s[which],
-            loading: false,
-            error: null,
-            query: label,
-            coords: { lat: Number(item.lat), lng: Number(item.lng) },
-            results: [],
-          },
+        produce<RouteOptionsStore>((s) => {
+          const sec = s[which];
+          sec.loading = false;
+          sec.error = null;
+          sec.query = label;
+          sec.coords = { lat: Number(item.lat), lng: Number(item.lng) };
+          sec.results = [];
         }),
         false,
+        `mapOptions/${which}/pinToAddress/success`,
       );
     } catch (e: unknown) {
       if (e instanceof Error && e.name === 'AbortError') return;
+
       set(
-        (s) => ({
-          [which]: { ...s[which], loading: false, error: 'Błąd reverse geokodowania' },
+        produce<RouteOptionsStore>((s) => {
+          s[which].loading = false;
+          s[which].error = 'Błąd reverse geokodowania';
         }),
         false,
+        `mapOptions/${which}/pinToAddress/error`,
       );
     }
   },
 });
 
-export const useMapOptions = create<RouteOptionsState>()(
+export const useMapOptions = create<RouteOptionsStore>()(
   devtools((...a) => ({
     ...createRouteOptionsSlice(...a),
   })),
