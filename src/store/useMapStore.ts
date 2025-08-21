@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { createRouteOptionsSlice, type RouteOptionsStore } from './routeOptionsSlice';
+import { type RouteOptionsStore, createRouteOptionsSlice } from './routeOptionsSlice';
 
 export const useMapStore = create<RouteOptionsStore>()(
   devtools((...a) => ({

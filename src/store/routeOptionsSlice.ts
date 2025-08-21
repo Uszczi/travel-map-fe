@@ -21,12 +21,15 @@ export type Which = 'start' | 'end';
 export interface RouteOptionsState {
   start: SearchState;
   end: SearchState;
+  preferNew: boolean;
 }
 
 export interface RouteOptionsActions {
   setStart: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
-  setEnd:   <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
+  setEnd: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
   setCoords: (coords: LatLng) => void;
+
+  setPreferNew: (value: boolean) => void;
 
   setQuery: (which: Which, q: string) => void;
   geocode: (which: Which) => Promise<void>;
@@ -45,14 +48,15 @@ const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
 let autoDelay = 1500; // ms
 
-export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, get) => ({
+export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand/devtools', never]]> = (set, get) => ({
   start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
-  end:   { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
+  end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
+  preferNew: true,
 
   setStart: (key, value) =>
     set(
       produce<RouteOptionsStore>((s) => {
-        s.start[key] = value as any;
+        s.start[key] = value;
       }),
       false,
       `mapOptions/start/set/${String(key)}`,
@@ -61,7 +65,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
   setEnd: (key, value) =>
     set(
       produce<RouteOptionsStore>((s) => {
-        s.end[key] = value as any;
+        s.end[key] = value;
       }),
       false,
       `mapOptions/end/set/${String(key)}`,
@@ -103,11 +107,21 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
       'mapOptions/setCoords',
     ),
 
+  setPreferNew: (value) => {
+    set(
+      produce((s) => {
+        s.preferNew = value;
+      }),
+      false,
+      'mapOptions/setPreferNew',
+    );
+  },
+
   setQuery: (which, q) => {
     if (!isWhich(which)) return;
 
     set(
-      produce<RouteOptionsStore>((s) => {
+      produce((s) => {
         s[which].query = q;
       }),
       false,
@@ -160,7 +174,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
 
       lastFetchedQuery[which] = q;
       set(
-        produce<RouteOptionsStore>((s) => {
+        produce((s) => {
           s[which].results = data.items ?? [];
           s[which].loading = false;
         }),
@@ -171,7 +185,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
       if (e instanceof Error && e.name === 'AbortError') return;
 
       set(
-        produce<RouteOptionsStore>((s) => {
+        produce((s) => {
           s[which].loading = false;
           s[which].error = 'Błąd wyszukiwania';
         }),
@@ -187,7 +201,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
     lastFetchedQuery[which] = item.label;
 
     set(
-      produce<RouteOptionsStore>((s) => {
+      produce((s) => {
         const sec = s[which];
         sec.method = 'search';
         sec.query = item.label;
@@ -235,7 +249,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
     abortCtrl[which] = new AbortController();
 
     set(
-      produce<RouteOptionsStore>((s) => {
+      produce((s) => {
         s[which].loading = true;
         s[which].error = null;
         s[which].results = [];
@@ -251,7 +265,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
       lastFetchedQuery[which] = label;
 
       set(
-        produce<RouteOptionsStore>((s) => {
+        produce((s) => {
           const sec = s[which];
           sec.loading = false;
           sec.error = null;
@@ -266,7 +280,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
       if (e instanceof Error && e.name === 'AbortError') return;
 
       set(
-        produce<RouteOptionsStore>((s) => {
+        produce((s) => {
           s[which].loading = false;
           s[which].error = 'Błąd reverse geokodowania';
         }),
