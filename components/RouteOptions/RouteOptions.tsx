@@ -25,7 +25,7 @@ export default function RouteOptions() {
   const setPreferNew = useMapStore((s) => s.setPreferNew);
   const setDistance = useMapStore((s) => s.setDistance);
   const setAlgorithm = useMapStore((s) => s.setAlgorithm);
-  const setLoading = useMapStore((s) => s.setLoading);
+  const getResult = useMapStore((s) => s.getResult);
 
   return (
     <section className="flex flex-col gap-2">
@@ -53,7 +53,7 @@ export default function RouteOptions() {
         loadingLegend="TODO"
         loading={loading}
         onClick={() => {
-          setLoading(true);
+          getResult();
         }}
       />
     </section>

@@ -1,9 +1,12 @@
+import { Algorithm, LatLng } from '@/components/types';
+
 export interface Segment {
   new: boolean;
   distance: number;
 }
 export interface Route {
   rec: [number, number, number, number];
+  // TODO
   x: number[]; // lon[]
   y: number[]; // lat[]
   distance: number;
@@ -24,6 +27,22 @@ export interface StravaRoute {
 }
 
 export default class ApiService {
+  static async get(
+    algorithm: Algorithm,
+    start: LatLng | null,
+    end: LatLng | null,
+    distance: number,
+    preferNew: boolean,
+  ): Promise<Route> {
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/${algorithm}?distance=${distance}&prefer_new=${preferNew}`;
+    if (start) url += `&start_x=${start.lat}&start_y=${start.lng}`;
+    if (end) url += `&end_x=${end.lat}&end_y=${end.lng}`;
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  }
+
   static async stravaRoutesToVisited(): Promise<void> {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/strava-to-visited`;
     await fetch(url);
