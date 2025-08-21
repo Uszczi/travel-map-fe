@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import type { StateCreator } from 'zustand';
 
+import type { Algorithm } from '@/components/types';
 import { geocodeReverse, geocodeSearch } from '@/src/services/geocode';
 import type { GeocodeItem } from '@/src/services/geocode';
 
@@ -23,6 +24,7 @@ export interface RouteOptionsState {
   end: SearchState;
   preferNew: boolean;
   distance: number;
+  algorithm: Algorithm;
 }
 
 export interface RouteOptionsActions {
@@ -32,6 +34,7 @@ export interface RouteOptionsActions {
 
   setPreferNew: (value: boolean) => void;
   setDistance: (value: number) => void;
+  setAlgorithm: (value: Algorithm) => void;
 
   setQuery: (which: Which, q: string) => void;
   geocode: (which: Which) => Promise<void>;
@@ -55,6 +58,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
   end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
   preferNew: true,
   distance: 5,
+  algorithm: 'dfs',
 
   setStart: (key, value) =>
     set(
@@ -117,6 +121,16 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
       }),
       false,
       'mapOptions/setPreferNew',
+    );
+  },
+
+  setAlgorithm(value) {
+    set(
+      produce((s) => {
+        s.algorithm = value;
+      }),
+      false,
+      'mapOptions/setAlgorithm',
     );
   },
 

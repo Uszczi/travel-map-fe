@@ -8,20 +8,25 @@ import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
 import DistancePicker from '@/components/RouteOptions/DistancePicker';
 import GenerateButton from '@/components/RouteOptions/GenerateButton';
 import LocationPicker from '@/components/RouteOptions/LocationPicker';
-import type { Algorithm } from '@/components/types';
 import { useMapStore } from '@/src/store/useMapStore';
 
 export default function RouteOptions() {
-  const [algo, setAlgo] = useState<Algorithm>('dfs');
   const [loading, _setLoading] = useState(false);
 
-  const { start, end, preferNew, distance } = useMapStore(
-    useShallow((s) => ({ start: s.start, end: s.end, preferNew: s.preferNew, distance: s.distance, })),
+  const { start, end, preferNew, distance, algorithm } = useMapStore(
+    useShallow((s) => ({
+      start: s.start,
+      end: s.end,
+      preferNew: s.preferNew,
+      distance: s.distance,
+      algorithm: s.algorithm,
+    })),
   );
   const setStart = useMapStore((s) => s.setStart);
   const setEnd = useMapStore((s) => s.setEnd);
   const setPreferNew = useMapStore((s) => s.setPreferNew);
   const setDistance = useMapStore((s) => s.setDistance);
+  const setAlgorithm = useMapStore((s) => s.setAlgorithm);
 
   return (
     <section className="flex flex-col gap-2">
@@ -39,7 +44,7 @@ export default function RouteOptions() {
 
       <LocationPicker legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} setOtherPoint={setStart} />
 
-      <AlgorithmPicker legend="Algorytm" value={algo} onChange={setAlgo} />
+      <AlgorithmPicker legend="Algorytm" value={algorithm} onChange={setAlgorithm} />
       <DistancePicker legend="Dystans" value={distance} onChange={setDistance} />
 
       <AdditionalPicker legend="dodatkowe opcje todo" preferNewRoads={preferNew} setPreferNewRoads={setPreferNew} />
