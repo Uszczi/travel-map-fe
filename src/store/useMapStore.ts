@@ -276,7 +276,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore> = (set, ge
   },
 });
 
-export const useMapOptions = create<RouteOptionsStore>()(
+export const useMapStore = create<RouteOptionsStore>()(
   devtools((...a) => ({
     ...createRouteOptionsSlice(...a),
   })),

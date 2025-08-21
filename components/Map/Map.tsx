@@ -7,7 +7,7 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import RouteWithArrows from '@/components/RouteWithArrows';
 import ApiService, { Route, StravaRoute } from '@/src/services/api';
-import { useMapOptions } from '@/src/store/useMapOptions';
+import { useMapStore } from '@/src/store/useMapStore';
 
 // Rozwiązanie problemu z ikonami markerów w Leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +39,7 @@ export default function Map() {
   const center: [number, number] = [51.6101241, 19.1999532];
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
-  const { start: startSec, end: endSec, setCoords, setStart, setEnd, pinToAddress } = useMapOptions();
+  const { start: startSec, end: endSec, setCoords, setStart, setEnd, pinToAddress } = useMapStore();
   const start = startSec.coords ? ([startSec.coords.lat, startSec.coords.lng] as [number, number]) : null;
   const end = endSec.coords ? ([endSec.coords.lat, endSec.coords.lng] as [number, number]) : null;
 

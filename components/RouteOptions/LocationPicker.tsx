@@ -3,8 +3,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useMapOptions } from '@/src/store/useMapOptions';
-import type { SearchState } from '@/src/store/useMapOptions';
+import { useMapStore } from '@/src/store/useMapStore';
+import type { SearchState } from '@/src/store/useMapStore';
 
 type Props = {
   className?: string;
@@ -18,9 +18,9 @@ type Props = {
 const DISABLE_SEARCH_BUTTON = true;
 
 export default function LocationPicker({ className, legend, which, point, setOtherPoint, setPoint }: Props) {
-  const setQuery = useMapOptions((s) => s.setQuery);
-  const geocode = useMapOptions((s) => s.geocode);
-  const pickResult = useMapOptions((s) => s.pickResult);
+  const setQuery = useMapStore((s) => s.setQuery);
+  const geocode = useMapStore((s) => s.geocode);
+  const pickResult = useMapStore((s) => s.pickResult);
 
   const canSearch = (point.query ?? '').trim().length >= 3;
   const isPicking = point.method === 'pin' && point.awaitingClick;
