@@ -22,6 +22,7 @@ export interface RouteOptionsState {
   start: SearchState;
   end: SearchState;
   preferNew: boolean;
+  distance: number;
 }
 
 export interface RouteOptionsActions {
@@ -30,6 +31,7 @@ export interface RouteOptionsActions {
   setCoords: (coords: LatLng) => void;
 
   setPreferNew: (value: boolean) => void;
+  setDistance: (value: number) => void;
 
   setQuery: (which: Which, q: string) => void;
   geocode: (which: Which) => Promise<void>;
@@ -52,6 +54,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
   start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
   end: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
   preferNew: true,
+  distance: 5,
 
   setStart: (key, value) =>
     set(
@@ -117,6 +120,15 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
     );
   },
 
+  setDistance: (value) => {
+    set(
+      produce((s) => {
+        s.distance = value;
+      }),
+      false,
+      'mapOptions/setDistance',
+    );
+  },
   setQuery: (which, q) => {
     if (!isWhich(which)) return;
 

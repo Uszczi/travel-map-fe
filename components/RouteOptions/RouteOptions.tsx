@@ -13,15 +13,15 @@ import { useMapStore } from '@/src/store/useMapStore';
 
 export default function RouteOptions() {
   const [algo, setAlgo] = useState<Algorithm>('dfs');
-  const [distance, setDistance] = useState(5);
   const [loading, _setLoading] = useState(false);
 
-  const { start, end, preferNew } = useMapStore(
-    useShallow((s) => ({ start: s.start, end: s.end, preferNew: s.preferNew })),
+  const { start, end, preferNew, distance } = useMapStore(
+    useShallow((s) => ({ start: s.start, end: s.end, preferNew: s.preferNew, distance: s.distance, })),
   );
   const setStart = useMapStore((s) => s.setStart);
   const setEnd = useMapStore((s) => s.setEnd);
   const setPreferNew = useMapStore((s) => s.setPreferNew);
+  const setDistance = useMapStore((s) => s.setDistance);
 
   return (
     <section className="flex flex-col gap-2">
