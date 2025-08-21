@@ -15,6 +15,8 @@ type Props = {
   setOtherPoint: <K extends keyof SearchState>(key: K, value: SearchState[K]) => void;
 };
 
+const DISABLE_SEARCH_BUTTON = true;
+
 export default function LocationPicker({ className, legend, which, point, setOtherPoint, setPoint }: Props) {
   const setQuery = useMapOptions((s) => s.setQuery);
   const geocode = useMapOptions((s) => s.geocode);
@@ -79,13 +81,13 @@ export default function LocationPicker({ className, legend, which, point, setOth
           <button
             type="button"
             // disabled={!canSearch || point.loading}
-            disabled={true}
-            onClick={true ? undefined : () => geocode(which)}
+            disabled={DISABLE_SEARCH_BUTTON}
+            onClick={DISABLE_SEARCH_BUTTON ? undefined : () => geocode(which)}
             className={[
               'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl min-w-14',
               'border transition-transform duration-100 active:translate-y-px cursor-not-allowed',
               // !canSearch || point.loading ? 'opacity-60 cursor-not-allowed' : '',
-              true ? 'opacity-60 cursor-not-allowed' : '',
+              DISABLE_SEARCH_BUTTON ? 'opacity-60 cursor-not-allowed' : '',
             ].join(' ')}
             title="Wyszukaj"
           >
