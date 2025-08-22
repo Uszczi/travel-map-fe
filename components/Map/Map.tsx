@@ -50,7 +50,6 @@ export default function Map() {
 
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
-  const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
 
   const routes = useMapStore((s) => s.results);
 
@@ -110,7 +109,6 @@ export default function Map() {
   const clear = () => {
     setVisitedRoutes([]);
     setStravaRoutes([]);
-    setDisplayRoutes([]);
   };
 
   return (
