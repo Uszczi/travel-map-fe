@@ -13,8 +13,7 @@ import { useMapStore } from '@/src/store/useMapStore';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-const routeToPositions = (r: Route): [number, number][] =>
-  r.y.map((lat, i) => [lat, r.x[i]]).filter((p) => Number.isFinite(p[0]) && Number.isFinite(p[1]));
+const routeToPositions = (r: Route): [number, number][] => r.y.map((lat, i) => [lat, r.x[i]]);
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
