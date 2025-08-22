@@ -3,7 +3,7 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 
 import RouteWithArrows from '@/components/RouteWithArrows';
 import ApiService, { Route, StravaRoute } from '@/src/services/api';
@@ -35,13 +35,31 @@ const endIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
+const DEFAULT_CENTER: [number, number] = [51.6101241, 19.1999532];
+
+function RecenterOnStart({
+  start,
+  fallback,
+}: { start: [number, number] | null; fallback: [number, number] }) {
+  const map = useMap();
+  const lat = (start ?? fallback)[0];
+  const lng = (start ?? fallback)[1];
+
+  useEffect(() => {
+    map.setView([lat, lng]);
+  }, [lat, lng, map]);
+
+  return null;
+}
+
 export default function Map() {
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const { start: startSec, end: endSec, setCoords, setStart, setEnd, pinToAddress } = useMapStore();
 
   const center: [number, number] = [51.6101241, 19.1999532];
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
-  const { start: startSec, end: endSec, setCoords, setStart, setEnd, pinToAddress } = useMapStore();
   const start = startSec.coords ? ([startSec.coords.lat, startSec.coords.lng] as [number, number]) : null;
   const end = endSec.coords ? ([endSec.coords.lat, endSec.coords.lng] as [number, number]) : null;
 
@@ -113,6 +131,7 @@ export default function Map() {
   return (
     <div ref={wrapperRef} className="h-full h-min-[500px] w-full flex flex-col">
       <MapContainer center={center} zoom={13} style={{ flexGrow: 1 }}>
+        <RecenterOnStart start={start} fallback={DEFAULT_CENTER} />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
