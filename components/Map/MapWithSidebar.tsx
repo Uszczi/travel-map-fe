@@ -8,12 +8,12 @@ const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
 
 export default function MapWithSidebar() {
   return (
-    <div className="h-full grid grid-cols-[500px_1fr] gap-4 p-2 overflow-hidden">
-      <aside className="min-h-0 p-4 border rounded-lg overflow-auto">
+    <div className="h-full grid gap-4 p-2">
+      <aside className="min-h-0 p-4 border rounded-lg">
         <RouteOptionsClient />
       </aside>
 
-      <main className="min-h-0 h-full border rounded-lg overflow-hidden flex flex-col">
+      <main className="min-h-[500px] h-full border rounded-lg flex flex-col">
         <div className="min-h-0 flex-1">
           <Map />
         </div>

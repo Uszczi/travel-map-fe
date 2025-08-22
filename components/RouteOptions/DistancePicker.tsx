@@ -25,7 +25,7 @@ export default function DistancePicker({
   step = 1,
   presets,
 }: Props) {
-  const chips = useMemo(() => presets ?? [3, 5, 10, 15, 20, 30], [presets]);
+  const chips = useMemo(() => presets ?? [3, 5, 10, 15], [presets]);
 
   const clamp = (n: number) => Math.min(max, Math.max(min, n));
   const toStep = (n: number) => Math.round(n / step) * step;
