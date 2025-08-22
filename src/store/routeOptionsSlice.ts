@@ -196,7 +196,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
     );
 
     try {
-      const data = await geocodeSearch(q);
+      const data = await geocodeSearch(q, { signal: abortCtrl[which].signal });
 
       lastFetchedQuery[which] = q;
       set(
@@ -285,7 +285,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
     );
 
     try {
-      const item = await geocodeReverse(coords.lat, coords.lng);
+      const item = await geocodeReverse(coords.lat, coords.lng, { signal: abortCtrl[which].signal });
       const label = item.label;
 
       lastFetchedQuery[which] = label;

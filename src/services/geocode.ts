@@ -13,18 +13,63 @@ export interface GeocodeResponse {
   items: GeocodeItem[];
 }
 
-// TODO add controllers
-export async function geocodeSearch(q: string): Promise<GeocodeResponse> {
+type RequestOptions = {
+  signal?: AbortSignal;
+};
+
+let searchController: AbortController | null = null;
+let reverseController: AbortController | null = null;
+
+export async function geocodeSearch(q: string, options: RequestOptions = {}): Promise<GeocodeResponse> {
   if (!q || !q.trim()) throw new Error('Query cannot be empty');
+
   const url = `${process.env.NEXT_PUBLIC_API_URL}/geocode?q=${encodeURIComponent(q.trim())}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+
+  let controller: AbortController | null = null;
+  let signal: AbortSignal | undefined = options.signal;
+
+  if (!signal) {
+    if (searchController) {
+      searchController.abort();
+    }
+    controller = new AbortController();
+    searchController = controller;
+    signal = controller.signal;
+  }
+
+  try {
+    const res = await fetch(url, { signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  } finally {
+    if (controller && searchController === controller) {
+      searchController = null;
+    }
+  }
 }
 
-export async function geocodeReverse(lat: number, lng: number): Promise<GeocodeItem> {
+export async function geocodeReverse(lat: number, lng: number, options: RequestOptions = {}): Promise<GeocodeItem> {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/geocode?lat=${encodeURIComponent(String(lat))}&lng=${encodeURIComponent(String(lng))}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+
+  let controller: AbortController | null = null;
+  let signal: AbortSignal | undefined = options.signal;
+
+  if (!signal) {
+    if (reverseController) {
+      reverseController.abort();
+    }
+    controller = new AbortController();
+    reverseController = controller;
+    signal = controller.signal;
+  }
+
+  try {
+    const res = await fetch(url, { signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  } finally {
+    if (controller && reverseController === controller) {
+      reverseController = null;
+    }
+  }
 }
