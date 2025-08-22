@@ -3,7 +3,7 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
-import { MapContainer, Marker, TileLayer, useMapEvents, useMap } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 
 import RouteWithArrows from '@/components/RouteWithArrows';
 import ApiService, { Route, StravaRoute } from '@/src/services/api';
@@ -37,10 +37,7 @@ const endIcon = new L.Icon({
 
 const DEFAULT_CENTER: [number, number] = [51.6101241, 19.1999532];
 
-function RecenterOnStart({
-  start,
-  fallback,
-}: { start: [number, number] | null; fallback: [number, number] }) {
+function RecenterOnStart({ start, fallback }: { start: [number, number] | null; fallback: [number, number] }) {
   const map = useMap();
   const lat = (start ?? fallback)[0];
   const lng = (start ?? fallback)[1];

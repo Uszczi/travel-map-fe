@@ -35,8 +35,8 @@ export default class ApiService {
     preferNew: boolean,
   ): Promise<Route> {
     let url = `${process.env.NEXT_PUBLIC_API_URL}/route/${algorithm}?distance=${distance}&prefer_new=${preferNew}`;
-    if (start) url += `&start_x=${start.lat}&start_y=${start.lng}`;
-    if (end) url += `&end_x=${end.lat}&end_y=${end.lng}`;
+    if (start) url += `&start_x=${start.lng}&start_y=${start.lat}`;
+    if (end) url += `&end_x=${end.lng}&end_y=${end.lat}`;
 
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -46,51 +46,6 @@ export default class ApiService {
   static async stravaRoutesToVisited(): Promise<void> {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/strava-to-visited`;
     await fetch(url);
-  }
-
-  static async getRandomRoute(
-    distance: number,
-    start: [number, number] | null,
-    end: [number, number] | null,
-    preferNew: boolean,
-  ): Promise<Route> {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/random?distance=${distance}&prefer_new=${preferNew}`;
-    if (start) url += `&start_x=${start[1]}&start_y=${start[0]}`;
-    if (end) url += `&end_x=${end[1]}&end_y=${end[0]}`;
-
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
-  }
-
-  static async getAStarRoute(
-    distance: number,
-    start: [number, number] | null,
-    end: [number, number] | null,
-    preferNew: boolean,
-  ): Promise<Route> {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/astar?distance=${distance}&prefer_new=${preferNew}`;
-    if (start) url += `&start_x=${start[1]}&start_y=${start[0]}`;
-    if (end) url += `&end_x=${end[1]}&end_y=${end[0]}`;
-
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
-  }
-
-  static async getDFSRoute(
-    distance: number,
-    start: [number, number] | null,
-    end: [number, number] | null,
-    preferNew: boolean,
-  ): Promise<Route> {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/dfs?distance=${distance}&prefer_new=${preferNew}`;
-    if (start) url += `&start_x=${start[1]}&start_y=${start[0]}`;
-    if (end) url += `&end_x=${end[1]}&end_y=${end[0]}`;
-
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
   }
 
   static async getVisitedRoutes(): Promise<[number, number][][]> {
