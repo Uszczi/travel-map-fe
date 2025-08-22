@@ -13,6 +13,9 @@ import { useMapStore } from '@/src/store/useMapStore';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
+const routeToPositions = (r: Route): [number, number][] =>
+  r.y.map((lat, i) => [lat, r.x[i]]).filter((p) => Number.isFinite(p[0]) && Number.isFinite(p[1]));
+
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
@@ -45,10 +48,11 @@ export default function Map() {
 
   const selecting: 'start' | 'end' | null = startSec.awaitingClick ? 'start' : endSec.awaitingClick ? 'end' : null;
 
-  const [_routes, setRoutes] = useState<Route[]>([]);
   const [stravaRoutes, setStravaRoutes] = useState<StravaRoute[]>([]);
   const [visitedRoutes, setVisitedRoutes] = useState<[number, number][][]>([]);
   const [displayRoutes, setDisplayRoutes] = useState<[number, number][][]>([]);
+
+  const routes = useMapStore((s) => s.results);
 
   useEffect(() => {
     if (!selecting) return;
@@ -106,7 +110,6 @@ export default function Map() {
   const clear = () => {
     setVisitedRoutes([]);
     setStravaRoutes([]);
-    setRoutes([]);
     setDisplayRoutes([]);
   };
 
@@ -122,10 +125,13 @@ export default function Map() {
         {end && <Marker position={end} icon={endIcon} />}
         {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}
 
-        {displayRoutes.length > 0 &&
-          displayRoutes.map((item, index) => (
-            <RouteWithArrows key={index} positions={item} focused={index + 1 === displayRoutes.length} />
-          ))}
+        {routes.map((r, i) => (
+          <RouteWithArrows
+            key={`gen-${i}`}
+            positions={routeToPositions(r)}
+            focused={i === routes.length - 1} // 👉 fokus na najnowszą trasę
+          />
+        ))}
 
         {stravaRoutes.map((item) => (
           <RouteWithArrows key={item.id} positions={item.xy} focused={false} />
