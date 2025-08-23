@@ -2,6 +2,11 @@
 
 import RouteOptions from './RouteOptions';
 
-export default function RouteOptionsClient() {
-  return <RouteOptions />;
+type Props = {
+  onCollapse?: () => void;
+  isCollapsed?: boolean;
+};
+
+export default function RouteOptionsClient(props: Props) {
+  return <RouteOptions {...props} />;
 }

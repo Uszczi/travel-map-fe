@@ -65,14 +65,24 @@ export default function Map() {
   };
 
   return (
-    <div ref={wrapperRef} className="h-full h-min-[500px] w-full flex flex-col">
-      <MapContainer center={DEFAULT_CENTER} zoom={13} style={{ flexGrow: 1 }}>
-        <CenterMap center={start} fallback={DEFAULT_CENTER} />
+    <div
+      ref={wrapperRef}
+      className="w-full flex flex-col"
+      style={{ height: '60vh' }}
+    >
+      <MapContainer
+        center={DEFAULT_CENTER}
+        zoom={13}
+        className="w-full h-full"
+      >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+
+        <CenterMap center={start} fallback={DEFAULT_CENTER} />
         <MapClickHandler />
+
         {start && <Marker position={start} icon={startIcon} />}
         {end && <Marker position={end} icon={endIcon} />}
         {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}

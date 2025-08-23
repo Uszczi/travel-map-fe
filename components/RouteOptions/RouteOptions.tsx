@@ -1,5 +1,6 @@
 'use client';
 
+import { PanelLeftClose } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -10,7 +11,12 @@ import GenerateButton from '@/components/RouteOptions/GenerateButton';
 import LocationPicker from '@/components/RouteOptions/LocationPicker';
 import { useMapStore } from '@/src/store/useMapStore';
 
-export default function RouteOptions() {
+type Props = {
+  onCollapse?: () => void; // wywołane po kliknięciu w guzik w nagłówku
+  isCollapsed?: boolean; // ewentualnie do własnej logiki/aria (opcjonalne)
+};
+
+export default function RouteOptions({ onCollapse }: Props) {
   const t = useTranslations();
 
   const { start, end, preferNew, distance, algorithm, loading } = useMapStore(
@@ -32,8 +38,20 @@ export default function RouteOptions() {
 
   return (
     <section className="flex flex-col gap-2">
-      <header className="mt-2 mb-4">
+      <header className="mt-2 mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold tracking-wide">{t('routeOptions_label')}</h2>
+
+        {/* Guzik do zwinięcia panelu */}
+        <button
+          type="button"
+          onClick={onCollapse}
+          aria-controls="route-options-aside"
+          aria-label="Zwiń panel opcji"
+          className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring"
+        >
+          <PanelLeftClose className="h-4 w-4" />
+          <span>Zwiń</span>
+        </button>
       </header>
 
       <LocationPicker
