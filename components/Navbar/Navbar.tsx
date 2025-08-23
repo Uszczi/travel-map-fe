@@ -34,8 +34,8 @@ export default function Navbar() {
   };
   const base = useMemo(() => `/${locale}`, [locale]);
   const links = [
-    { href: `${base}`, label: t('navhome') },
-    { href: `${base}/mapa`, label: t('navmap') },
+    { href: `${base}`, label: t('navbar_home_title') },
+    { href: `${base}/mapa`, label: t('navbar_map_title') },
   ];
 
   useEffect(() => {
@@ -188,7 +188,7 @@ export default function Navbar() {
                 <div className="flex cursor-pointer">
                   <div className="flex items-center gap-2">
                     <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" />
-                    <span className="text-sm">Language</span>
+                    <span className="text-sm">{t('navbar_language')}</span>
                   </div>
                   <div className="flex items-center gap-2 ml-8">
                     <button

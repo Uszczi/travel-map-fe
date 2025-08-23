@@ -5,22 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = {
   className?: string;
-  legend?: string;
-  loadingLegend?: string;
+  label?: string;
+  loadingLabel?: string;
   disabled?: boolean;
   loading?: boolean;
-  title?: string; // tooltip
   onClick: () => void;
   fullWidth?: boolean;
 };
 
 export default function GenerateButton({
   className,
-  legend = 'Generuj trasę',
-  loadingLegend = 'Generuję…',
+  label,
+  loadingLabel,
   disabled,
   loading,
-  title = 'Wygeneruj trasę',
   onClick,
   fullWidth = true,
 }: Props) {
@@ -32,7 +30,6 @@ export default function GenerateButton({
         disabled={disabled || loading}
         aria-busy={!!loading}
         aria-live="polite"
-        title={title}
         className={[
           'relative group inline-flex items-center justify-center gap-2',
           fullWidth ? 'w-full' : '',
@@ -45,12 +42,12 @@ export default function GenerateButton({
         {loading ? (
           <>
             <FontAwesomeIcon icon={faSpinner} className="text-sm" />
-            <span className="font-medium">{loadingLegend}</span>
+            <span className="font-medium">{loadingLabel}</span>
           </>
         ) : (
           <>
             <FontAwesomeIcon icon={faRoute} className="text-sm" />
-            <span className="font-medium">{legend}</span>
+            <span className="font-medium">{label}</span>
           </>
         )}
       </button>

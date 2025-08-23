@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useShallow } from 'zustand/react/shallow';
 
 import AdditionalPicker from '@/components/RouteOptions/AdditionalPicker';
@@ -10,6 +11,8 @@ import LocationPicker from '@/components/RouteOptions/LocationPicker';
 import { useMapStore } from '@/src/store/useMapStore';
 
 export default function RouteOptions() {
+  const t = useTranslations();
+
   const { start, end, preferNew, distance, algorithm, loading } = useMapStore(
     useShallow((s) => ({
       start: s.start,
@@ -30,30 +33,41 @@ export default function RouteOptions() {
   return (
     <section className="flex flex-col gap-2">
       <header className="mt-2 mb-4">
-        <h2 className="text-lg font-semibold tracking-wide">Ustawienia trasy</h2>
+        <h2 className="text-lg font-semibold tracking-wide">{t('routeOptions_label')}</h2>
       </header>
 
       <LocationPicker
-        legend="Punkt początkowy"
+        legend={t('routeOptions_LocationPicker_start_label')}
         which="start"
         point={start}
         setPoint={setStart}
         setOtherPoint={setEnd}
       />
 
-      <LocationPicker legend="Punkt końcowy" which="end" point={end} setPoint={setEnd} setOtherPoint={setStart} />
+      <LocationPicker
+        legend={t('routeOptions_LocationPicker_end_label')}
+        which="end"
+        point={end}
+        setPoint={setEnd}
+        setOtherPoint={setStart}
+      />
 
-      <AlgorithmPicker legend="Algorytm" value={algorithm} onChange={setAlgorithm} />
-      <DistancePicker legend="Dystans" value={distance} onChange={setDistance} />
+      <AlgorithmPicker legend={t('routeOptions_AlgorithmPicker_legend')} value={algorithm} onChange={setAlgorithm} />
 
-      <AdditionalPicker legend="dodatkowe opcje todo" preferNewRoads={preferNew} setPreferNewRoads={setPreferNew} />
+      <DistancePicker legend={t('routeOptions_Distance_legend')} value={distance} onChange={setDistance} />
+
+      <AdditionalPicker
+        legend={t('routeOptions_AdditionalPicker_label')}
+        preferNewRoads={preferNew}
+        setPreferNewRoads={setPreferNew}
+      />
 
       <GenerateButton
-        legend="TODO"
-        loadingLegend="TODO"
+        label={t('routeOptions_GenerateButton_label')}
+        loadingLabel={t('routeOptions_GenerateButton_LoadingLabel')}
         loading={loading}
-        onClick={() => {
-          getResult();
+        onClick={async () => {
+          await getResult();
         }}
       />
     </section>

@@ -2,6 +2,7 @@
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
 
 import type { SearchState } from '@/src/store/routeOptionsSlice';
 import { useMapStore } from '@/src/store/useMapStore';
@@ -18,6 +19,8 @@ type Props = {
 const DISABLE_SEARCH_BUTTON = true;
 
 export default function LocationPicker({ className, legend, which, point, setOtherPoint, setPoint }: Props) {
+  const t = useTranslations();
+
   const setQuery = useMapStore((s) => s.setQuery);
   const geocode = useMapStore((s) => s.geocode);
   const pickResult = useMapStore((s) => s.pickResult);
@@ -91,7 +94,9 @@ export default function LocationPicker({ className, legend, which, point, setOth
             ].join(' ')}
             title="Wyszukaj"
           >
-            {point.loading ? 'Szukam…' : 'Szukaj'}
+            {point.loading
+              ? t('routeOptions_LocationPicker_loading_search_button')
+              : t('routeOptions_LocationPicker_search_button')}
           </button>
         </div>
 
@@ -121,7 +126,6 @@ export default function LocationPicker({ className, legend, which, point, setOth
             data-pick-toggle
             onClick={handlePickOnMap}
             aria-pressed={isPicking}
-            title={isPicking ? 'Anuluj wybieranie na mapie' : 'Wybierz na mapie'}
             className={[
               'w-44 relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
               'border transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
@@ -130,7 +134,9 @@ export default function LocationPicker({ className, legend, which, point, setOth
                 : '',
             ].join(' ')}
           >
-            {isPicking ? 'Anuluj' : 'Wybierz na mapie'}
+            {isPicking
+              ? t('routeOptions_LocationPicker_cancel_select_on_map_button')
+              : t('routeOptions_LocationPicker_select_on_map_button')}
           </button>
 
           {point.coords && (
