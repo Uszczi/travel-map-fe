@@ -1,7 +1,7 @@
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 import { useTranslations } from 'next-intl';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -14,10 +14,10 @@ import { useMapStore } from '@/src/store/useMapStore';
 
 type Props = {
   onCollapse?: () => void; // wywołane po kliknięciu w guzik w nagłówku
-  isCollapsed?: boolean; // ewentualnie do własnej logiki/aria (opcjonalne)
+  isCollapsed?: boolean;   // true = zwinięte
 };
 
-export default function RouteOptions({ onCollapse }: Props) {
+export default function RouteOptions({ onCollapse, isCollapsed = false }: Props) {
   const t = useTranslations();
 
   const { start, end, preferNew, distance, algorithm, loading } = useMapStore(
@@ -37,8 +37,23 @@ export default function RouteOptions({ onCollapse }: Props) {
   const setAlgorithm = useMapStore((s) => s.setAlgorithm);
   const getResult = useMapStore((s) => s.getResult);
 
+  // Na telefonie ( < sm ) zwijamy W GÓRĘ: -translate-y-full
+  // Na większych ekranach zwijamy W LEWO: sm:-translate-x-full
+  const collapseClasses = isCollapsed
+    ? '-translate-y-full sm:translate-y-0 sm:-translate-x-full'
+    : 'translate-y-0 sm:translate-x-0';
+
   return (
-    <section className="flex flex-col gap-2">
+    <section
+      id="route-options-aside"
+      aria-hidden={isCollapsed}
+      className={[
+        'flex flex-col gap-2',
+        'transition-transform duration-300 ease-out will-change-transform',
+        'transform-gpu', // płynniejsze animacje
+        collapseClasses,
+      ].join(' ')}
+    >
       <header className="mt-2 mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold tracking-wide">{t('routeOptions_label')}</h2>
 
@@ -47,11 +62,18 @@ export default function RouteOptions({ onCollapse }: Props) {
           type="button"
           onClick={onCollapse}
           aria-controls="route-options-aside"
+          aria-expanded={!isCollapsed}
           aria-label="Zwiń panel opcji"
           className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring"
         >
-          <FontAwesomeIcon icon={faAnglesLeft} className="h-4 w-4" />
-          <span>Zwiń</span>
+          {/* Ikona: na telefonie strzałki w górę, na desktopie w lewo */}
+          <span className="sm:hidden inline-flex">
+            <FontAwesomeIcon icon={faAnglesUp} className="h-4 w-4" />
+          </span>
+          <span className="hidden sm:inline-flex">
+            <FontAwesomeIcon icon={faAnglesLeft} className="h-4 w-4" />
+          </span>
+          <span className="hidden sm:inline">Zwiń</span>
         </button>
       </header>
 
