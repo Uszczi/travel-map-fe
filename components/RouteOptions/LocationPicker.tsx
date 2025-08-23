@@ -28,6 +28,11 @@ export default function LocationPicker({ className, legend, which, point, setOth
   const canSearch = (point.query ?? '').trim().length >= 3;
   const isPicking = point.method === 'pin' && point.awaitingClick;
 
+  const clear = () => {
+    setQuery(which, '');
+    setPoint('coords', undefined);
+  };
+
   const handlePickOnMap = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -72,7 +77,8 @@ export default function LocationPicker({ className, legend, which, point, setOth
             {(point.query || point.coords) && (
               <button
                 type="button"
-                onClick={() => setQuery(which, '')}
+                // onClick={() => setQuery(which, '')}
+                onClick={clear}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
                 aria-label="Wyczyść"
               >

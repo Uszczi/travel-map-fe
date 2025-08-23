@@ -163,7 +163,14 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
     }
 
     const trimmed = q.trim();
-    if (trimmed.length < 3) return;
+    if (trimmed.length < 3) {
+      set(
+        produce((s) => {
+          s[which].results = [];
+        }),
+      );
+      return;
+    }
 
     debounceId[which] = setTimeout(() => {
       get().geocode(which);
@@ -180,7 +187,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
 
     const q = get()[which]?.query?.trim?.() ?? '';
     if (q.length < 3) return;
-    if (q === lastFetchedQuery[which]) return;
+    // if (q === lastFetchedQuery[which]) return;
 
     abortCtrl[which]?.abort();
     abortCtrl[which] = new AbortController();
