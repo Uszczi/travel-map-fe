@@ -14,19 +14,16 @@ export default function CenterMap({ center, fallback }: Props) {
   const [lat, lng] = center ?? fallback;
 
   useEffect(() => {
-    const apply = () => map.setView([lat, lng]);
+    let raf = 0;
 
-    // jeśli mapa już ma utworzone DOM-pane (najpewniejszy warunek)
-    if ((map as any)._mapPane) {
-      // odłóż o 1 klatkę – omija glitche StrictMode/dev
-      const id = requestAnimationFrame(apply);
-      return () => cancelAnimationFrame(id);
-    }
+    map.whenReady(() => {
+      raf = requestAnimationFrame(() => {
+        map.setView([lat, lng]);
+      });
+    });
 
-    // pierwsze załadowanie
-    map.once('load', apply);
     return () => {
-      map.off('load', apply);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [map, lat, lng]);
 

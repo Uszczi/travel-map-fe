@@ -2,7 +2,6 @@
 
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { warn } from 'console';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
@@ -29,14 +28,7 @@ export default function MapWithSidebar() {
           className={[
             'h-full transition-opacity duration-200',
             isSidebarOpen ? 'opacity-100 pointer-events-auto p-4' : 'opacity-0 pointer-events-none p-0',
-
-
-
-
-
-
           ].join(' ')}
-
         >
           <RouteOptionsClient onCollapse={() => setIsSidebarOpen(false)} isCollapsed={!isSidebarOpen} />
         </div>
