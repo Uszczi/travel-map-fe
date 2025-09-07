@@ -1,7 +1,7 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslations } from 'next-intl';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -14,7 +14,7 @@ import { useMapStore } from '@/src/store/useMapStore';
 
 type Props = {
   onCollapse?: () => void; // wywołane po kliknięciu w guzik w nagłówku
-  isCollapsed?: boolean;   // true = zwinięte
+  isCollapsed?: boolean; // true = zwinięte
 };
 
 export default function RouteOptions({ onCollapse, isCollapsed = false }: Props) {
