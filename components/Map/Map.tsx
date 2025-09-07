@@ -7,17 +7,26 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 import CenterMap from '@/components/Map/CenterMap';
 import { endIcon, startIcon } from '@/components/Map/icons';
 import RouteWithArrows from '@/components/RouteWithArrows';
-import { Route } from '@/src/services/api';
+import Route from '@/components/Route';
+import { Route as RouteInterface } from '@/src/services/api';
 import { useMapStore } from '@/src/store/useMapStore';
 
-const routeToPositions = (r: Route): [number, number][] => r.y.map((lat, i) => [lat, r.x[i]]);
+const routeToPositions = (r: RouteInterface): [number, number][] => r.y.map((lat, i) => [lat, r.x[i]]);
 
 const DEFAULT_CENTER: [number, number] = [51.6101241, 19.1999532];
 
 export default function Map() {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const { start: startSec, end: endSec, setCoords, setStart, setEnd, pinToAddress } = useMapStore();
+  const startSec = useMapStore((s) => s.start);
+  const endSec = useMapStore((s) => s.end);
+  const setCoords = useMapStore((s) => s.setCoords);
+  const setStart = useMapStore((s) => s.setStart);
+  const setEnd = useMapStore((s) => s.setEnd);
+  const pinToAddress = useMapStore((s) => s.pinToAddress);
+  const visitedRoutes = useMapStore((s) => s.visitedRoutes.results);
+  const displayVisitedRoutes = useMapStore((s) => s.visitedRoutes.display);
+
   const start = startSec.coords ? ([startSec.coords.lat, startSec.coords.lng] as [number, number]) : null;
   const end = endSec.coords ? ([endSec.coords.lat, endSec.coords.lng] as [number, number]) : null;
   const selecting: 'start' | 'end' | null = startSec.awaitingClick ? 'start' : endSec.awaitingClick ? 'end' : null;
@@ -81,6 +90,10 @@ export default function Map() {
 
         {routes.map((r, i) => (
           <RouteWithArrows key={`gen-${i}`} positions={routeToPositions(r)} focused={i === routes.length - 1} />
+        ))}
+
+        {displayVisitedRoutes && visitedRoutes.map((r, i) => (
+          <Route key={`gen-${i}`} positions={r} focused={false} />
         ))}
       </MapContainer>
     </div>

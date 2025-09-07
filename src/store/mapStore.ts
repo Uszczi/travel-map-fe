@@ -6,7 +6,7 @@ import ApiService, { Route } from '@/src/services/api';
 export interface VisitedRoutesState {
   display: boolean;
   loading: boolean;
-  results: Route[];
+  results: [number, number][][];
   error?: string | null;
 }
 
