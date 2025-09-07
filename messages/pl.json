@@ -25,5 +25,6 @@
   "routeOptions_GenerateButton_label": "Wygeneruj trasę",
   "routeOptions_GenerateButton_LoadingLabel": "Generowanie...",
   "common_LabeledSwitch_on": "włączone",
-  "common_LabeledSwitch_off": "wyłączone"
+  "common_LabeledSwitch_off": "wyłączone",
+  "map_DisplayVisitedButton_label": "Wyświetl odwiedzone drogi"
 }

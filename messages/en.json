@@ -25,5 +25,6 @@
   "routeOptions_GenerateButton_label": "Generate route",
   "routeOptions_GenerateButton_LoadingLabel": "Generating...",
   "common_LabeledSwitch_on": "on",
-  "common_LabeledSwitch_off": "off"
+  "common_LabeledSwitch_off": "off",
+  "map_DisplayVisitedButton_label": "Display visited routes"
 }

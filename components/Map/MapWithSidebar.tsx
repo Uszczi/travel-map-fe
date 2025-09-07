@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
+import DisplayVistedButton from '@/components/Map/DisplayVisitedButton';
 import RouteOptionsClient from '@/components/RouteOptions/RouteOptionsClient';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
@@ -29,7 +30,6 @@ export default function MapWithSidebar() {
           isSidebarOpen ? 'h-[70dvh] md:h-auto' : 'h-[44px] md:h-auto',
           'md:min-h-0',
         ].join(' ')}
-        aria-expanded={isSidebarOpen}
       >
         {/* TREŚĆ PANELU */}
         <div
@@ -42,16 +42,13 @@ export default function MapWithSidebar() {
           ].join(' ')}
           aria-hidden={!isSidebarOpen}
         >
-          <RouteOptionsClient
-            onCollapse={() => setIsSidebarOpen(false)}
-            isCollapsed={!isSidebarOpen}
-          />
+          <RouteOptionsClient onCollapse={() => setIsSidebarOpen(false)} isCollapsed={!isSidebarOpen} />
         </div>
 
         {/* UCHWYT — z pionowym napisem widocznym, gdy panel jest zwinięty */}
         <button
           type="button"
-          onClick={() => setIsSidebarOpen(v => !v)}
+          onClick={() => setIsSidebarOpen((v) => !v)}
           aria-controls="route-options-aside"
           aria-label={isSidebarOpen ? 'Zwiń panel' : 'Rozwiń panel'}
           title={isSidebarOpen ? 'Zwiń panel' : 'Rozwiń panel'}
@@ -83,11 +80,7 @@ export default function MapWithSidebar() {
             </span>
 
             {/* Ikona strzałki */}
-            <FontAwesomeIcon
-              icon={isSidebarOpen ? faChevronLeft : faChevronRight}
-              className="h-5 w-5"
-              fixedWidth
-            />
+            <FontAwesomeIcon icon={isSidebarOpen ? faChevronLeft : faChevronRight} className="h-5 w-5" fixedWidth />
           </div>
         </button>
       </aside>
@@ -95,6 +88,7 @@ export default function MapWithSidebar() {
       <main className="flex-1 min-h-0 border rounded-lg flex flex-col">
         <div className="flex-1 min-h-0">
           <Map />
+          <DisplayVistedButton />
         </div>
       </main>
     </div>
