@@ -68,6 +68,7 @@ export default class ApiService {
   static async downloadGPXFromRoute(route: Route, title: string): Promise<void> {
     const hasEle = Array.isArray(route.elevation) && route.elevation.length === route.x.length;
 
+    // TODO check
     // (lat, lon[, ele])
     const points = route.y.map((lat, i) => {
       const lon = route.x[i];
