@@ -23,5 +23,7 @@
   "routeOptions_AlgorithmPicker_astar_tooltip": "A* — algorytm A-star (heurystyczny)",
   "routeOptions_Distance_legend": "Dystans",
   "routeOptions_GenerateButton_label": "Wygeneruj trasę",
-  "routeOptions_GenerateButton_LoadingLabel": "Generowanie..."
+  "routeOptions_GenerateButton_LoadingLabel": "Generowanie...",
+  "common_LabeledSwitch_on": "włączone",
+  "common_LabeledSwitch_off": "wyłączone"
 }
