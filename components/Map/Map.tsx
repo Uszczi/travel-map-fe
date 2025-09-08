@@ -6,8 +6,8 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import CenterMap from '@/components/Map/CenterMap';
 import { endIcon, startIcon } from '@/components/Map/icons';
-import RouteWithArrows from '@/components/RouteWithArrows';
 import Route from '@/components/Route';
+import RouteWithArrows from '@/components/RouteWithArrows';
 import { Route as RouteInterface } from '@/src/services/api';
 import { useMapStore } from '@/src/store/useMapStore';
 
@@ -92,9 +92,7 @@ export default function Map() {
           <RouteWithArrows key={`gen-${i}`} positions={routeToPositions(r)} focused={i === routes.length - 1} />
         ))}
 
-        {displayVisitedRoutes && visitedRoutes.map((r, i) => (
-          <Route key={`gen-${i}`} positions={r} focused={false} />
-        ))}
+        {displayVisitedRoutes && visitedRoutes.map((r, i) => <Route key={`gen-${i}`} positions={r} />)}
       </MapContainer>
     </div>
   );

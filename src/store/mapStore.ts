@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import type { StateCreator } from 'zustand';
 
-import ApiService, { Route } from '@/src/services/api';
+import ApiService from '@/src/services/api';
 
 export interface VisitedRoutesState {
   display: boolean;
