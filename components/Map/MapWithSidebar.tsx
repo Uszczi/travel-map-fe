@@ -7,11 +7,15 @@ import { useState } from 'react';
 
 import DisplayVistedButton from '@/components/Map/DisplayVisitedButton';
 import RouteOptionsClient from '@/components/RouteOptions/RouteOptionsClient';
+import { useMapStore } from '@/src/store/useMapStore';
+
+import RouteDetils from '../RouteDetails';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
 
 export default function MapWithSidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const routes = useMapStore((s) => s.results);
 
   return (
     <div
@@ -89,6 +93,9 @@ export default function MapWithSidebar() {
         <div className="flex-1 min-h-0">
           <Map />
           <DisplayVistedButton />
+          {routes.map((v) => (
+            <RouteDetils route={v} onRemove={() => {}} />
+          ))}
         </div>
       </main>
     </div>
