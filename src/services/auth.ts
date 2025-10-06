@@ -1,5 +1,7 @@
 import { postForm, postJson } from '@/src/services/common';
 
+import { tokenStore } from '../store/tokenStore';
+
 export interface AuthResponse {
   access_token: string;
   refresh_token: string;
@@ -12,12 +14,14 @@ export default class AuthService {
     this.base_url = base_url;
   }
 
-  async login(params: { username: string; password: string }): Promise<AuthResponse> {
-    return await postForm<AuthResponse>(`${this.base_url}/login`, params);
+  async login(params: { username: string; password: string }) {
+    const res = await postForm<AuthResponse>(`${this.base_url}/login`, params);
+    tokenStore.set(res.access_token);
   }
 
   async logout() {
-    return await postJson(`${this.base_url}/logout`, {});
+    await postJson(`${this.base_url}/logout`, {});
+    tokenStore.clear();
   }
 
   async refresh() {}
@@ -28,7 +32,7 @@ export default class AuthService {
 
   async passwordResetConfirm(params: { token: string; password: string }) {
     return await postJson(`${this.base_url}/password-reset/confirm`, params);
-  }
+    }
   async register(params: { email: string; password: string }) {
     return await postJson(`${this.base_url}/register`, params);
   }
