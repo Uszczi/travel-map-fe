@@ -26,5 +26,162 @@
   "routeOptions_GenerateButton_LoadingLabel": "Generowanie...",
   "common_LabeledSwitch_on": "włączone",
   "common_LabeledSwitch_off": "wyłączone",
-  "map_DisplayVisitedButton_label": "Wyświetl odwiedzone drogi"
+  "map_DisplayVisitedButton_label": "Wyświetl odwiedzone drogi",
+  "legal": {
+    "terms": {
+      "title": "Regulamin serwisu Travel‑Map",
+      "intro": "Niniejszy Regulamin określa zasady korzystania z serwisu Travel‑Map (\"Serwis\"), prowadzonego przez Mateusza Papugę, Łask, Polska, e‑mail: mateuszpapuga24@gmail.com. Korzystając z Serwisu, Użytkownik akceptuje postanowienia Regulaminu.",
+      "toc": "Spis treści",
+      "sections": {
+        "general": "Postanowienia ogólne",
+        "services": "Zakres usług",
+        "account": "Rejestracja i konto użytkownika",
+        "content": "Treści użytkownika",
+        "liability": "Odpowiedzialność",
+        "tech": "Wymagania techniczne i dostępność",
+        "termination": "Usunięcie konta i rozwiązanie umowy",
+        "changes": "Zmiany Regulaminu",
+        "law": "Prawo właściwe i spory",
+        "contact": "Kontakt"
+      },
+      "text": {
+        "general": [
+          "Administratorem i właścicielem Serwisu jest Mateusz Papuga (działalność hobbystyczna). Dokument stanowi umowę o świadczenie usług drogą elektroniczną.",
+          "Regulamin jest dostępny bezpłatnie w Serwisie. Użytkownik powinien zapoznać się z jego treścią przed rejestracją konta."
+        ],
+        "services": [
+          "Serwis umożliwia generowanie i wizualizację tras na mapie, zapis historii tras oraz integrację z zewnętrznymi usługami (w szczególności Strava).",
+          "Serwis ma charakter rekreacyjno‑informacyjny. Trasy mają charakter orientacyjny; korzystanie z nich odbywa się na wyłączne ryzyko Użytkownika."
+        ],
+        "account": [
+          "Konto można założyć przy użyciu adresu e‑mail i hasła lub poprzez logowanie zewnętrzne (Strava). Użytkownik zobowiązuje się podawać prawdziwe dane i chronić hasło.",
+          "Użytkownik może w każdej chwili usunąć konto. Administrator może zablokować lub usunąć konto w razie istotnego naruszenia Regulaminu."
+        ],
+        "content": [
+          "W przyszłości Serwis może umożliwiać dodawanie treści (np. opisy tras, komentarze, zdjęcia). Użytkownik ponosi wyłączną odpowiedzialność za publikowane treści i gwarantuje, że nie naruszają one prawa ani dóbr osób trzecich.",
+          "Użytkownik udziela niewyłącznej licencji na bezpłatne wyświetlanie treści w Serwisie wyłącznie w celu działania funkcjonalności Serwisu."
+        ],
+        "liability": [
+          "Administrator dokłada starań, by Serwis działał prawidłowo, lecz nie gwarantuje nieprzerwanego działania. Odpowiedzialność Administratora jest ograniczona do szkód rzeczywistych i nie obejmuje utraconych korzyści, w najszerszym zakresie dopuszczalnym przez prawo.",
+          "Użytkownik powinien zachować ostrożność podczas korzystania z tras na zewnątrz, w szczególności uwzględniać warunki terenowe i pogodowe."
+        ],
+        "tech": [
+          "Wymagane jest urządzenie z dostępem do Internetu i aktualna przeglądarka. Wybrane funkcje mogą wymagać zgody na lokalizację urządzenia.",
+          "Administrator może prowadzić prace serwisowe powodujące czasową niedostępność."
+        ],
+        "termination": [
+          "Użytkownik może usunąć konto z poziomu ustawień lub kontaktując się na adres: mateuszpapuga24@gmail.com.",
+          "Usunięcie konta powoduje zaprzestanie świadczenia usług i może skutkować usunięciem danych zgodnie z Polityką Prywatności."
+        ],
+        "changes": [
+          "Administrator może zmienić Regulamin z ważnych przyczyn (np. zmiana funkcjonalności, przepisów prawa). O zmianach Użytkownicy są informowani w Serwisie lub e‑mailem. Nowa wersja obowiązuje od dnia publikacji, chyba że wskazano inaczej."
+        ],
+        "law": [
+          "W sprawach nieuregulowanych zastosowanie ma prawo polskie. Spory rozstrzyga sąd właściwy dla miejsca zamieszkania Administratora, z zastrzeżeniem bezwzględnie obowiązujących przepisów o właściwości konsumenta."
+        ],
+        "contact": ["W sprawach dotyczących Serwisu prosimy o kontakt: mateuszpapuga24@gmail.com."]
+      },
+      "lastUpdated": "Ostatnia aktualizacja: 6 października 2025"
+    },
+    "privacy": {
+      "title": "Polityka Prywatności Travel‑Map",
+      "intro": "Niniejsza Polityka wyjaśnia, jak przetwarzamy dane osobowe w Serwisie Travel‑Map. Administratorem danych jest Mateusz Papuga, Łask, Polska, e‑mail: mateuszpapuga24@gmail.com.",
+      "toc": "Spis treści",
+      "sections": {
+        "admin": "Administrator danych",
+        "dataCategories": "Kategorie i zakres danych",
+        "purposes": "Cele przetwarzania",
+        "legalBases": "Podstawy prawne",
+        "retention": "Okres przechowywania",
+        "recipients": "Odbiorcy danych",
+        "transfers": "Przekazywanie poza EOG",
+        "rights": "Prawa użytkownika",
+        "cookies": "Pliki cookies",
+        "security": "Zabezpieczenia",
+        "changes": "Zmiany Polityki",
+        "contact": "Kontakt"
+      },
+      "text": {
+        "admin": [
+          "Administratorem danych osobowych jest Mateusz Papuga, Łask, Polska, e‑mail: mateuszpapuga24@gmail.com.",
+          "W sprawach prywatności prosimy o kontakt pod wskazanym adresem e‑mail."
+        ],
+        "dataCategories": [
+          "Dane identyfikacyjne i kontaktowe: e‑mail, imię i nazwisko (jeśli podane).",
+          "Dane logowania i techniczne: identyfikatory sesji, adres IP, nagłówki przeglądarki, dzienniki błędów (Sentry).",
+          "Dane tras: punkty GPS, dystans, wysokość, historia tras (o ile funkcja jest używana).",
+          "Dane pochodzące z integracji: identyfikator i zakres udostępnionych danych Strava (przy logowaniu OAuth)."
+        ],
+        "purposes": [
+          "Założenie i obsługa konta użytkownika oraz świadczenie funkcji Serwisu (w tym integracja ze Strava).",
+          "Utrzymanie bezpieczeństwa i niezawodności (logi, diagnostyka, Sentry).",
+          "Komunikacja techniczna (powiadomienia o zmianach, bezpieczeństwie)."
+        ],
+        "legalBases": [
+          "Art. 6 ust. 1 lit. b RODO – niezbędność do wykonania umowy o świadczenie usług drogą elektroniczną (prowadzenie konta, funkcje Serwisu).",
+          "Art. 6 ust. 1 lit. f RODO – prawnie uzasadniony interes Administratora (bezpieczeństwo, zapobieganie nadużyciom, diagnostyka Sentry).",
+          "Art. 6 ust. 1 lit. c RODO – w zakresie, w jakim obowiązek wynika z przepisów prawa (np. rozpatrywanie reklamacji, obowiązki podatkowe – jeżeli dotyczy)."
+        ],
+        "retention": [
+          "Dane konta: przez okres aktywności konta oraz do 12 miesięcy po jego usunięciu (kopie zapasowe/logi – do 12 miesięcy).",
+          "Dane dzienników i błędów (Sentry): do 90 dni, chyba że przepisy lub uzasadniony interes wymagają dłużej (np. analiza incydentów).",
+          "Dane tras: do czasu usunięcia przez Użytkownika lub likwidacji konta."
+        ],
+        "recipients": [
+          "Dostawca hostingu i utrzymania Serwisu.",
+          "Sentry (monitoring błędów i wydajności).",
+          "Strava – wyłącznie w zakresie niezbędnym do logowania OAuth oraz importu danych, jeśli Użytkownik to aktywuje.",
+          "Inne podmioty, jeśli wynika to z przepisów prawa (organy publiczne)."
+        ],
+        "transfers": [
+          "Jeśli dostawcy przetwarzają dane poza EOG, stosujemy mechanizmy legalizacji transferu (np. standardowe klauzule umowne). Dostawcy są dobierani z uwzględnieniem zgodności z RODO."
+        ],
+        "rights": [
+          "Prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania oraz przenoszenia danych.",
+          "Prawo sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie (art. 6 ust. 1 lit. f RODO).",
+          "Prawo wniesienia skargi do Prezesa UODO. W celu realizacji praw prosimy o kontakt: mateuszpapuga24@gmail.com."
+        ],
+        "cookies": [
+          "Używamy cookies niezbędnych do logowania i utrzymania sesji oraz zapamiętywania podstawowych ustawień. Możemy stosować cookies analityczne wyłącznie po uzyskaniu zgody (jeśli zostaną wdrożone).",
+          "Użytkownik może zarządzać cookies w ustawieniach przeglądarki; ograniczenie cookies może wpłynąć na działanie Serwisu."
+        ],
+        "security": [
+          "Stosujemy środki techniczne i organizacyjne adekwatne do ryzyka: szyfrowanie HTTPS, kontrola dostępu, kopie zapasowe, monitorowanie incydentów (Sentry)."
+        ],
+        "changes": [
+          "Polityka może być aktualizowana w razie zmian funkcjonalności lub prawa. O zmianach informujemy w Serwisie lub e‑mailem."
+        ],
+        "contact": ["Pytania dotyczące prywatności: mateuszpapuga24@gmail.com."]
+      },
+      "lastUpdated": "Ostatnia aktualizacja: 6 października 2025"
+    }
+  },
+  "auth": {
+    "resetRequest": {
+      "title": "Reset hasła",
+      "intro": "Podaj adres e‑mail powiązany z kontem. Wyślemy link do ustawienia nowego hasła.",
+      "emailLabel": "E‑mail",
+      "emailPlaceholder": "jan.kowalski@example.com",
+      "submitLabel": "Wyślij link resetujący",
+      "loadingLabel": "Wysyłanie…",
+      "successGeneric": "Jeśli takie konto istnieje, wysłaliśmy wiadomość z instrukcją resetu.",
+      "backToLoginPrefix": "Pamiętasz hasło?",
+      "backToLogin": "Zaloguj się"
+    },
+    "resetConfirm": {
+      "title": "Ustaw nowe hasło",
+      "intro": "Wprowadź nowe hasło. Po zapisaniu zaloguj się ponownie.",
+      "passwordLabel": "Nowe hasło",
+      "confirmLabel": "Powtórz hasło",
+      "passwordHint": "Min. 8 znaków, wielka/mała litera i cyfra.",
+      "showPassword": "Pokaż hasło",
+      "hidePassword": "Ukryj hasło",
+      "mismatch": "Hasła nie są identyczne.",
+      "submitLabel": "Zapisz nowe hasło",
+      "loadingLabel": "Zapisywanie…",
+      "success": "Hasło zostało zmienione. Możesz się zalogować.",
+      "backToLoginPrefix": "Gotowe?",
+      "backToLogin": "Przejdź do logowania"
+    }
+  }
 }

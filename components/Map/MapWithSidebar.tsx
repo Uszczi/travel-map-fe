@@ -93,8 +93,8 @@ export default function MapWithSidebar() {
         <div className="flex-1 min-h-0">
           <Map />
           <DisplayVistedButton />
-          {routes.map((v) => (
-            <RouteDetils route={v} onRemove={() => {}} />
+          {routes.map((v, i) => (
+            <RouteDetils key={i} route={v} onRemove={() => {}} />
           ))}
         </div>
       </main>

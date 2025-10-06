@@ -26,5 +26,162 @@
   "routeOptions_GenerateButton_LoadingLabel": "Generating...",
   "common_LabeledSwitch_on": "on",
   "common_LabeledSwitch_off": "off",
-  "map_DisplayVisitedButton_label": "Display visited routes"
+  "map_DisplayVisitedButton_label": "Display visited routes",
+  "legal": {
+    "terms": {
+      "title": "Travel‑Map Terms of Service",
+      "intro": "These Terms govern the use of Travel‑Map (the \"Service\"), operated by Mateusz Papuga, Łask, Poland, e‑mail: mateuszpapuga24@gmail.com. By using the Service you accept these Terms.",
+      "toc": "Table of contents",
+      "sections": {
+        "general": "General provisions",
+        "services": "Scope of services",
+        "account": "Registration and user account",
+        "content": "User content",
+        "liability": "Liability",
+        "tech": "Technical requirements and availability",
+        "termination": "Account deletion and termination",
+        "changes": "Changes to the Terms",
+        "law": "Governing law and disputes",
+        "contact": "Contact"
+      },
+      "text": {
+        "general": [
+          "The Service is operated by Mateusz Papuga (hobby project). These Terms constitute an electronic services agreement.",
+          "The Terms are available free of charge on the website. Users should read them before registering an account."
+        ],
+        "services": [
+          "The Service enables route generation and visualisation on a map, saving route history and integrations with third‑party services (in particular Strava).",
+          "The Service is recreational and informational. Routes are indicative; use them at your own risk."
+        ],
+        "account": [
+          "Accounts can be created with e‑mail and password or via external login (Strava). Users must provide accurate data and protect their passwords.",
+          "Users may delete their accounts at any time. The Administrator may block or delete an account in case of material breach of the Terms."
+        ],
+        "content": [
+          "In the future, the Service may allow adding content (e.g. route descriptions, comments, photos). Users are solely responsible for their content and warrant it does not infringe laws or third‑party rights.",
+          "Users grant a non‑exclusive, free licence to display their content within the Service solely to enable its functionality."
+        ],
+        "liability": [
+          "The Administrator strives for proper operation but does not guarantee uninterrupted availability. Liability is limited to actual damages and excludes lost profits to the maximum extent permitted by law.",
+          "Users should exercise caution when using routes outdoors, considering terrain and weather conditions."
+        ],
+        "tech": [
+          "An Internet‑enabled device and an up‑to‑date browser are required. Certain features may require location access.",
+          "Maintenance may cause temporary unavailability."
+        ],
+        "termination": [
+          "Users can delete their account via settings or by contacting: mateuszpapuga24@gmail.com.",
+          "Account deletion ends the provision of services and may result in data deletion in line with the Privacy Policy."
+        ],
+        "changes": [
+          "The Administrator may amend the Terms for valid reasons (e.g. feature or legal changes). Users will be informed on the website or by e‑mail. New versions apply from publication unless stated otherwise."
+        ],
+        "law": [
+          "These Terms are governed by Polish law. Disputes shall be resolved by courts competent for the Administrator’s residence, subject to mandatory consumer venue rules."
+        ],
+        "contact": ["Service matters: mateuszpapuga24@gmail.com."]
+      },
+      "lastUpdated": "Last updated: October 6, 2025"
+    },
+    "privacy": {
+      "title": "Travel‑Map Privacy Policy",
+      "intro": "This Policy explains how we process personal data in Travel‑Map. The data controller is Mateusz Papuga, Łask, Poland, e‑mail: mateuszpapuga24@gmail.com.",
+      "toc": "Table of contents",
+      "sections": {
+        "admin": "Data controller",
+        "dataCategories": "Categories and scope of data",
+        "purposes": "Purposes of processing",
+        "legalBases": "Legal bases",
+        "retention": "Retention period",
+        "recipients": "Data recipients",
+        "transfers": "Transfers outside the EEA",
+        "rights": "User rights",
+        "cookies": "Cookies",
+        "security": "Security measures",
+        "changes": "Policy changes",
+        "contact": "Contact"
+      },
+      "text": {
+        "admin": [
+          "The controller is Mateusz Papuga, Łask, Poland, e‑mail: mateuszpapuga24@gmail.com.",
+          "For privacy requests please use the e‑mail above."
+        ],
+        "dataCategories": [
+          "Identification and contact data: e‑mail, name (if provided).",
+          "Login and technical data: session identifiers, IP address, browser headers, error logs (Sentry).",
+          "Route data: GPS points, distance, elevation, route history (if the feature is used).",
+          "Data from integrations: Strava identifier and scope of data shared via OAuth (upon user activation)."
+        ],
+        "purposes": [
+          "Creating and operating user accounts and providing the Service (including Strava integration).",
+          "Keeping the Service secure and reliable (logs, diagnostics, Sentry).",
+          "Technical communication (changes, security notices)."
+        ],
+        "legalBases": [
+          "Art. 6(1)(b) GDPR – performance of a contract for electronic services (account and Service features).",
+          "Art. 6(1)(f) GDPR – legitimate interests (security, fraud prevention, diagnostics via Sentry).",
+          "Art. 6(1)(c) GDPR – where processing is necessary for legal obligations (e.g. complaint handling, tax where applicable)."
+        ],
+        "retention": [
+          "Account data: for the account’s lifetime and up to 12 months after deletion (backups/logs up to 12 months).",
+          "Logs and error data (Sentry): up to 90 days unless longer is necessary (e.g. incident analysis).",
+          "Route data: until deleted by the User or account closure."
+        ],
+        "recipients": [
+          "Hosting/maintenance provider.",
+          "Sentry (error and performance monitoring).",
+          "Strava – only as necessary for OAuth login and imports enabled by the User.",
+          "Public authorities when required by law."
+        ],
+        "transfers": [
+          "If providers process data outside the EEA, we rely on appropriate safeguards (e.g. Standard Contractual Clauses). Providers are selected with GDPR compliance in mind."
+        ],
+        "rights": [
+          "Right of access, rectification, erasure, restriction, and data portability.",
+          "Right to object to processing based on legitimate interests (Art. 6(1)(f) GDPR).",
+          "Right to lodge a complaint with the supervisory authority. To exercise rights: mateuszpapuga24@gmail.com."
+        ],
+        "cookies": [
+          "We use necessary cookies for login/session and basic settings. Analytics cookies may be used only with consent (if implemented).",
+          "Users can manage cookies via their browser settings; limiting cookies may impact functionality."
+        ],
+        "security": [
+          "We apply technical and organisational measures appropriate to risk: HTTPS encryption, access control, backups, incident monitoring (Sentry)."
+        ],
+        "changes": [
+          "We may update this Policy due to feature or legal changes. We will inform users on the website or by e‑mail."
+        ],
+        "contact": ["Privacy questions: mateuszpapuga24@gmail.com."]
+      },
+      "lastUpdated": "Last updated: October 6, 2025"
+    }
+  },
+  "auth": {
+    "resetRequest": {
+      "title": "Password reset",
+      "intro": "Enter the e‑mail linked to your account. We'll send a link to set a new password.",
+      "emailLabel": "E‑mail",
+      "emailPlaceholder": "john.doe@example.com",
+      "submitLabel": "Send reset link",
+      "loadingLabel": "Sending…",
+      "successGeneric": "If an account exists, we've sent you an e‑mail with reset instructions.",
+      "backToLoginPrefix": "Remembered your password?",
+      "backToLogin": "Sign in"
+    },
+    "resetConfirm": {
+      "title": "Set a new password",
+      "intro": "Enter your new password. After saving, sign in again.",
+      "passwordLabel": "New password",
+      "confirmLabel": "Repeat password",
+      "passwordHint": "Min. 8 chars, upper/lowercase and a digit.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "mismatch": "Passwords do not match.",
+      "submitLabel": "Save new password",
+      "loadingLabel": "Saving…",
+      "success": "Password changed. You can sign in now.",
+      "backToLoginPrefix": "All set?",
+      "backToLogin": "Go to sign in"
+    }
+  }
 }
