@@ -1,4 +1,5 @@
 'use client';
+// TODO refactor this
 
 import { faBars, faGlobe, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -81,6 +82,42 @@ export default function Navbar() {
 
           {/* Language */}
           <div className="hidden md:flex items-center gap-4">
+            <Link
+              href={`/${locale}/login`}
+              className={`
+                  block rounded-md px-3 py-2  transition
+                  hover:bg-green-500 hover:text-white
+                  active:bg-green-600 active:text-white
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
+                `}
+            >
+              Login
+            </Link>
+            <Link
+              href={`/${locale}/my-account`}
+              className={`
+                  block rounded-md px-3 py-2  transition
+                  hover:bg-green-500 hover:text-white
+                  active:bg-green-600 active:text-white
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                  ${isActive(`${locale}/my-account`) ? 'font-bold' : ''}
+                `}
+            >
+              My account
+            </Link>
+            <Link
+              href={`/${locale}/logout`}
+              className={`
+                  block rounded-md px-3 py-2  transition
+                  hover:bg-green-500 hover:text-white
+                  active:bg-green-600 active:text-white
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                  ${isActive(`${locale}/logout`) ? 'font-bold' : ''}
+                `}
+            >
+              Logout
+            </Link>
             <div className="flex items-center gap-2 select-none mr-4" role="group" aria-label="Language">
               <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80 pointer-events-none" aria-hidden />
 
@@ -181,6 +218,47 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+
+                <div className="my-2 h-px bg-zinc-200 dark:bg-zinc-800" />
+
+                <div>
+                  <Link
+                    href={`/${locale}/login`}
+                    className={`
+                  block rounded-md px-3 py-2  transition
+                  hover:bg-green-500 hover:text-white
+                  active:bg-green-600 active:text-white
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
+                `}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href={`/${locale}/login`}
+                    className={`
+                  block rounded-md px-3 py-2  transition
+                  hover:bg-green-500 hover:text-white
+                  active:bg-green-600 active:text-white
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
+                `}
+                  >
+                    My account
+                  </Link>
+                  <Link
+                    href={`/${locale}/login`}
+                    className={`
+                  block rounded-md px-3 py-2  transition
+                  hover:bg-green-500 hover:text-white
+                  active:bg-green-600 active:text-white
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
+                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
+                `}
+                  >
+                    Logout
+                  </Link>
+                </div>
 
                 <div className="my-2 h-px bg-zinc-200 dark:bg-zinc-800" />
 
