@@ -32,7 +32,7 @@ export default class AuthService {
 
   async passwordResetConfirm(params: { token: string; password: string }) {
     return await postJson(`${this.base_url}/password-reset/confirm`, params);
-    }
+  }
   async register(params: { email: string; password: string }) {
     return await postJson(`${this.base_url}/register`, params);
   }

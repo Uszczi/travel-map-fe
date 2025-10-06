@@ -27,7 +27,7 @@ export default function ResetWithTokenPage() {
   }, [password]);
 
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const token = searchParams.get('token') as string;
   const canSubmit = useMemo(() => password.length >= 8 && password === confirm && token, [password, confirm, token]);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 'use client';
-// TODO refactor this
 
+// TODO refactor this
 import { faBars, faGlobe, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocale, useTranslations } from 'next-intl';

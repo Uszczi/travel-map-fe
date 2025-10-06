@@ -4,10 +4,14 @@ export interface HttpOpts {
   headers?: HeadersInit;
 }
 
+interface HttpErrorBody {
+  detail: string;
+}
+
 export class HttpError extends Error {
   constructor(
     public status: number,
-    public body: unknown,
+    public body: HttpErrorBody,
   ) {
     super(`HTTP ${status}`);
   }

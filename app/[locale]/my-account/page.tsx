@@ -1,22 +1,20 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCheck,
+  faEnvelope,
   faExclamationTriangle,
   faLink,
   faLinkSlash,
+  faLock,
   faPen,
   faSpinner,
   faTrash,
   faUser,
-  faEnvelope,
-  faLock,
 } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 type Connections = {
   google: boolean;
@@ -57,8 +55,14 @@ export default function AccountPage() {
     return checks.filter(Boolean).length;
   }, [newPw]);
 
-  const canSaveProfile = useMemo(() => name.trim().length >= 2 && !!profile && name.trim() !== profile.name.trim(), [name, profile]);
-  const canSavePw = useMemo(() => newPw.length >= 8 && newPw === confirmPw && currentPw.length > 0, [newPw, confirmPw, currentPw]);
+  const canSaveProfile = useMemo(
+    () => name.trim().length >= 2 && !!profile && name.trim() !== profile.name.trim(),
+    [name, profile],
+  );
+  const canSavePw = useMemo(
+    () => newPw.length >= 8 && newPw === confirmPw && currentPw.length > 0,
+    [newPw, confirmPw, currentPw],
+  );
 
   // Load profile + connections
   useEffect(() => {
@@ -201,7 +205,10 @@ export default function AccountPage() {
             ].join(' ')}
           >
             <div className="flex items-start gap-2">
-              <FontAwesomeIcon icon={banner.type === 'error' ? faExclamationTriangle : faCheck} className="mt-0.5 shrink-0" />
+              <FontAwesomeIcon
+                icon={banner.type === 'error' ? faExclamationTriangle : faCheck}
+                className="mt-0.5 shrink-0"
+              />
               <span>{banner.msg}</span>
             </div>
           </div>
@@ -300,7 +307,12 @@ export default function AccountPage() {
                 />
                 <div className="mt-2 grid grid-cols-4 gap-1">
                   {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className={'h-1 rounded-full ' + (pwScore > i ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-700')} />
+                    <div
+                      key={i}
+                      className={
+                        'h-1 rounded-full ' + (pwScore > i ? 'bg-emerald-500' : 'bg-zinc-300 dark:bg-zinc-700')
+                      }
+                    />
                   ))}
                 </div>
                 <p className="mt-1 text-xs text-zinc-500">{t('security.hint')}</p>
@@ -366,7 +378,11 @@ export default function AccountPage() {
                       onClick={() => unlinkProvider('google')}
                       className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
                     >
-                      {unlinking === 'google' ? <FontAwesomeIcon icon={faSpinner} className="animate-spin" /> : <FontAwesomeIcon icon={faLinkSlash} />}
+                      {unlinking === 'google' ? (
+                        <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+                      ) : (
+                        <FontAwesomeIcon icon={faLinkSlash} />
+                      )}
                       <span>{t('connections.unlink')}</span>
                     </button>
                   ) : (
@@ -400,7 +416,11 @@ export default function AccountPage() {
                       onClick={() => unlinkProvider('strava')}
                       className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
                     >
-                      {unlinking === 'strava' ? <FontAwesomeIcon icon={faSpinner} className="animate-spin" /> : <FontAwesomeIcon icon={faLinkSlash} />}
+                      {unlinking === 'strava' ? (
+                        <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+                      ) : (
+                        <FontAwesomeIcon icon={faLinkSlash} />
+                      )}
                       <span>{t('connections.unlink')}</span>
                     </button>
                   ) : (

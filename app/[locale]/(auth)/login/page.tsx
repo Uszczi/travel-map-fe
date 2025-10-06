@@ -23,7 +23,7 @@ export default function LoginFormPanel() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +31,7 @@ export default function LoginFormPanel() {
   const canSubmit = email.trim().length >= 3 && password.length >= 6;
 
   const onSubmit = async (_obj: unknown) => {
-    setError(undefined);
+    setError(null);
     setLoading(true);
 
     try {
