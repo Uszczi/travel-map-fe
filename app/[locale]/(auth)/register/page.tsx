@@ -10,10 +10,16 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useCallback, useMemo, useState } from 'react';
 
+import { authService } from '@/src/services/auth';
+import { HttpError } from '@/src/services/common';
+
 export default function RegisterPage() {
+  const t = useTranslations('auth.register');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -21,8 +27,6 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
-  const apiBase = process.env.NEXT_PUBLIC_API_URL;
 
   const pwChecks = useMemo(() => {
     const checks = {
@@ -42,10 +46,6 @@ export default function RegisterPage() {
   const onSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!apiBase) {
-        setError('Brak NEXT_PUBLIC_API_URL. Ustaw zmienną środowiskową.');
-        return;
-      }
       if (!canSubmit) return;
 
       setLoading(true);
@@ -53,41 +53,24 @@ export default function RegisterPage() {
       setSuccess(null);
 
       try {
-        const r = await fetch(`${apiBase}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ email, password }),
-        });
-
-        if (!r.ok) {
-          const msg = (await r.text().catch(() => '')) || `HTTP ${r.status}`;
-          throw new Error(msg);
-        }
+        await authService.register({ email, password });
 
         setSuccess('Konto utworzone. Sprawdź pocztę, aby potwierdzić adres e-mail.');
         // window.location.href = "/";
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Nieznany błąd';
+        let msg = err instanceof HttpError ? err.body.detail : 'Nieznany błąd';
+        if (msg == 'Email already used.') {
+          msg = t('email_used');
+        }
         setError(msg);
       } finally {
         setLoading(false);
       }
     },
-    [apiBase, canSubmit, email, password],
+    [canSubmit, email, password, t],
   );
 
-  const onOAuth = useCallback(
-    (provider: 'strava' | 'google') => {
-      if (!apiBase) {
-        setError('Brak NEXT_PUBLIC_API_URL. Ustaw zmienną środowiskową.');
-        return;
-      }
-      const path = provider === 'google' ? '/auth/google' : '/auth/strava';
-      window.location.href = `${apiBase}${path}`;
-    },
-    [apiBase],
-  );
+  const onOAuth = useCallback((_provider: 'strava' | 'google') => {}, []);
 
   return (
     <main className="h-full grid place-items-center p-3 sm:p-6">

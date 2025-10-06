@@ -157,6 +157,12 @@
     }
   },
   "auth": {
+    "login": {
+       "invalid": "Invalid email or password."
+    },
+    "register": {
+      "email_used": "Email already used, please login or use different email."
+    },
     "resetRequest": {
       "title": "Password reset",
       "intro": "Enter the e‑mail linked to your account. We'll send a link to set a new password.",
@@ -181,7 +187,8 @@
       "loadingLabel": "Saving…",
       "success": "Password changed. You can sign in now.",
       "backToLoginPrefix": "All set?",
-      "backToLogin": "Go to sign in"
+      "backToLogin": "Go to sign in",
+      "missingToken": "Missing token in url, check if whole link was entered."
     }
   }
 }

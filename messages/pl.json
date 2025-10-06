@@ -157,6 +157,12 @@
     }
   },
   "auth": {
+    "login": {
+       "invalid": "Nieprawidłowy email albo hasło."
+    },
+    "register": {
+      "email_used": "Email jest już wykorzystany, zaloguj się albo użyj innego emaila."
+    },
     "resetRequest": {
       "title": "Reset hasła",
       "intro": "Podaj adres e‑mail powiązany z kontem. Wyślemy link do ustawienia nowego hasła.",
@@ -181,7 +187,8 @@
       "loadingLabel": "Zapisywanie…",
       "success": "Hasło zostało zmienione. Możesz się zalogować.",
       "backToLoginPrefix": "Gotowe?",
-      "backToLogin": "Przejdź do logowania"
+      "backToLogin": "Przejdź do logowania",
+      "missingToken": "Brak tokenu w url, sprawdź czy cały link został wprowadzony."
     }
   }
 }

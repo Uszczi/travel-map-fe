@@ -6,9 +6,10 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useCallback, useMemo, useState } from 'react';
 
+import { authService } from '@/src/services/auth';
+
 export default function ResetRequestPage() {
   const t = useTranslations('auth.resetRequest');
-  const apiBase = process.env.NEXT_PUBLIC_API_URL;
 
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,34 +21,21 @@ export default function ResetRequestPage() {
   const onSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!apiBase) {
-        setError('Brak NEXT_PUBLIC_API_URL');
-        return;
-      }
       if (!canSubmit) return;
 
       setLoading(true);
       setError(null);
       try {
-        const r = await fetch(`${apiBase}/auth/password/reset-request`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ email }),
-        });
-        // Bez względu na odpowiedź zwracamy generyczny komunikat sukcesu
-        if (!r.ok) {
-          // nie ujawniamy, czy e-mail istnieje
-        }
-        setSent(true);
+        await authService.passwordReset({ email });
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : typeof err === 'string' ? err : 'Unknown error';
         setError(msg);
       } finally {
+        setSent(true);
         setLoading(false);
       }
     },
-    [apiBase, email, canSubmit],
+    [email, canSubmit],
   );
 
   return (

@@ -4,13 +4,14 @@ import { faCheck, faEye, faEyeSlash, faLock, faTriangleExclamation } from '@fort
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { authService } from '@/src/services/auth';
 
 export default function ResetWithTokenPage() {
   const t = useTranslations('auth.resetConfirm');
-  const apiBase = process.env.NEXT_PUBLIC_API_URL;
 
-  const token = '';
   const locale = 'pl';
 
   const [password, setPassword] = useState('');
@@ -25,30 +26,25 @@ export default function ResetWithTokenPage() {
     return checks.filter(Boolean).length;
   }, [password]);
 
-  const canSubmit = useMemo(() => password.length >= 8 && password === confirm, [password, confirm]);
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const canSubmit = useMemo(() => password.length >= 8 && password === confirm && token, [password, confirm, token]);
+
+  useEffect(() => {
+    if (!token) {
+      setError(t('missingToken'));
+    }
+  }, [setError, token, t]);
 
   const onSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!apiBase) {
-        setError('Brak NEXT_PUBLIC_API_URL');
-        return;
-      }
       if (!canSubmit) return;
 
       setLoading(true);
       setError(null);
       try {
-        const r = await fetch(`${apiBase}/auth/password/reset-confirm`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ token: token, password }),
-        });
-        if (!r.ok) {
-          const msg = (await r.text().catch(() => '')) || `HTTP ${r.status}`;
-          throw new Error(msg);
-        }
+        await authService.passwordResetConfirm({ token, password });
         setDone(true);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : typeof err === 'string' ? err : 'Unknown error';
@@ -57,7 +53,7 @@ export default function ResetWithTokenPage() {
         setLoading(false);
       }
     },
-    [apiBase, token, password, canSubmit],
+    [token, password, canSubmit],
   );
 
   return (

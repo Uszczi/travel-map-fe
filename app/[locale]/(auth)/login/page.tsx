@@ -11,20 +11,41 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { authService } from '@/src/services/auth';
+import { HttpError } from '@/src/services/common';
+
 export default function LoginFormPanel() {
+  const t = useTranslations('auth.login');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, _setError] = useState();
-  const [loading, _setLoading] = useState(false);
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const canSubmit = email.trim().length >= 3 && password.length >= 6;
 
-  const onSubmit = (_obj: unknown) => {};
+  const onSubmit = async (_obj: unknown) => {
+    setError(undefined);
+    setLoading(true);
+
+    try {
+      await authService.login({ username: email, password });
+    } catch (err: unknown) {
+      let msg = err instanceof HttpError ? err.body.detail : 'Nieznany błąd';
+      if (msg == 'Invalid username or password.') {
+        msg = t('invalid');
+      }
+      setError(msg);
+    }
+    setLoading(false);
+  };
+
   const onOAuth = (_obj: unknown) => {};
 
   return (
@@ -127,7 +148,7 @@ export default function LoginFormPanel() {
             disabled={!canSubmit || loading}
             onClick={async () => {
               if (!canSubmit || loading) return;
-              await onSubmit({ email, password, remember });
+              await onSubmit({ email, password });
             }}
             className={[
               'relative group inline-flex w-full items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
