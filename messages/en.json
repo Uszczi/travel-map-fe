@@ -158,7 +158,7 @@
   },
   "auth": {
     "login": {
-       "invalid": "Invalid email or password."
+      "invalid": "Invalid email or password."
     },
     "register": {
       "email_used": "Email already used, please login or use different email."
@@ -189,6 +189,44 @@
       "backToLoginPrefix": "All set?",
       "backToLogin": "Go to sign in",
       "missingToken": "Missing token in url, check if whole link was entered."
+    }
+  },
+  "account": {
+    "title": "My account",
+    "backHome": "Back to map",
+    "errors": { "generic": "Something went wrong" },
+    "profile": {
+      "section": "General information",
+      "name": "Display name",
+      "namePlaceholder": "Your name",
+      "email": "E-mail",
+      "save": "Save changes",
+      "saved": "Profile updated"
+    },
+    "security": {
+      "section": "Security",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "hint": "At least 8 characters, upper/lowercase and a number.",
+      "mismatch": "Passwords do not match.",
+      "save": "Change password",
+      "passwordChanged": "Password changed"
+    },
+    "connections": {
+      "section": "Connected accounts",
+      "connected": "Connected",
+      "disconnected": "Not connected",
+      "link": "Connect",
+      "unlink": "Disconnect",
+      "unlinked": "Disconnected from {provider}"
+    },
+    "danger": {
+      "section": "Danger zone",
+      "description": "Deleting your account is irreversible and removes all your routes and preferences.",
+      "arm": "Arm deletion",
+      "cancel": "Cancel",
+      "delete": "Delete account"
     }
   }
 }

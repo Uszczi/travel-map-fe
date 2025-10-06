@@ -158,7 +158,7 @@
   },
   "auth": {
     "login": {
-       "invalid": "Nieprawidłowy email albo hasło."
+      "invalid": "Nieprawidłowy email albo hasło."
     },
     "register": {
       "email_used": "Email jest już wykorzystany, zaloguj się albo użyj innego emaila."
@@ -189,6 +189,44 @@
       "backToLoginPrefix": "Gotowe?",
       "backToLogin": "Przejdź do logowania",
       "missingToken": "Brak tokenu w url, sprawdź czy cały link został wprowadzony."
+    }
+  },
+  "account": {
+    "title": "Moje konto",
+    "backHome": "Wróć na mapę",
+    "errors": { "generic": "Coś poszło nie tak" },
+    "profile": {
+      "section": "Informacje ogólne",
+      "name": "Nazwa wyświetlana",
+      "namePlaceholder": "Twoje imię",
+      "email": "E‑mail",
+      "save": "Zapisz zmiany",
+      "saved": "Profil zaktualizowany"
+    },
+    "security": {
+      "section": "Bezpieczeństwo",
+      "current": "Obecne hasło",
+      "new": "Nowe hasło",
+      "confirm": "Powtórz nowe hasło",
+      "hint": "Minimum 8 znaków, duża/mała litera i cyfra.",
+      "mismatch": "Hasła nie są identyczne.",
+      "save": "Zmień hasło",
+      "passwordChanged": "Hasło zostało zmienione"
+    },
+    "connections": {
+      "section": "Połączone konta",
+      "connected": "Połączone",
+      "disconnected": "Niepołączone",
+      "link": "Połącz",
+      "unlink": "Odłącz",
+      "unlinked": "Odłączono od {provider}"
+    },
+    "danger": {
+      "section": "Strefa ryzyka",
+      "description": "Usunięcie konta jest nieodwracalne i usuwa wszystkie trasy oraz preferencje.",
+      "arm": "Uzbrój usuwanie",
+      "cancel": "Anuluj",
+      "delete": "Usuń konto"
     }
   }
 }
