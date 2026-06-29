@@ -16,9 +16,11 @@
   "routeOptions_AdditionalPicker_tip": "When calculating the route, try to avoid previously visited roads.",
   "routeOptions_AlgorithmPicker_legend": "Algorithm",
   "routeOptions_AlgorithmPicker_dfs_label": "DFS",
+  "routeOptions_AlgorithmPicker_allstreet_label": "AllStreet",
   "routeOptions_AlgorithmPicker_random_label": "Random",
   "routeOptions_AlgorithmPicker_astar_label": "A*",
   "routeOptions_AlgorithmPicker_dfs_tooltip": "DFS — depth-first search",
+  "routeOptions_AlgorithmPicker_allstreet_tooltip": "AllStreet — exploration/perturbations",
   "routeOptions_AlgorithmPicker_random_tooltip": "Random — exploration/perturbations",
   "routeOptions_AlgorithmPicker_astar_tooltip": "A* — A-star algorithm (heuristic)",
   "routeOptions_Distance_legend": "Distance",
@@ -26,78 +28,5 @@
   "routeOptions_GenerateButton_LoadingLabel": "Generating...",
   "common_LabeledSwitch_on": "on",
   "common_LabeledSwitch_off": "off",
-  "map_DisplayVisitedButton_label": "Display visited routes",
-  "auth": {
-    "login": {
-      "invalid": "Invalid email or password."
-    },
-    "register": {
-      "email_used": "Email already used, please login or use different email."
-    },
-    "resetRequest": {
-      "title": "Password reset",
-      "intro": "Enter the e‑mail linked to your account. We'll send a link to set a new password.",
-      "emailLabel": "E‑mail",
-      "emailPlaceholder": "john.doe@example.com",
-      "submitLabel": "Send reset link",
-      "loadingLabel": "Sending…",
-      "successGeneric": "If an account exists, we've sent you an e‑mail with reset instructions.",
-      "backToLoginPrefix": "Remembered your password?",
-      "backToLogin": "Sign in"
-    },
-    "resetConfirm": {
-      "title": "Set a new password",
-      "intro": "Enter your new password. After saving, sign in again.",
-      "passwordLabel": "New password",
-      "confirmLabel": "Repeat password",
-      "passwordHint": "Min. 8 chars, upper/lowercase and a digit.",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "mismatch": "Passwords do not match.",
-      "submitLabel": "Save new password",
-      "loadingLabel": "Saving…",
-      "success": "Password changed. You can sign in now.",
-      "backToLoginPrefix": "All set?",
-      "backToLogin": "Go to sign in",
-      "missingToken": "Missing token in url, check if whole link was entered."
-    }
-  },
-  "account": {
-    "title": "My account",
-    "backHome": "Back to map",
-    "errors": { "generic": "Something went wrong" },
-    "profile": {
-      "section": "General information",
-      "name": "Display name",
-      "namePlaceholder": "Your name",
-      "email": "E-mail",
-      "save": "Save changes",
-      "saved": "Profile updated"
-    },
-    "security": {
-      "section": "Security",
-      "current": "Current password",
-      "new": "New password",
-      "confirm": "Confirm new password",
-      "hint": "At least 8 characters, upper/lowercase and a number.",
-      "mismatch": "Passwords do not match.",
-      "save": "Change password",
-      "passwordChanged": "Password changed"
-    },
-    "connections": {
-      "section": "Connected accounts",
-      "connected": "Connected",
-      "disconnected": "Not connected",
-      "link": "Connect",
-      "unlink": "Disconnect",
-      "unlinked": "Disconnected from {provider}"
-    },
-    "danger": {
-      "section": "Danger zone",
-      "description": "Deleting your account is irreversible and removes all your routes and preferences.",
-      "arm": "Arm deletion",
-      "cancel": "Cancel",
-      "delete": "Delete account"
-    }
-  }
+  "map_DisplayVisitedButton_label": "Display visited routes"
 }
