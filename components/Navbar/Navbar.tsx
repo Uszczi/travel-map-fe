@@ -50,74 +50,17 @@ export default function Navbar() {
   return (
     <div>
       <header
-        className="sticky top-2 z-40 border bg-white/70 backdrop-blur m-2
-             supports-[backdrop-filter]:bg-white/60
-             dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60"
+        className="sticky top-2 z-40 backdrop-blur m-2
+             "
       >
         <nav className="mx-auto container flex h-20 items-center justify-between px-5">
           {/* Logo */}
           <Link href={base} className="font-bold tracking-tight text-xl">
-            City Travel
+            Cover City Travel
           </Link>
-
-          {/* Desktop */}
-          <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-6">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`
-                    block  px-3 py-2  transition
-                    hover:bg-green-500 hover:text-white
-                    active:bg-green-600 active:text-white
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                    ${isActive(link.href) ? 'font-bold' : ''}
-                  `}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
 
           {/* Language */}
           <div className="hidden md:flex items-center gap-4">
-            <Link
-              href={`/${locale}/login`}
-              className={`
-                  block  px-3 py-2  transition
-                  hover:bg-green-500 hover:text-white
-                  active:bg-green-600 active:text-white
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
-                `}
-            >
-              Login
-            </Link>
-            <Link
-              href={`/${locale}/my-account`}
-              className={`
-                  block  px-3 py-2  transition
-                  hover:bg-green-500 hover:text-white
-                  active:bg-green-600 active:text-white
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                  ${isActive(`${locale}/my-account`) ? 'font-bold' : ''}
-                `}
-            >
-              My account
-            </Link>
-            <Link
-              href={`/${locale}/logout`}
-              className={`
-                  block  px-3 py-2  transition
-                  hover:bg-green-500 hover:text-white
-                  active:bg-green-600 active:text-white
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                  ${isActive(`${locale}/logout`) ? 'font-bold' : ''}
-                `}
-            >
-              Logout
-            </Link>
             <div className="flex items-center gap-2 select-none mr-4" role="group" aria-label="Language">
               <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80 pointer-events-none" aria-hidden />
 
@@ -187,10 +130,9 @@ export default function Navbar() {
           <div className="fixed inset-0 z-[99999] md:hidden" role="dialog" aria-modal="true">
             <div className="absolute inset-0 bg-black/40 z-[99998]" onClick={() => setOpen(false)} aria-hidden />
 
-            {/* panel */}
             <div className="fixed inset-y-0 right-0 z-[100000] h-full w-full max-w-[85%] border-l border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
               <div className="mb-4 flex items-center justify-between">
-                <span className="font-bold">Menu</span>
+                <span className="font-bold"></span>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
@@ -202,67 +144,6 @@ export default function Navbar() {
               </div>
 
               <div className="flex flex-col gap-2">
-                {links.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className={`
-                        block  px-3 py-2 text-sm transition
-                        hover:bg-green-500 hover:text-white
-                        active:bg-green-600 active:text-white
-                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                        ${isActive(link.href) ? 'font-bold' : ''}
-                      `}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-
-                <div className="my-2 h-px bg-zinc-200 dark:bg-zinc-800" />
-
-                <div>
-                  <Link
-                    href={`/${locale}/login`}
-                    className={`
-                  block  px-3 py-2  transition
-                  hover:bg-green-500 hover:text-white
-                  active:bg-green-600 active:text-white
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
-                `}
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href={`/${locale}/login`}
-                    className={`
-                  block  px-3 py-2  transition
-                  hover:bg-green-500 hover:text-white
-                  active:bg-green-600 active:text-white
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
-                `}
-                  >
-                    My account
-                  </Link>
-                  <Link
-                    href={`/${locale}/login`}
-                    className={`
-                  block  px-3 py-2  transition
-                  hover:bg-green-500 hover:text-white
-                  active:bg-green-600 active:text-white
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
-                  ${isActive(`${locale}/login`) ? 'font-bold' : ''}
-                `}
-                  >
-                    Logout
-                  </Link>
-                </div>
-
-                <div className="my-2 h-px bg-zinc-200 dark:bg-zinc-800" />
-
-                {/* Language */}
                 <div className="flex cursor-pointer">
                   <div className="flex items-center gap-2">
                     <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" />

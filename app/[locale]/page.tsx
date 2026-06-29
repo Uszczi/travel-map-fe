@@ -1,25 +1,30 @@
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 
+import Map from '@/components/Map/Map';
+
 export default function Home() {
   const locale = useLocale();
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex flex-col items-center mt-2 md:mt-8">
-        <h1 className="text-4xl font-bold text-center">City Travel</h1>
-        <p>City Travel jest aplikacją ...</p>
+      <div
+        className="flex flex-col drop-shadow-lg items-center justify-center gap-2 mx-auto bg-cover bg-top bg-no-repeat p-8 text-white min-h-[800px]"
+        style={{ backgroundImage: "url('/static/images/100_100.jpg')" }}
+      >
+        <h1 className="text-4xl font-bold text-center">Visit every street in selected city.</h1>
+        <h2 className="text-xl text-center">This is a demo app for my exploration of graph algorithms and maps.</h2>
+        <h3 className="text-base text-center leading-relaxed">
+          Select a city from the list below. See how you could run through all the streets in the city.
+        </h3>
+        <h3 className="text-base text-center leading-relaxed">
+          Import your own data to see how you could run through all the remaining streets in your city.
+        </h3>
       </div>
-
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-        <Link
-          href={`/${locale}/mapa`}
-          className="rounded-2xl px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400
-                           bg-gradient-to-r from-blue-600 to-indigo-600"
-        >
-          Otwórz mapę
-        </Link>
+      <div className="mx-auto w-full max-w-3xl">
+        <Map />
       </div>
+      <div></div>
     </div>
   );
 }

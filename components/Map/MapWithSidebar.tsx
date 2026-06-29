@@ -9,7 +9,6 @@ import DisplayVistedButton from '@/components/Map/DisplayVisitedButton';
 import RouteOptionsClient from '@/components/RouteOptions/RouteOptionsClient';
 import { useMapStore } from '@/src/store/useMapStore';
 
-import SelectCity from '../Map/SelectCity';
 import RouteDetils from '../RouteDetails';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
@@ -93,7 +92,6 @@ export default function MapWithSidebar() {
       <main className="flex-1 min-h-0 border  flex flex-col">
         <div className="flex-1 min-h-0">
           <Map />
-          <SelectCity />
           <DisplayVistedButton />
           {routes.map((v, i) => (
             <RouteDetils key={i} route={v} onRemove={() => {}} />
