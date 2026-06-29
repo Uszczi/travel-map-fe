@@ -50,7 +50,7 @@ export default function Navbar() {
   return (
     <div>
       <header
-        className="sticky top-2 z-40 rounded-lg border bg-white/70 backdrop-blur m-2
+        className="sticky top-2 z-40 border bg-white/70 backdrop-blur m-2
              supports-[backdrop-filter]:bg-white/60
              dark:bg-zinc-950/70 dark:supports-[backdrop-filter]:bg-zinc-950/60"
       >
@@ -68,7 +68,7 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`
-                    block rounded-md px-3 py-2  transition
+                    block  px-3 py-2  transition
                     hover:bg-green-500 hover:text-white
                     active:bg-green-600 active:text-white
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -85,7 +85,7 @@ export default function Navbar() {
             <Link
               href={`/${locale}/login`}
               className={`
-                  block rounded-md px-3 py-2  transition
+                  block  px-3 py-2  transition
                   hover:bg-green-500 hover:text-white
                   active:bg-green-600 active:text-white
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -97,7 +97,7 @@ export default function Navbar() {
             <Link
               href={`/${locale}/my-account`}
               className={`
-                  block rounded-md px-3 py-2  transition
+                  block  px-3 py-2  transition
                   hover:bg-green-500 hover:text-white
                   active:bg-green-600 active:text-white
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -109,7 +109,7 @@ export default function Navbar() {
             <Link
               href={`/${locale}/logout`}
               className={`
-                  block rounded-md px-3 py-2  transition
+                  block  px-3 py-2  transition
                   hover:bg-green-500 hover:text-white
                   active:bg-green-600 active:text-white
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -126,7 +126,7 @@ export default function Navbar() {
                 onClick={() => switchLocale('pl')}
                 aria-label="Polski"
                 className={`
-                  relative text-sm cursor-pointer px-3 py-2 rounded-md transition
+                  relative text-sm cursor-pointer px-3 py-2  transition
                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                   focus-visible:outline-zinc-500/40 dark:focus-visible:outline-zinc-400/30
 
@@ -150,7 +150,7 @@ export default function Navbar() {
                 onClick={() => switchLocale('en')}
                 aria-label="English"
                 className={`
-                  relative text-sm cursor-pointer px-2 py-1 rounded-md transition
+                  relative text-sm cursor-pointer px-2 py-1  transition
                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                   focus-visible:outline-zinc-500/40 dark:focus-visible:outline-zinc-400/30
 
@@ -174,7 +174,7 @@ export default function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(true)}
-            className="rounded-md p-2 ring-offset-2 transition hover:bg-zinc-100 focus-visible:ring-2 md:hidden dark:hover:bg-zinc-900"
+            className=" p-2 ring-offset-2 transition hover:bg-zinc-100 focus-visible:ring-2 md:hidden dark:hover:bg-zinc-900"
             aria-label="Open menu"
           >
             <FontAwesomeIcon icon={faBars} className="h-5 w-5" />
@@ -194,7 +194,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-md p-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-700 hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-white"
+                  className=" p-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-700 hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-white"
                   aria-label="Close menu"
                 >
                   <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
@@ -208,7 +208,7 @@ export default function Navbar() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={`
-                        block rounded-md px-3 py-2 text-sm transition
+                        block  px-3 py-2 text-sm transition
                         hover:bg-green-500 hover:text-white
                         active:bg-green-600 active:text-white
                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -225,7 +225,7 @@ export default function Navbar() {
                   <Link
                     href={`/${locale}/login`}
                     className={`
-                  block rounded-md px-3 py-2  transition
+                  block  px-3 py-2  transition
                   hover:bg-green-500 hover:text-white
                   active:bg-green-600 active:text-white
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -237,7 +237,7 @@ export default function Navbar() {
                   <Link
                     href={`/${locale}/login`}
                     className={`
-                  block rounded-md px-3 py-2  transition
+                  block  px-3 py-2  transition
                   hover:bg-green-500 hover:text-white
                   active:bg-green-600 active:text-white
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400
@@ -249,7 +249,7 @@ export default function Navbar() {
                   <Link
                     href={`/${locale}/login`}
                     className={`
-                  block rounded-md px-3 py-2  transition
+                  block  px-3 py-2  transition
                   hover:bg-green-500 hover:text-white
                   active:bg-green-600 active:text-white
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400

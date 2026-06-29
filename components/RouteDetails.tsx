@@ -13,6 +13,8 @@ type RouteDetilsProps = {
 };
 
 function combineSegmentsIfNew(segments: Segment[]): Segment[] {
+  if (!segments?.length) return [];
+
   const result = [];
   let lastSegment = { ...segments[0] };
 
@@ -35,7 +37,9 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
   const [downloading, setDownloading] = useState(false);
 
   const total_width = 1000;
-  const combinedSegments = useMemo(() => combineSegmentsIfNew(route.segments), [route.segments]);
+  const combinedSegments = useMemo(() => combineSegmentsIfNew(route.segments ?? []), [route.segments]);
+  const elevation = route.elevation ?? [];
+  const routeDistance = route.distance > 0 ? route.distance : 1;
 
   const handleDownload = async () => {
     try {
@@ -80,7 +84,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
           <div
             key={index}
             style={{
-              width: `${Math.round((e.distance * total_width) / route.distance)}px`,
+              width: `${Math.round((e.distance * total_width) / routeDistance)}px`,
               height: '20px',
               background: e.new ? 'green' : 'brown',
               position: 'relative',
@@ -116,7 +120,11 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
           <p>Całkowity wznos: {route.total_gain}</p>
           <p>Całkowity spadek: {route.total_lose}</p>
         </div>
-        <ElevationChart elevation={route.elevation} />
+        {elevation.length > 0 ? (
+          <ElevationChart elevation={elevation} />
+        ) : (
+          <p className="text-sm text-zinc-500">Brak danych wysokości</p>
+        )}
       </div>
     </div>
   );

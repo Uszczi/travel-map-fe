@@ -53,7 +53,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
     <div
       role="group"
       aria-label={legend}
-      className={`w-full rounded-xl border p-3 dark:bg-zinc-900 space-y-3 ${className ?? ''}`}
+      className={`w-full  border p-3 dark:bg-zinc-900 space-y-3 ${className ?? ''}`}
     >
       <div className="text-sm font-semibold">{legend}</div>
       <div className="space-y-2">
@@ -69,7 +69,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
                 if (e.key === 'Enter' && canSearch) geocode(which);
               }}
               placeholder="np. Plac Zamkowy, Warszawa"
-              className="w-full rounded-lg border dark:bg-zinc-700 px-3 py-2 pr-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+              className="w-full  border dark:bg-zinc-700 px-3 py-2 pr-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
               inputMode="search"
               aria-label="Wyszukaj miejsce"
             />
@@ -93,7 +93,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
             disabled={DISABLE_SEARCH_BUTTON}
             onClick={DISABLE_SEARCH_BUTTON ? undefined : () => geocode(which)}
             className={[
-              'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl min-w-14',
+              'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5  min-w-14',
               'border transition-transform duration-100 active:translate-y-px cursor-not-allowed',
               // !canSearch || point.loading ? 'opacity-60 cursor-not-allowed' : '',
               DISABLE_SEARCH_BUTTON ? 'opacity-60 cursor-not-allowed' : '',
@@ -109,7 +109,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
         {point.error && <p className="text-xs text-red-600">{point.error}</p>}
 
         {point.results.length > 0 && (
-          <ul className="max-h-56 overflow-auto rounded-xl border divide-y divide-zinc-800">
+          <ul className="max-h-56 overflow-auto  border divide-y divide-zinc-800">
             {point.results.map((r) => (
               <li key={r.id}>
                 <button
@@ -133,7 +133,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
             onClick={handlePickOnMap}
             aria-pressed={isPicking}
             className={[
-              'w-44 relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+              'w-44 relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 ',
               'border transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
               point.method === 'pin' && point.awaitingClick
                 ? 'border-indigo-500 ring-1 ring-inset ring-indigo-500 dark:bg-zinc-100 dark:text-zinc-900'

@@ -76,7 +76,7 @@ export default function RegisterPage() {
     <main className="h-full grid place-items-center p-3 sm:p-6">
       <section className="w-full max-w-md">
         {/* Ten sam DNA co LocationPicker/RouteOptions */}
-        <div className="rounded-xl border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
+        <div className=" border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
           <header className="space-y-0.5">
             <h2 className="text-lg font-semibold tracking-wide">Załóż konto</h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">Dołącz i odkrywaj nowe trasy z travel‑map.</p>
@@ -86,7 +86,7 @@ export default function RegisterPage() {
             <div
               role="alert"
               aria-live="assertive"
-              className="flex items-start gap-2 rounded-lg border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 p-2 text-sm text-red-800 dark:text-red-200"
+              className="flex items-start gap-2  border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 p-2 text-sm text-red-800 dark:text-red-200"
             >
               <FontAwesomeIcon icon={faTriangleExclamation} className="mt-0.5 shrink-0" />
               <span>{error}</span>
@@ -97,7 +97,7 @@ export default function RegisterPage() {
             <div
               role="status"
               aria-live="polite"
-              className="flex items-start gap-2 rounded-lg border border-emerald-300 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/40 p-2 text-sm text-emerald-800 dark:text-emerald-200"
+              className="flex items-start gap-2  border border-emerald-300 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/40 p-2 text-sm text-emerald-800 dark:text-emerald-200"
             >
               <FontAwesomeIcon icon={faCheck} className="mt-0.5 shrink-0" />
               <span>{success}</span>
@@ -119,7 +119,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="jan.kowalski@example.com"
-                  className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                  className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                 />
               </div>
             </label>
@@ -139,7 +139,7 @@ export default function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                    className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                   />
                 </div>
                 <div className="mt-1 grid grid-cols-4 gap-1">
@@ -170,7 +170,7 @@ export default function RegisterPage() {
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                    className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                   />
                 </div>
                 {confirm.length > 0 && confirm !== password && (
@@ -205,7 +205,7 @@ export default function RegisterPage() {
               type="submit"
               disabled={!canSubmit || loading}
               className={[
-                'relative group inline-flex w-full items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+                'relative group inline-flex w-full items-center justify-center gap-1.5 px-3 py-2.5 ',
                 'border transition-transform duration-100 active:translate-y-px',
                 'hover:border-zinc-700 disabled:opacity-60 disabled:cursor-not-allowed',
                 'shadow-sm',
@@ -240,7 +240,7 @@ export default function RegisterPage() {
                 type="button"
                 onClick={() => onOAuth('strava')}
                 className={[
-                  'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+                  'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 ',
                   'border transition-transform duration-100 active:translate-y-px',
                   'hover:border-zinc-700',
                 ].join(' ')}
@@ -251,7 +251,7 @@ export default function RegisterPage() {
                 type="button"
                 onClick={() => onOAuth('google')}
                 className={[
-                  'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+                  'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 ',
                   'border transition-transform duration-100 active:translate-y-px',
                   'hover:border-zinc-700',
                 ].join(' ')}

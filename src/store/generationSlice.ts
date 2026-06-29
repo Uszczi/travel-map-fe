@@ -5,7 +5,7 @@ import ApiService, { Route } from '../services/api';
 import { type RouteOptionsStore } from './routeOptionsSlice';
 
 export interface generationState {
-  loading: boolean;
+  isGenerating: boolean;
   results: Route[];
   error?: string | null;
 }
@@ -22,18 +22,22 @@ export const createGenerationSlice: StateCreator<
   [],
   GenerationStore
 > = (set, get) => ({
-  loading: false,
+  isGenerating: false,
   results: [] as Route[],
 
   getResult: async () => {
+    let started = false;
     set(
       produce((s: GenerationStore & RouteOptionsStore) => {
-        s.loading = true;
+        if (s.isGenerating) return;
+        s.isGenerating = true;
         s.error = null;
+        started = true;
       }),
       false,
       'generation/getResult/start',
     );
+    if (!started) return;
 
     try {
       const { start, end, distance, algorithm, preferNew } = get();
@@ -49,7 +53,7 @@ export const createGenerationSlice: StateCreator<
       set(
         produce((s: GenerationStore & RouteOptionsStore) => {
           s.results.push(result);
-          s.loading = false;
+          s.isGenerating = false;
         }),
         false,
         'generation/getResult/success',
@@ -57,9 +61,8 @@ export const createGenerationSlice: StateCreator<
     } catch (_e) {
       set(
         produce((s: GenerationStore & RouteOptionsStore) => {
-          s.loading = false;
-          // TODO set to error
           s.error = 'Nie udało się wygenerować trasy';
+          s.isGenerating = false;
         }),
         false,
         'generation/getResult/error',

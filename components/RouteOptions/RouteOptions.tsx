@@ -3,6 +3,7 @@
 import { faAnglesLeft, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import AdditionalPicker from '@/components/RouteOptions/AdditionalPicker';
@@ -20,16 +21,17 @@ type Props = {
 export default function RouteOptions({ onCollapse, isCollapsed = false }: Props) {
   const t = useTranslations();
 
-  const { start, end, preferNew, distance, algorithm, loading } = useMapStore(
+  const { start, end, preferNew, distance, algorithm } = useMapStore(
     useShallow((s) => ({
       start: s.start,
       end: s.end,
       preferNew: s.preferNew,
       distance: s.distance,
       algorithm: s.algorithm,
-      loading: s.loading,
     })),
   );
+  const [isGenerating, setIsGenerating] = useState(false);
+  const generationError = useMapStore((s) => s.error);
   const setStart = useMapStore((s) => s.setStart);
   const setEnd = useMapStore((s) => s.setEnd);
   const setPreferNew = useMapStore((s) => s.setPreferNew);
@@ -37,8 +39,6 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
   const setAlgorithm = useMapStore((s) => s.setAlgorithm);
   const getResult = useMapStore((s) => s.getResult);
 
-  // Na telefonie ( < sm ) zwijamy W GÓRĘ: -translate-y-full
-  // Na większych ekranach zwijamy W LEWO: sm:-translate-x-full
   const collapseClasses = isCollapsed
     ? '-translate-y-full sm:translate-y-0 sm:-translate-x-full'
     : 'translate-y-0 sm:translate-x-0';
@@ -64,7 +64,7 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
           aria-controls="route-options-aside"
           aria-expanded={!isCollapsed}
           aria-label="Zwiń panel opcji"
-          className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring"
+          className="inline-flex items-center gap-2  border px-3 py-1.5 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring"
         >
           {/* Ikona: na telefonie strzałki w górę, na desktopie w lewo */}
           <span className="sm:hidden inline-flex">
@@ -103,12 +103,20 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
         setPreferNewRoads={setPreferNew}
       />
 
+      {generationError && <p className="text-xs text-red-600">{generationError}</p>}
+
       <GenerateButton
         label={t('routeOptions_GenerateButton_label')}
         loadingLabel={t('routeOptions_GenerateButton_LoadingLabel')}
-        loading={loading}
+        loading={isGenerating}
         onClick={async () => {
-          await getResult();
+          if (isGenerating) return;
+          setIsGenerating(true);
+          try {
+            await getResult();
+          } finally {
+            setIsGenerating(false);
+          }
         }}
       />
     </section>

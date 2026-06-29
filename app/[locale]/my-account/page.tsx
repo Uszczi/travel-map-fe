@@ -198,7 +198,7 @@ export default function AccountPage() {
             role={banner.type === 'error' ? 'alert' : 'status'}
             aria-live={banner.type === 'error' ? 'assertive' : 'polite'}
             className={[
-              'rounded-lg border p-2 text-sm',
+              ' border p-2 text-sm',
               banner.type === 'error'
                 ? 'border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-200'
                 : 'border-emerald-300 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200',
@@ -215,7 +215,7 @@ export default function AccountPage() {
         )}
 
         {/* General info */}
-        <section className="rounded-xl border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
+        <section className=" border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
           <header className="flex items-center justify-between">
             <h2 className="text-sm font-semibold">{t('profile.section')}</h2>
             {loadingProfile && <FontAwesomeIcon icon={faSpinner} className="animate-spin" />}
@@ -233,7 +233,7 @@ export default function AccountPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t('profile.namePlaceholder')}
-                  className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                  className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                 />
               </div>
             </label>
@@ -248,7 +248,7 @@ export default function AccountPage() {
                   type="email"
                   value={profile?.email ?? ''}
                   disabled
-                  className="w-full rounded-lg border dark:bg-zinc-800 pl-10 pr-3 py-2 text-sm opacity-80"
+                  className="w-full  border dark:bg-zinc-800 pl-10 pr-3 py-2 text-sm opacity-80"
                 />
               </div>
             </label>
@@ -260,7 +260,7 @@ export default function AccountPage() {
               onClick={saveProfile}
               disabled={!canSaveProfile || savingProfile}
               className={[
-                'inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm',
+                'inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm',
                 'hover:border-zinc-700 active:translate-y-px disabled:opacity-60 disabled:cursor-not-allowed',
               ].join(' ')}
             >
@@ -272,7 +272,7 @@ export default function AccountPage() {
         </section>
 
         {/* Security */}
-        <section className="rounded-xl border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
+        <section className=" border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
           <h2 className="text-sm font-semibold">{t('security.section')}</h2>
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -286,7 +286,7 @@ export default function AccountPage() {
                   type="password"
                   value={currentPw}
                   onChange={(e) => setCurrentPw(e.target.value)}
-                  className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                  className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                   autoComplete="current-password"
                 />
               </div>
@@ -302,7 +302,7 @@ export default function AccountPage() {
                   type="password"
                   value={newPw}
                   onChange={(e) => setNewPw(e.target.value)}
-                  className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                  className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                   autoComplete="new-password"
                 />
                 <div className="mt-2 grid grid-cols-4 gap-1">
@@ -329,7 +329,7 @@ export default function AccountPage() {
                   type="password"
                   value={confirmPw}
                   onChange={(e) => setConfirmPw(e.target.value)}
-                  className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                  className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
                   autoComplete="new-password"
                 />
               </div>
@@ -345,7 +345,7 @@ export default function AccountPage() {
               onClick={savePassword}
               disabled={!canSavePw || savingPw}
               className={[
-                'inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm',
+                'inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm',
                 'hover:border-zinc-700 active:translate-y-px disabled:opacity-60 disabled:cursor-not-allowed',
               ].join(' ')}
             >
@@ -357,12 +357,12 @@ export default function AccountPage() {
         </section>
 
         {/* Connected accounts */}
-        <section className="rounded-xl border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
+        <section className=" border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
           <h2 className="text-sm font-semibold">{t('connections.section')}</h2>
 
           <ul className="grid gap-2 sm:grid-cols-2">
             {/* Google */}
-            <li className="rounded-lg border p-3">
+            <li className=" border p-3">
               <div className="flex items-center justify-between">
                 <div className="text-sm">
                   <div className="font-medium">Google</div>
@@ -376,7 +376,7 @@ export default function AccountPage() {
                       type="button"
                       disabled={unlinking === 'google'}
                       onClick={() => unlinkProvider('google')}
-                      className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
+                      className="inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
                     >
                       {unlinking === 'google' ? (
                         <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
@@ -389,7 +389,7 @@ export default function AccountPage() {
                     <button
                       type="button"
                       onClick={() => linkProvider('google')}
-                      className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
+                      className="inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
                     >
                       <FontAwesomeIcon icon={faLink} />
                       <span>{t('connections.link')}</span>
@@ -400,7 +400,7 @@ export default function AccountPage() {
             </li>
 
             {/* Strava */}
-            <li className="rounded-lg border p-3">
+            <li className=" border p-3">
               <div className="flex items-center justify-between">
                 <div className="text-sm">
                   <div className="font-medium">Strava</div>
@@ -414,7 +414,7 @@ export default function AccountPage() {
                       type="button"
                       disabled={unlinking === 'strava'}
                       onClick={() => unlinkProvider('strava')}
-                      className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
+                      className="inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
                     >
                       {unlinking === 'strava' ? (
                         <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
@@ -427,7 +427,7 @@ export default function AccountPage() {
                     <button
                       type="button"
                       onClick={() => linkProvider('strava')}
-                      className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
+                      className="inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
                     >
                       <FontAwesomeIcon icon={faLink} />
                       <span>{t('connections.link')}</span>
@@ -440,7 +440,7 @@ export default function AccountPage() {
         </section>
 
         {/* Danger zone */}
-        <section className="rounded-xl border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
+        <section className=" border p-3 dark:bg-zinc-900 space-y-3 shadow-sm">
           <h2 className="text-sm font-semibold">{t('danger.section')}</h2>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">{t('danger.description')}</p>
 
@@ -448,7 +448,7 @@ export default function AccountPage() {
             <button
               type="button"
               onClick={() => setDangerArmed((v) => !v)}
-              className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
+              className="inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm hover:border-zinc-700 active:translate-y-px"
             >
               <FontAwesomeIcon icon={faTrash} />
               <span>{dangerArmed ? t('danger.cancel') : t('danger.arm')}</span>
@@ -459,7 +459,7 @@ export default function AccountPage() {
               disabled={!dangerArmed || deleting}
               onClick={deleteAccount}
               className={[
-                'inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm',
+                'inline-flex items-center gap-1.5  border px-3 py-2.5 text-sm',
                 'hover:border-zinc-700 active:translate-y-px disabled:opacity-60 disabled:cursor-not-allowed',
               ].join(' ')}
             >

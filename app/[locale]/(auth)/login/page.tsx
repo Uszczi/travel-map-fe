@@ -53,7 +53,7 @@ export default function LoginFormPanel() {
       <section
         role="form"
         aria-busy={loading}
-        className={['w-full max-w-md', 'rounded-xl border p-3 dark:bg-zinc-900 space-y-3', 'shadow-sm'].join(' ')}
+        className={['w-full max-w-md', ' border p-3 dark:bg-zinc-900 space-y-3', 'shadow-sm'].join(' ')}
       >
         <header className="space-y-0.5">
           <h2 className="text-lg font-semibold tracking-wide">Zaloguj się</h2>
@@ -66,7 +66,7 @@ export default function LoginFormPanel() {
           <div
             role="alert"
             aria-live="assertive"
-            className="flex items-start gap-2 rounded-lg border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 p-2 text-sm text-red-800 dark:text-red-200"
+            className="flex items-start gap-2  border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 p-2 text-sm text-red-800 dark:text-red-200"
           >
             <FontAwesomeIcon icon={faTriangleExclamation} className="mt-0.5 shrink-0" />
             <span>{error}</span>
@@ -92,7 +92,7 @@ export default function LoginFormPanel() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jan.kowalski@example.com"
-                className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                className="w-full  border dark:bg-zinc-700 pl-10 pr-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
               />
             </div>
           </label>
@@ -113,13 +113,13 @@ export default function LoginFormPanel() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-lg border dark:bg-zinc-700 pl-10 pr-10 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+                className="w-full  border dark:bg-zinc-700 pl-10 pr-10 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
               />
               <button
                 type="button"
                 aria-label={showPassword ? 'Ukryj hasło' : 'Pokaż hasło'}
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md px-2 py-1 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-800/40"
+                className="absolute right-2 top-1/2 -translate-y-1/2  px-2 py-1 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-800/40"
               >
                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
               </button>
@@ -151,7 +151,7 @@ export default function LoginFormPanel() {
               await onSubmit({ email, password });
             }}
             className={[
-              'relative group inline-flex w-full items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+              'relative group inline-flex w-full items-center justify-center gap-1.5 px-3 py-2.5 ',
               'border transition-transform duration-100 active:translate-y-px',
               'hover:border-zinc-700 disabled:opacity-60 disabled:cursor-not-allowed',
               'shadow-sm',
@@ -186,7 +186,7 @@ export default function LoginFormPanel() {
               type="button"
               onClick={() => onOAuth?.('strava')}
               className={[
-                'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+                'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 ',
                 'border transition-transform duration-100 active:translate-y-px',
                 'hover:border-zinc-700',
               ].join(' ')}
@@ -199,7 +199,7 @@ export default function LoginFormPanel() {
               type="button"
               onClick={() => onOAuth?.('google')}
               className={[
-                'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl',
+                'inline-flex items-center justify-center gap-1.5 px-3 py-2.5 ',
                 'border transition-transform duration-100 active:translate-y-px',
                 'hover:border-zinc-700',
               ].join(' ')}

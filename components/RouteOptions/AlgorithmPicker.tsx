@@ -46,6 +46,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
     { key: 'dfs', label: 'DFS', Icon: TreeIcon },
     { key: 'astar', label: 'A*', Icon: StarIcon },
     { key: 'random', label: 'Losowy', Icon: ShuffleIcon },
+    { key: 'allstreet', label: 'Wszystkie', Icon: ShuffleIcon },
   ];
 
   const cycle = (dir: 1 | -1) => {
@@ -56,7 +57,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
   };
 
   return (
-    <div className={`w-full rounded-xl border p-3 bg-white dark:bg-zinc-900 ${className ?? ''}`}>
+    <div className={`w-full  border p-3 bg-white dark:bg-zinc-900 ${className ?? ''}`}>
       <div className="text-sm font-semibold mb-2.5">{legend}</div>
 
       <div
@@ -88,7 +89,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
                 onChange?.(key);
               }}
               className={[
-                'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl min-w-14',
+                'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5  min-w-14',
                 'border border-zinc-800 cursor-pointer outline-none',
                 'transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
                 'dark:bg-zinc-700',
@@ -104,7 +105,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
 
               <span
                 role="tooltip"
-                className="pointer-events-none absolute left-24 bottom-full mb-2 -translate-x-1/2 whitespace-nowrap rounded-md border border-zinc-800 bg-zinc-900 px-2 py-1.5 text-xs text-zinc-200 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 z-40"
+                className="pointer-events-none absolute left-24 bottom-full mb-2 -translate-x-1/2 whitespace-nowrap  border border-zinc-800 bg-zinc-900 px-2 py-1.5 text-xs text-zinc-200 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 z-40"
               >
                 {t(`routeOptions_AlgorithmPicker_${key}_tooltip`)}
                 <span className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 bg-zinc-900 border-r border-b border-zinc-800" />

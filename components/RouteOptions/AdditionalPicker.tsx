@@ -20,7 +20,7 @@ export default function AdditionalPicker({ className, legend, preferNewRoads, se
     <div
       role="group"
       aria-label={legend}
-      className={['w-full rounded-xl border p-3 dark:bg-zinc-900 space-y-3', className ?? ''].join(' ')}
+      className={['w-full  border p-3 dark:bg-zinc-900 space-y-3', className ?? ''].join(' ')}
     >
       <div className="text-sm font-semibold">{legend}</div>
 

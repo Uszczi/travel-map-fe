@@ -33,7 +33,7 @@ export default function GenerateButton({
         className={[
           'relative group inline-flex items-center justify-center gap-2',
           fullWidth ? 'w-full' : '',
-          'px-4 py-2.5 rounded-xl border',
+          'px-4 py-2.5  border',
           'transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
           'dark:bg-zinc-900',
           disabled || loading ? 'opacity-60 cursor-not-allowed' : '',
@@ -41,7 +41,7 @@ export default function GenerateButton({
       >
         {loading ? (
           <>
-            <FontAwesomeIcon icon={faSpinner} className="text-sm" />
+            <FontAwesomeIcon icon={faSpinner} className="text-sm animate-spin" />
             <span className="font-medium">{loadingLabel}</span>
           </>
         ) : (

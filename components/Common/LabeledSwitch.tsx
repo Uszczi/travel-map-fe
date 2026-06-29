@@ -27,11 +27,7 @@ export default function LabeledSwitch({
   );
 
   return (
-    <div
-      role="group"
-      aria-label={label}
-      className={['w-full rounded-xl border p-3 dark:bg-zinc-900', className ?? ''].join(' ')}
-    >
+    <div role="group" aria-label={label} className={['w-full  border p-3 dark:bg-zinc-900', className ?? ''].join(' ')}>
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="text-sm font-semibold">{label}</div>

@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
+import AnimatedRoute from '@/components/AnimatedRoute';
 import CenterMap from '@/components/Map/CenterMap';
 import { endIcon, startIcon } from '@/components/Map/icons';
 import Route from '@/components/Route';
@@ -11,7 +12,10 @@ import RouteWithArrows from '@/components/RouteWithArrows';
 import { Route as RouteInterface } from '@/src/services/api';
 import { useMapStore } from '@/src/store/useMapStore';
 
-const routeToPositions = (r: RouteInterface): [number, number][] => r.y.map((lat, i) => [lat, r.x[i]]);
+const routeToPositions = (r: RouteInterface): [number, number][] => {
+  if (!Array.isArray(r.y) || !Array.isArray(r.x)) return [];
+  return r.y.map((lat, i) => [lat, r.x[i]]);
+};
 
 const DEFAULT_CENTER: [number, number] = [51.6101241, 19.1999532];
 
@@ -34,6 +38,7 @@ export default function Map() {
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
   const routes = useMapStore((s) => s.results);
+  const algorithm = useMapStore((s) => s.algorithm);
 
   useEffect(() => {
     if (!selecting) return;
@@ -88,9 +93,15 @@ export default function Map() {
         {end && <Marker position={end} icon={endIcon} />}
         {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}
 
-        {routes.map((r, i) => (
-          <RouteWithArrows key={`gen-${i}`} positions={routeToPositions(r)} focused={i === routes.length - 1} />
-        ))}
+        {routes.map((r, i) => {
+          const isFocused = i === routes.length - 1;
+          if (algorithm === 'allstreet' && isFocused) {
+            return <AnimatedRoute key={`gen-${i}`} route={r} focused />;
+          }
+          return (
+            <RouteWithArrows key={`gen-${i}`} positions={routeToPositions(r)} focused={isFocused} />
+          );
+        })}
 
         {displayVisitedRoutes && visitedRoutes.map((r, i) => <Route key={`gen-${i}`} positions={r} />)}
       </MapContainer>

@@ -33,14 +33,22 @@ export default class ApiService {
     end: LatLng | null,
     distance: number,
     preferNew: boolean,
+    timeout = 30_000,
   ): Promise<Route> {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/route/${algorithm}?distance=${distance}&prefer_new=${preferNew}`;
-    if (start) url += `&start_x=${start.lng}&start_y=${start.lat}`;
-    if (end) url += `&end_x=${end.lng}&end_y=${end.lat}`;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
 
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
+    try {
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/route/${algorithm}?distance=${distance}&prefer_new=${preferNew}`;
+      if (start) url += `&start_x=${start.lng}&start_y=${start.lat}`;
+      if (end) url += `&end_x=${end.lng}&end_y=${end.lat}`;
+
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   static async stravaRoutesToVisited(): Promise<void> {

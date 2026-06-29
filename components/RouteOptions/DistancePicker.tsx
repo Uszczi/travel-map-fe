@@ -45,7 +45,7 @@ export default function DistancePicker({
     <div
       role="group"
       aria-label={legend}
-      className={`w-full rounded-xl border p-3 dark:bg-zinc-900 space-y-3 ${className ?? ''}`}
+      className={`w-full  border p-3 dark:bg-zinc-900 space-y-3 ${className ?? ''}`}
     >
       <div className="space-y-2">
         <div className="flex items-end justify-between">
@@ -66,7 +66,7 @@ export default function DistancePicker({
           disabled={value <= min}
           title={`- ${step} km`}
           className={[
-            'relative inline-flex items-center justify-center px-3 py-2.5 rounded-xl border',
+            'relative inline-flex items-center justify-center px-3 py-2.5  border',
             'transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
             value <= min ? 'opacity-60 cursor-not-allowed' : '',
           ].join(' ')}
@@ -88,7 +88,7 @@ export default function DistancePicker({
             aria-valuemax={max}
             aria-valuenow={current}
             aria-valuetext={`${current} kilometrów`}
-            className="w-full h-2 rounded-lg appearance-none bg-zinc-200 dark:bg-zinc-700 cursor-pointer"
+            className="w-full h-2  appearance-none bg-zinc-200 dark:bg-zinc-700 cursor-pointer"
           />
 
           <div className="relative w-36">
@@ -119,7 +119,7 @@ export default function DistancePicker({
                 }
               }}
               aria-label="Wpisz odległość w km"
-              className="w-full rounded-lg border dark:bg-zinc-700 px-3 py-2 pr-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
+              className="w-full  border dark:bg-zinc-700 px-3 py-2 pr-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
             />
             <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-zinc-500 select-none">km</span>
           </div>
@@ -131,7 +131,7 @@ export default function DistancePicker({
           disabled={value >= max}
           title={`+ ${step} km`}
           className={[
-            'relative inline-flex items-center justify-center px-3 py-2.5 rounded-xl border',
+            'relative inline-flex items-center justify-center px-3 py-2.5  border',
             'transition-transform duration-100 hover:border-zinc-700 active:translate-y-px',
             value >= max ? 'opacity-60 cursor-not-allowed' : '',
           ].join(' ')}
@@ -151,7 +151,7 @@ export default function DistancePicker({
               aria-pressed={active}
               onClick={() => set(km)}
               className={[
-                'px-2.5 py-1.5 rounded-xl text-sm border transition-colors',
+                'px-2.5 py-1.5  text-sm border transition-colors',
                 'hover:border-zinc-700 shrink-0',
                 active ? 'border-indigo-500 ring-1 ring-inset ring-indigo-500' : '',
               ].join(' ')}

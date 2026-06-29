@@ -9,6 +9,7 @@ import DisplayVistedButton from '@/components/Map/DisplayVisitedButton';
 import RouteOptionsClient from '@/components/RouteOptions/RouteOptionsClient';
 import { useMapStore } from '@/src/store/useMapStore';
 
+import SelectCity from '../Map/SelectCity';
 import RouteDetils from '../RouteDetails';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
@@ -29,7 +30,7 @@ export default function MapWithSidebar() {
       <aside
         id="route-options-aside"
         className={[
-          'relative border rounded-lg overflow-hidden',
+          'relative border  overflow-hidden',
           'transition-[height] duration-300',
           isSidebarOpen ? 'h-[70dvh] md:h-auto' : 'h-[44px] md:h-auto',
           'md:min-h-0',
@@ -89,9 +90,10 @@ export default function MapWithSidebar() {
         </button>
       </aside>
 
-      <main className="flex-1 min-h-0 border rounded-lg flex flex-col">
+      <main className="flex-1 min-h-0 border  flex flex-col">
         <div className="flex-1 min-h-0">
           <Map />
+          <SelectCity />
           <DisplayVistedButton />
           {routes.map((v, i) => (
             <RouteDetils key={i} route={v} onRemove={() => {}} />
