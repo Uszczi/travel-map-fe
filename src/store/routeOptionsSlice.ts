@@ -324,7 +324,6 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
       set(
         produce((s) => {
           s[which].loading = false;
-          s[which].error = 'Błąd reverse geokodowania';
         }),
         false,
         `mapOptions/${which}/pinToAddress/error`,

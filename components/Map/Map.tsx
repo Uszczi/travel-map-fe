@@ -1,7 +1,7 @@
 'use client';
 
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import AnimatedRoute from '@/components/AnimatedRoute';
@@ -22,8 +22,6 @@ const routeToPositions = (r: RouteInterface): [number, number][] => {
 const DEFAULT_CENTER: [number, number] = [51.6101241, 19.1999532];
 
 export default function Map() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
   const startSec = useMapStore((s) => s.start);
   const endSec = useMapStore((s) => s.end);
   const setCoords = useMapStore((s) => s.setCoords);
@@ -54,7 +52,7 @@ export default function Map() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      if (wrapperRef.current?.contains(target)) return;
+      if (target.closest('.leaflet-container')) return;
 
       if (target.closest('[data-pick-toggle]')) return;
 
@@ -86,7 +84,7 @@ export default function Map() {
   };
 
   return (
-    <div ref={wrapperRef} className="w-full flex flex-col min-h-[600px] h-[600px]">
+    <div className="w-full flex flex-col min-h-[600px] h-[600px]">
       <MapContainer center={DEFAULT_CENTER} zoom={13} className="w-full h-full">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

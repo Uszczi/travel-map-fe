@@ -2,8 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 import CityAlgorithmPicker from '@/components/CityAlgorithmPicker';
+import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
+import GenerateButton from '@/components/RouteOptions/GenerateButton';
 import LocationPicker from '@/components/RouteOptions/LocationPicker';
 import { useMapStore } from '@/src/store/useMapStore';
 
@@ -15,6 +18,10 @@ export default function Home() {
   const start = useMapStore((s) => s.start);
   const setStart = useMapStore((s) => s.setStart);
   const setEnd = useMapStore((s) => s.setEnd);
+  const algorithm = useMapStore((s) => s.algorithm);
+  const setAlgorithm = useMapStore((s) => s.setAlgorithm);
+  const getResult = useMapStore((s) => s.getResult);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -55,6 +62,25 @@ export default function Home() {
             point={start}
             setPoint={setStart}
             setOtherPoint={setEnd}
+          />
+          <AlgorithmPicker
+            legend={t('routeOptions_AlgorithmPicker_legend')}
+            value={algorithm}
+            onChange={setAlgorithm}
+          />
+          <GenerateButton
+            label={t('routeOptions_GenerateButton_label')}
+            loadingLabel={t('routeOptions_GenerateButton_LoadingLabel')}
+            loading={isGenerating}
+            onClick={async () => {
+              if (isGenerating) return;
+              setIsGenerating(true);
+              try {
+                await getResult();
+              } finally {
+                setIsGenerating(false);
+              }
+            }}
           />
         </div>
       </div>
