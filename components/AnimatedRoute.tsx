@@ -36,9 +36,11 @@ function splitIntoSegments(positions: [number, number][], segments: Segment[]): 
 type AnimatedRouteProps = {
   route: Route;
   focused?: boolean;
+  speed?: number;
+  skipCounter?: number;
 };
 
-const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true }) => {
+const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true, speed = 500, skipCounter = 0 }) => {
   const map = useMap();
   const polylineRef = useRef<L.Polyline | null>(null);
 
@@ -54,8 +56,6 @@ const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true }) 
       weight: 3,
     }).addTo(map);
 
-    polyline.setLatLngs(chunks[0]);
-
     polyline.arrowheads({
       size: '10m',
       yawn: 30,
@@ -65,12 +65,15 @@ const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true }) 
 
     polylineRef.current = polyline;
 
-    if (chunks.length <= 1) {
+    if (chunks.length <= 1 || skipCounter > 0) {
+      polyline.setLatLngs(chunks.flat());
       return () => {
         map.removeLayer(polyline);
         polylineRef.current = null;
       };
     }
+
+    polyline.setLatLngs(chunks[0]);
 
     let idx = 0;
     const timer = setInterval(() => {
@@ -80,14 +83,14 @@ const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true }) 
       if (idx >= chunks.length - 1) {
         clearInterval(timer);
       }
-    }, 1000);
+    }, speed);
 
     return () => {
       clearInterval(timer);
       map.removeLayer(polyline);
       polylineRef.current = null;
     };
-  }, [map, positions, chunks, focused]);
+  }, [map, positions, chunks, focused, speed, skipCounter]);
 
   return null;
 };

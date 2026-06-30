@@ -4,10 +4,27 @@ import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export default function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <button
+        className={`flex items-center gap-x-2  px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer`}
+        aria-label="Przełącz motyw"
+      >
+        <span className="text-sm min-w-[6ch]" />
+      </button>
+    );
+  }
 
   return (
     <button
@@ -15,7 +32,7 @@ export default function ThemeToggleButton() {
       className={`flex items-center gap-x-2  px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer`}
       aria-label="Przełącz motyw"
     >
-      <span className="text-sm min-w-[6ch]" suppressHydrationWarning>
+      <span className="text-sm min-w-[6ch]">
         {resolvedTheme === 'dark' ? t('navbar_light_theme') : t('navbar_dark_theme')}
       </span>
 

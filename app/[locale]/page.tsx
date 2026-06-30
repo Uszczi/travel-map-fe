@@ -1,11 +1,12 @@
-import { useLocale } from 'next-intl';
-import Link from 'next/link';
+'use client';
 
-import Map from '@/components/Map/Map';
+import dynamic from 'next/dynamic';
+
+import CityAlgorithmPicker from '@/components/CityAlgorithmPicker';
+
+const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
 
 export default function Home() {
-  const locale = useLocale();
-
   return (
     <div className="flex h-full w-full flex-col">
       <div
@@ -21,10 +22,13 @@ export default function Home() {
           Import your own data to see how you could run through all the remaining streets in your city.
         </h3>
       </div>
-      <div className="mx-auto w-full max-w-3xl">
+      <div className="mx-auto w-full max-w-3xl mt-8">
         <Map />
+        <div className="mt-4 px-2">
+          <CityAlgorithmPicker />
+        </div>
       </div>
-      <div></div>
+      <div className="mt-[400px]"></div>
     </div>
   );
 }

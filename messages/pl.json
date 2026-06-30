@@ -19,7 +19,6 @@
   "routeOptions_AlgorithmPicker_allstreet_label": "Wszystkie drogi",
   "routeOptions_AlgorithmPicker_random_label": "Losowy",
   "routeOptions_AlgorithmPicker_astar_label": "A*",
-  "routeOptions_AlgorithmPicker_allstreet_label": "Wszystkie drogi",
   "routeOptions_AlgorithmPicker_dfs_tooltip": "DFS — przeszukiwanie w głąb",
   "routeOptions_AlgorithmPicker_random_tooltip": "Losowy — eksploracja/perturbacje",
   "routeOptions_AlgorithmPicker_astar_tooltip": "A* — algorytm A-star (heurystyczny)",

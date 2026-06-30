@@ -6,6 +6,8 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 import AnimatedRoute from '@/components/AnimatedRoute';
 import CenterMap from '@/components/Map/CenterMap';
+import DraggableResizableBbox from '@/components/Map/DraggableResizableBbox';
+import FitBoundsOnRoute from '@/components/Map/FitBoundsOnRoute';
 import { endIcon, startIcon } from '@/components/Map/icons';
 import Route from '@/components/Route';
 import RouteWithArrows from '@/components/RouteWithArrows';
@@ -38,7 +40,12 @@ export default function Map() {
   const [tempPosition, setTempPosition] = useState<[number, number] | null>(null);
 
   const routes = useMapStore((s) => s.results);
-  const algorithm = useMapStore((s) => s.algorithm);
+  const animationSpeed = useMapStore((s) => s.animationSpeed);
+  const skipAnimation = useMapStore((s) => s.skipAnimation);
+  const lastRec = routes.length > 0 ? routes[routes.length - 1].rec : null;
+  const animationEnabled = useMapStore((s) => s.animationEnabled);
+  const setAnimationEnabled = useMapStore((s) => s.setAnimationEnabled);
+  const triggerSkipAnimation = useMapStore((s) => s.triggerSkipAnimation);
 
   useEffect(() => {
     if (!selecting) return;
@@ -87,24 +94,38 @@ export default function Map() {
         />
 
         <CenterMap center={start} fallback={DEFAULT_CENTER} />
+        <FitBoundsOnRoute rec={lastRec} />
         <MapClickHandler />
 
         {start && <Marker position={start} icon={startIcon} />}
         {end && <Marker position={end} icon={endIcon} />}
         {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}
 
+        {startSec.boundingbox && <DraggableResizableBbox bbox={startSec.boundingbox} color="#22c55e" which="start" />}
+        {endSec.boundingbox && <DraggableResizableBbox bbox={endSec.boundingbox} color="#ef4444" which="end" />}
+
         {routes.map((r, i) => {
           const isFocused = i === routes.length - 1;
-          if (algorithm === 'allstreet' && isFocused) {
-            return <AnimatedRoute key={`gen-${i}`} route={r} focused />;
+          if (animationEnabled && isFocused) {
+            return (
+              <AnimatedRoute key={`gen-${i}`} route={r} focused speed={animationSpeed} skipCounter={skipAnimation} />
+            );
           }
-          return (
-            <RouteWithArrows key={`gen-${i}`} positions={routeToPositions(r)} focused={isFocused} />
-          );
+          return <RouteWithArrows key={`gen-${i}`} positions={routeToPositions(r)} focused={isFocused} />;
         })}
 
         {displayVisitedRoutes && visitedRoutes.map((r, i) => <Route key={`gen-${i}`} positions={r} />)}
       </MapContainer>
+
+      <div className="px-4 py-2 border-t flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={() => setAnimationEnabled(!animationEnabled)}
+          className="px-4 py-1.5 text-sm font-medium border rounded hover:bg-gray-50 active:translate-y-px transition-transform"
+        >
+          {animationEnabled ? 'Wyłącz animację' : 'Włącz animację'}
+        </button>
+      </div>
     </div>
   );
 }

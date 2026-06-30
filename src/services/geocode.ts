@@ -1,4 +1,31 @@
-export type BoundingBox = [number, number, number, number];
+export interface BoundingBox {
+  south: number;
+  north: number;
+  west: number;
+  east: number;
+}
+
+export const MAX_BBOX_SIZE = 0.1; // degrees
+
+export function clampBbox(bbox: BoundingBox): BoundingBox {
+  let { south, north, west, east } = bbox;
+
+  const latSpan = north - south;
+  if (latSpan > MAX_BBOX_SIZE) {
+    const mid = (south + north) / 2;
+    south = mid - MAX_BBOX_SIZE / 2;
+    north = mid + MAX_BBOX_SIZE / 2;
+  }
+
+  const lngSpan = east - west;
+  if (lngSpan > MAX_BBOX_SIZE) {
+    const mid = (west + east) / 2;
+    west = mid - MAX_BBOX_SIZE / 2;
+    east = mid + MAX_BBOX_SIZE / 2;
+  }
+
+  return { south, north, west, east };
+}
 
 export interface GeocodeItem {
   id: number;

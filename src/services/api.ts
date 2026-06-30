@@ -1,5 +1,7 @@
 import { Algorithm, LatLng } from '@/components/types';
 
+import type { BoundingBox } from './geocode';
+
 export interface Segment {
   new: boolean;
   distance: number;
@@ -27,14 +29,17 @@ export interface StravaRoute {
 }
 
 export default class ApiService {
-  static async get(
-    algorithm: Algorithm,
-    start: LatLng | null,
-    end: LatLng | null,
-    distance: number,
-    preferNew: boolean,
-    timeout = 30_000,
-  ): Promise<Route> {
+  static async get(params: {
+    algorithm: Algorithm;
+    start?: LatLng | null;
+    end?: LatLng | null;
+    distance: number;
+    preferNew: boolean;
+    startBbox?: BoundingBox;
+    endBbox?: BoundingBox;
+    timeout?: number;
+  }): Promise<Route> {
+    const { algorithm, start, end, distance, preferNew, startBbox, endBbox, timeout = 3000_000 } = params;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
 
@@ -42,6 +47,14 @@ export default class ApiService {
       let url = `${process.env.NEXT_PUBLIC_API_URL}/route/${algorithm}?distance=${distance}&prefer_new=${preferNew}`;
       if (start) url += `&start_x=${start.lng}&start_y=${start.lat}`;
       if (end) url += `&end_x=${end.lng}&end_y=${end.lat}`;
+      if (startBbox) {
+        url += `&start_bbox_south=${startBbox.south}&start_bbox_north=${startBbox.north}`;
+        url += `&start_bbox_west=${startBbox.west}&start_bbox_east=${startBbox.east}`;
+      }
+      if (endBbox) {
+        url += `&end_bbox_south=${endBbox.south}&end_bbox_north=${endBbox.north}`;
+        url += `&end_bbox_west=${endBbox.west}&end_bbox_east=${endBbox.east}`;
+      }
 
       const response = await fetch(url, { signal: controller.signal });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);

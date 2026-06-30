@@ -8,10 +8,16 @@ export interface generationState {
   isGenerating: boolean;
   results: Route[];
   error?: string | null;
+  animationSpeed: number;
+  skipAnimation: number;
+  animationEnabled: boolean;
 }
 
 export interface generationActions {
   getResult: () => Promise<void>;
+  setAnimationSpeed: (speed: number) => void;
+  triggerSkipAnimation: () => void;
+  setAnimationEnabled: (enabled: boolean) => void;
 }
 
 export interface GenerationStore extends generationState, generationActions {}
@@ -24,6 +30,9 @@ export const createGenerationSlice: StateCreator<
 > = (set, get) => ({
   isGenerating: false,
   results: [] as Route[],
+  animationSpeed: 500,
+  skipAnimation: 0,
+  animationEnabled: true,
 
   getResult: async () => {
     let started = false;
@@ -42,18 +51,21 @@ export const createGenerationSlice: StateCreator<
     try {
       const { start, end, distance, algorithm, preferNew } = get();
 
-      const result = await ApiService.get(
+      const result = await ApiService.get({
         algorithm,
-        start.coords || null,
-        end.coords || null,
-        distance * 1000,
+        start: start.coords || null,
+        end: end.coords || null,
+        distance: distance * 1000,
         preferNew,
-      );
+        startBbox: start.boundingbox,
+        endBbox: end.boundingbox,
+      });
 
       set(
         produce((s: GenerationStore & RouteOptionsStore) => {
           s.results.push(result);
           s.isGenerating = false;
+          s.skipAnimation = 0;
         }),
         false,
         'generation/getResult/success',
@@ -68,5 +80,36 @@ export const createGenerationSlice: StateCreator<
         'generation/getResult/error',
       );
     }
+  },
+
+  setAnimationSpeed: (speed: number) => {
+    set(
+      produce((s: GenerationStore) => {
+        s.animationSpeed = speed;
+      }),
+      false,
+      'generation/setAnimationSpeed',
+    );
+  },
+
+  triggerSkipAnimation: () => {
+    set(
+      produce((s: GenerationStore) => {
+        s.skipAnimation++;
+      }),
+      false,
+      'generation/triggerSkipAnimation',
+    );
+  },
+
+  setAnimationEnabled: (enabled: boolean) => {
+    set(
+      produce((s: GenerationStore) => {
+        s.animationEnabled = enabled;
+        if (enabled) s.skipAnimation = 0;
+      }),
+      false,
+      'generation/setAnimationEnabled',
+    );
   },
 });

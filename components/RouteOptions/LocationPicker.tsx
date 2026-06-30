@@ -31,6 +31,7 @@ export default function LocationPicker({ className, legend, which, point, setOth
   const clear = () => {
     setQuery(which, '');
     setPoint('coords', undefined);
+    setPoint('boundingbox', undefined);
   };
 
   const handlePickOnMap = (e: React.MouseEvent<HTMLButtonElement>) => {

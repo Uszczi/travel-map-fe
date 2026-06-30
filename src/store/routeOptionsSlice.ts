@@ -3,13 +3,15 @@ import type { StateCreator } from 'zustand';
 
 import type { Algorithm } from '@/components/types';
 import { geocodeReverse, geocodeSearch } from '@/src/services/geocode';
-import type { GeocodeItem } from '@/src/services/geocode';
+import { clampBbox } from '@/src/services/geocode';
+import type { BoundingBox, GeocodeItem } from '@/src/services/geocode';
 
 export type LatLng = { lat: number; lng: number };
 
 export type SearchState = {
   method: 'search' | 'pin';
   coords?: LatLng;
+  boundingbox?: BoundingBox;
   awaitingClick: boolean;
   query: string;
   results: GeocodeItem[];
@@ -51,7 +53,7 @@ const isWhich = (x: unknown): x is Which => x === 'start' || x === 'end';
 const debounceId: Partial<Record<Which, ReturnType<typeof setTimeout>>> = {};
 const abortCtrl: Partial<Record<Which, AbortController>> = {};
 const lastFetchedQuery: Record<Which, string> = { start: '', end: '' };
-let autoDelay = 1500; // ms
+let autoDelay = 300; // ms
 
 export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand/devtools', never]]> = (set, get) => ({
   start: { method: 'search', awaitingClick: false, query: '', results: [], loading: false, error: null },
@@ -86,28 +88,33 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
 
         if (start.awaitingClick) {
           start.coords = coords;
+          start.boundingbox = undefined;
           start.awaitingClick = false;
           start.query = toStr(coords);
           return;
         }
         if (end.awaitingClick) {
           end.coords = coords;
+          end.boundingbox = undefined;
           end.awaitingClick = false;
           end.query = toStr(coords);
           return;
         }
         if (start.method === 'pin') {
           start.coords = coords;
+          start.boundingbox = undefined;
           start.query = toStr(coords);
           return;
         }
         if (end.method === 'pin') {
           end.coords = coords;
+          end.boundingbox = undefined;
           end.query = toStr(coords);
           return;
         }
         // fallback: start
         start.coords = coords;
+        start.boundingbox = undefined;
         start.query = toStr(coords);
       }),
       false,
@@ -239,6 +246,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
         sec.method = 'search';
         sec.query = item.label;
         sec.coords = { lat: item.lat, lng: item.lng };
+        sec.boundingbox = item.boundingbox ? clampBbox(item.boundingbox) : undefined;
         sec.awaitingClick = false;
         sec.results = [];
       }),
@@ -304,6 +312,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
           sec.error = null;
           sec.query = label;
           sec.coords = { lat: Number(item.lat), lng: Number(item.lng) };
+          sec.boundingbox = item.boundingbox ? clampBbox(item.boundingbox) : undefined;
           sec.results = [];
         }),
         false,
