@@ -21,6 +21,8 @@ type Props = {
 export default function RouteOptions({ onCollapse, isCollapsed = false }: Props) {
   const t = useTranslations();
 
+  const [isGenerating, setIsGenerating] = useState(false);
+
   const { start, end, preferNew, distance, algorithm } = useMapStore(
     useShallow((s) => ({
       start: s.start,
@@ -30,7 +32,6 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
       algorithm: s.algorithm,
     })),
   );
-  const [isGenerating, setIsGenerating] = useState(false);
   const generationError = useMapStore((s) => s.error);
   const setStart = useMapStore((s) => s.setStart);
   const setEnd = useMapStore((s) => s.setEnd);
@@ -66,7 +67,6 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
           aria-label="Zwiń panel opcji"
           className="inline-flex items-center gap-2  border px-3 py-1.5 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring"
         >
-          {/* Ikona: na telefonie strzałki w górę, na desktopie w lewo */}
           <span className="sm:hidden inline-flex">
             <FontAwesomeIcon icon={faAnglesUp} className="h-4 w-4" />
           </span>
