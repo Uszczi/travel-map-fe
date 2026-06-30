@@ -18,8 +18,22 @@ export default function Home() {
         <h3 className="text-base text-center leading-relaxed">
           Select a city from the list below. See how you could run through all the streets in the city.
         </h3>
+      </div>
+      <div className="mx-auto w-full max-w-3xl mt-8">
+        <Map />
+        <div className="mt-4 px-2">
+          <CityAlgorithmPicker />
+        </div>
+      </div>
+
+      <div
+        className="flex mt-4 flex-col drop-shadow-lg items-center justify-center gap-2 mx-auto bg-cover bg-top bg-no-repeat p-8 text-white min-h-[800px]"
+        style={{ backgroundImage: "url('/static/images/100_100.jpg')" }}
+      >
+        <h2 className="text-xl text-center">It is hard to visit every street in a city at once.</h2>
         <h3 className="text-base text-center leading-relaxed">
-          Import your own data to see how you could run through all the remaining streets in your city.
+          This map allows you to select distance and starting point it will prioritize the streets that weren't visited
+          yet.
         </h3>
       </div>
       <div className="mx-auto w-full max-w-3xl mt-8">
@@ -28,7 +42,7 @@ export default function Home() {
           <CityAlgorithmPicker />
         </div>
       </div>
-      <div className="mt-[400px]"></div>
+      <div className="mt-[200px]"></div>
     </div>
   );
 }

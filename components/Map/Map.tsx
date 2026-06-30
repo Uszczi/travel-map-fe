@@ -86,7 +86,7 @@ export default function Map() {
   };
 
   return (
-    <div ref={wrapperRef} className="w-full flex flex-col" style={{ height: '60vh' }}>
+    <div ref={wrapperRef} className="w-full flex flex-col min-h-[600px] h-[600px]">
       <MapContainer center={DEFAULT_CENTER} zoom={13} className="w-full h-full">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
