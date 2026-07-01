@@ -86,7 +86,10 @@ export default function Map() {
   return (
     <div className="w-full flex flex-col min-h-[600px] h-[600px]">
       <MapContainer center={DEFAULT_CENTER} zoom={13} className="w-full h-full">
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={t('attribution')} />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+        />
 
         <CenterMap center={start} fallback={DEFAULT_CENTER} />
         <FitBoundsOnRoute rec={lastRec} />
