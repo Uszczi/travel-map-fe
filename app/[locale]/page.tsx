@@ -34,6 +34,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-center">{tHome('heroTitle')}</h1>
         <h2 className="text-xl text-center">{tHome('heroSubtitle')}</h2>
         <h3 className="text-base text-center leading-relaxed">{tHome('heroDescription')}</h3>
+        <p className="text-base text-center leading-relaxed text-red-800">{tHome('warning')}</p>
       </div>
       <div className="mx-auto w-full mt-8">
         <Map />

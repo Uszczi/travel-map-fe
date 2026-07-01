@@ -99,7 +99,8 @@
   "home": {
     "heroTitle": "Visit every street in the selected city.",
     "heroSubtitle": "This is a demo app for my exploration of graph algorithms and maps.",
-    "heroDescription": "Select a city from the list below. See how you could run through all the streets in the city.",
+    "heroDescription": "Select a city from the search below. See how you could run through all the streets in the city.",
+    "warning": "This is a demo app. It is not intended for use in production. It's still under development and may contain bugs.",
     "section2Title": "It is hard to visit every street in a city at once.",
     "section2Description": "This map lets you pick a distance and a starting point — it will prioritize streets that haven't been visited yet.",
     "section2Note": "You can import your data — nothing is stored on the server."

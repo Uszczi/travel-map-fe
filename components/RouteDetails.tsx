@@ -82,7 +82,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
         </button>
       </div>
 
-      <div className="flex">
+      <div className="w-full overflow-x-auto flex">
         {combinedSegments.map((e, index) => (
           <div
             key={index}
@@ -91,6 +91,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
               height: '20px',
               background: e.new ? 'green' : 'brown',
               position: 'relative',
+              flexShrink: 0,
             }}
             onMouseEnter={() => setHoveredSegment(index)}
             onMouseLeave={() => setHoveredSegment(null)}
