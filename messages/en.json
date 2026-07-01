@@ -1,32 +1,332 @@
 {
-  "navbar_home_title": "Home",
-  "navbar_map_title": "Map",
-  "navbar_language": "Language",
-  "navbar_light_theme": "Light",
-  "navbar_dark_theme": "Dark",
-  "routeOptions_label": "Route options",
-  "routeOptions_LocationPicker_start_label": "Start point",
-  "routeOptions_LocationPicker_end_label": "End point",
-  "routeOptions_LocationPicker_search_button": "Search",
-  "routeOptions_LocationPicker_loading_search_button": "Searching...",
-  "routeOptions_LocationPicker_select_on_map_button": "Select on map",
-  "routeOptions_LocationPicker_cancel_select_on_map_button": "Cancel",
-  "routeOptions_AdditionalPicker_label": "Additional options",
-  "routeOptions_AdditionalPicker_button": "Prefer new roads",
-  "routeOptions_AdditionalPicker_tip": "When calculating the route, try to avoid previously visited roads.",
-  "routeOptions_AlgorithmPicker_legend": "Algorithm",
-  "routeOptions_AlgorithmPicker_dfs_label": "DFS",
-  "routeOptions_AlgorithmPicker_allstreet_label": "AllStreet",
-  "routeOptions_AlgorithmPicker_random_label": "Random",
-  "routeOptions_AlgorithmPicker_astar_label": "A*",
-  "routeOptions_AlgorithmPicker_dfs_tooltip": "DFS — depth-first search",
-  "routeOptions_AlgorithmPicker_allstreet_tooltip": "AllStreet — exploration/perturbations",
-  "routeOptions_AlgorithmPicker_random_tooltip": "Random — exploration/perturbations",
-  "routeOptions_AlgorithmPicker_astar_tooltip": "A* — A-star algorithm (heuristic)",
-  "routeOptions_Distance_legend": "Distance",
-  "routeOptions_GenerateButton_label": "Generate route",
-  "routeOptions_GenerateButton_LoadingLabel": "Generating...",
-  "common_LabeledSwitch_on": "on",
-  "common_LabeledSwitch_off": "off",
-  "map_DisplayVisitedButton_label": "Display visited routes"
+  "navbar": {
+    "home": { "title": "Home" },
+    "map": { "title": "Map" },
+    "language": "Language",
+    "theme": { "light": "Light", "dark": "Dark" },
+    "brand": "Cover City Travel",
+    "langLabel": { "pl": "PL", "en": "EN" },
+    "langAriaLabel": { "pl": "Polish", "en": "English" },
+    "languageGroupAriaLabel": "Language",
+    "mobile": { "openMenu": "Open menu", "closeMenu": "Close menu" }
+  },
+  "themeToggle": { "switchTheme": "Toggle theme" },
+  "routeOptions": {
+    "label": "Route options",
+    "collapse": "Collapse",
+    "collapseAriaLabel": "Collapse options panel",
+    "locationPicker": {
+      "start": { "label": "Start point" },
+      "end": { "label": "End point" },
+      "searchButton": "Search",
+      "loadingSearchButton": "Searching...",
+      "selectOnMapButton": "Select on map",
+      "cancelSelectOnMapButton": "Cancel",
+      "searchPlaceholder": "e.g. Castle Square, Warsaw",
+      "searchAriaLabel": "Search place",
+      "clearAriaLabel": "Clear",
+      "searchButtonTitle": "Search",
+      "selectedCoords": "Selected: {lat}, {lng}"
+    },
+    "additionalPicker": {
+      "label": "Additional options",
+      "button": "Prefer new roads",
+      "tip": "When calculating the route, try to avoid previously visited roads."
+    },
+    "algorithmPicker": {
+      "legend": "Algorithm",
+      "groupAriaLabel": "Algorithm selection",
+      "dfs": { "label": "DFS", "tooltip": "DFS — depth-first search" },
+      "allstreet": { "label": "AllStreet", "tooltip": "AllStreet — exploration/perturbations" },
+      "random": { "label": "Random", "tooltip": "Random — exploration/perturbations" },
+      "astar": { "label": "A*", "tooltip": "A* — A-star algorithm (heuristic)" }
+    },
+    "distance": {
+      "legend": "Distance",
+      "rangeHint": "{min}–{max} km",
+      "decrementTitle": "- {step} km",
+      "decrementAriaLabel": "Decrease by {step} km",
+      "sliderAriaLabel": "Distance selection in kilometers",
+      "sliderValueText": "{current} kilometers",
+      "inputAriaLabel": "Enter distance in km",
+      "unit": "km",
+      "incrementTitle": "+ {step} km",
+      "incrementAriaLabel": "Increase by {step} km",
+      "preset": "{km} km"
+    },
+    "generateButton": {
+      "label": "Generate route",
+      "loadingLabel": "Generating..."
+    }
+  },
+  "cityAlgorithmPicker": {
+    "searchPlaceholder": "Warsaw",
+    "searchAriaLabel": "Search city"
+  },
+  "common": {
+    "labeledSwitch": { "on": "on", "off": "off" }
+  },
+  "map": {
+    "displayVisitedButton": { "label": "Display visited routes" },
+    "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+    "toggleAnimation": { "disable": "Disable animation", "enable": "Enable animation" }
+  },
+  "mapWithSidebar": {
+    "collapsePanel": "Collapse panel",
+    "expandPanel": "Expand panel",
+    "collapsedLabel": "Route options"
+  },
+  "routeDetails": {
+    "heading": "Route",
+    "distance": "Distance: {distance}m",
+    "newRoads": "New roads: {value}m",
+    "oldRoads": "Old roads: {value}m",
+    "percentNew": "Percent new: {percent}%",
+    "downloadGpx": "Download GPX",
+    "deleteRoute": "Delete route",
+    "downloadError": "Error downloading GPX",
+    "segmentDistance": "{distance}m",
+    "elevationHeading": "Elevation profile",
+    "totalAscent": "Total ascent: {value}",
+    "totalDescent": "Total descent: {value}",
+    "noElevationData": "No elevation data"
+  },
+  "elevationChart": {
+    "point": "Point {index}",
+    "datasetLabel": "Elevation (m a.s.l.)",
+    "yAxisTitle": "Elevation (m)"
+  },
+  "home": {
+    "heroTitle": "Visit every street in the selected city.",
+    "heroSubtitle": "This is a demo app for my exploration of graph algorithms and maps.",
+    "heroDescription": "Select a city from the list below. See how you could run through all the streets in the city.",
+    "section2Title": "It is hard to visit every street in a city at once.",
+    "section2Description": "This map lets you pick a distance and a starting point — it will prioritize streets that haven't been visited yet.",
+    "section2Note": "You can import your data — nothing is stored on the server."
+  },
+  "auth": {
+    "login": {
+      "heading": "Sign in",
+      "subtitle": "Nice to see you again. Return to the map and generate new routes.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "john.doe@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot your password?",
+      "loadingLabel": "Signing in…",
+      "submitLabel": "Sign in",
+      "separator": "or",
+      "stravaOauth": "Continue with Strava",
+      "googleOauth": "Continue with Google",
+      "noAccountPrefix": "Don't have an account? ",
+      "registerLink": "Sign up",
+      "unknownError": "Unknown error",
+      "invalid": "Invalid email or password."
+    },
+    "register": {
+      "heading": "Create account",
+      "subtitle": "Join and discover new routes with travel‑map.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "john.doe@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Min. 8 characters, upper/lowercase letter and a digit.",
+      "confirmLabel": "Confirm password",
+      "confirmPlaceholder": "••••••••",
+      "passwordMismatch": "Passwords do not match.",
+      "acceptTerms": "I accept the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "loadingLabel": "Creating account…",
+      "submitLabel": "Create account",
+      "separator": "or",
+      "stravaOauth": "Continue with Strava",
+      "googleOauth": "Continue with Google",
+      "hasAccountPrefix": "Already have an account? ",
+      "loginLink": "Sign in",
+      "unknownError": "Unknown error",
+      "email_used": "This email is already registered.",
+      "successMessage": "Account created. Check your email to confirm your address."
+    },
+    "resetRequest": {
+      "title": "Reset password",
+      "intro": "Enter your email and we'll send you a reset link.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "john.doe@example.com",
+      "submitLabel": "Send reset link",
+      "loadingLabel": "Sending…",
+      "successGeneric": "If an account with that email exists, you'll receive a reset link shortly.",
+      "backToLoginPrefix": "Remembered your password?",
+      "backToLogin": "Back to sign in"
+    },
+    "resetConfirm": {
+      "title": "Set a new password",
+      "intro": "Choose a strong password to secure your account.",
+      "passwordLabel": "New password",
+      "confirmLabel": "Confirm password",
+      "passwordHint": "Min. 8 characters, upper/lowercase letter and a digit.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "mismatch": "Passwords do not match.",
+      "submitLabel": "Set password",
+      "success": "Password changed. You can now sign in.",
+      "missingToken": "Missing reset token.",
+      "backToLoginPrefix": "Ready to sign in?",
+      "backToLogin": "Back to sign in"
+    }
+  },
+  "account": {
+    "title": "My account",
+    "errors": { "generic": "Something went wrong." },
+    "providers": { "google": "Google", "strava": "Strava" },
+    "profile": {
+      "section": "General info",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "save": "Save changes",
+      "saved": "Profile updated."
+    },
+    "security": {
+      "section": "Security",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "save": "Change password",
+      "hint": "Min. 8 characters, upper/lowercase letter and a digit.",
+      "mismatch": "Passwords do not match.",
+      "passwordChanged": "Password changed."
+    },
+    "connections": {
+      "section": "Connected accounts",
+      "connected": "Connected",
+      "disconnected": "Not connected",
+      "link": "Link",
+      "unlink": "Unlink",
+      "unlinked": "Disconnected {provider}."
+    },
+    "danger": {
+      "section": "Danger zone",
+      "description": "Once you delete your account, there is no going back. Please be certain.",
+      "arm": "Delete account",
+      "cancel": "Cancel",
+      "delete": "Confirm deletion"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "This Privacy Policy explains how we collect, use, and protect your personal data when you use travel‑map.",
+      "toc": "Table of contents",
+      "lastUpdated": "Last updated: 2025-01-01",
+      "sections": {
+        "admin": "Data controller",
+        "dataCategories": "Categories of data",
+        "purposes": "Purposes of processing",
+        "legalBases": "Legal bases",
+        "retention": "Data retention",
+        "recipients": "Recipients",
+        "transfers": "International transfers",
+        "rights": "Your rights",
+        "cookies": "Cookies",
+        "security": "Security",
+        "changes": "Changes to this policy",
+        "contact": "Contact"
+      },
+      "text": {
+        "admin": [
+          "The controller of your personal data is the operator of travel‑map. You can reach us using the contact details listed at the bottom of this page."
+        ],
+        "dataCategories": [
+          "We process your email address and, if you connect them, data from third‑party services such as Google or Strava.",
+          "We also collect basic technical data (e.g. IP address, browser type) required for the site to function."
+        ],
+        "purposes": [
+          "We use your data to provide the service, authenticate you, and improve the app."
+        ],
+        "legalBases": [
+          "Depending on the type of data, processing is based on your consent, our legitimate interest, or the necessity to perform a contract."
+        ],
+        "retention": [
+          "We keep your data for as long as your account is active, and afterwards only as required by law."
+        ],
+        "recipients": [
+          "We only share data with providers strictly necessary to run the service (hosting, authentication). Route data stays on our server."
+        ],
+        "transfers": [
+          "If any provider is located outside the EEA, we ensure appropriate safeguards are in place."
+        ],
+        "rights": [
+          "You have the right to access, correct, delete, restrict, or port your data, as well as to object to processing."
+        ],
+        "cookies": [
+          "We use only essential cookies required for authentication and preferences (e.g. theme, language)."
+        ],
+        "security": [
+          "We apply reasonable technical and organizational measures to protect your data."
+        ],
+        "changes": [
+          "We may update this policy. Significant changes will be announced in the app."
+        ],
+        "contact": [
+          "Questions? Contact us using the details on the project page."
+        ]
+      }
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "intro": "By using travel‑map you agree to these terms.",
+      "toc": "Table of contents",
+      "lastUpdated": "Last updated: 2025-01-01",
+      "sections": {
+        "general": "General",
+        "services": "Services",
+        "account": "Account",
+        "content": "Content",
+        "liability": "Liability",
+        "tech": "Technical requirements",
+        "termination": "Termination",
+        "changes": "Changes",
+        "law": "Applicable law",
+        "contact": "Contact"
+      },
+      "text": {
+        "general": [
+          "These terms govern your use of the travel‑map application and related services."
+        ],
+        "services": [
+          "The app helps you plan and explore routes in selected cities. Availability may vary and features may change."
+        ],
+        "account": [
+          "You are responsible for keeping your credentials safe and for activity that happens on your account."
+        ],
+        "content": [
+          "You retain ownership of data you provide. You grant us a limited license to process it to provide the service."
+        ],
+        "liability": [
+          "The service is provided as‑is. We are not liable for any indirect or consequential damages resulting from its use."
+        ],
+        "tech": [
+          "A modern browser and an internet connection are required."
+        ],
+        "termination": [
+          "You may delete your account at any time. We may suspend accounts violating these terms."
+        ],
+        "changes": [
+          "We may change these terms. Continued use of the service means acceptance of the updated terms."
+        ],
+        "law": [
+          "These terms are governed by the applicable law of the operator's jurisdiction."
+        ],
+        "contact": [
+          "For questions about these terms, contact us via the project page."
+        ]
+      }
+    }
+  },
+  "store": {
+    "generationError": "Failed to generate route.",
+    "geocodeError": "Search error."
+  }
 }

@@ -1,6 +1,7 @@
 import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'leaflet/dist/leaflet.css';
+import { useTranslations } from 'next-intl';
 import React, { MouseEventHandler, useMemo, useState } from 'react';
 
 import ApiService, { Route, Segment } from '@/src/services/api';
@@ -33,6 +34,8 @@ function combineSegmentsIfNew(segments: Segment[]): Segment[] {
 }
 
 const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
+  const t = useTranslations('routeDetails');
+
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
   const [downloading, setDownloading] = useState(false);
 
@@ -47,7 +50,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
       const title = `route_${Math.round(route.distance)}m_${Math.round(route.percent_of_new)}pct`;
       await ApiService.downloadGPXFromRoute(route, title);
     } catch {
-      alert('Błąd podczas pobierania GPX');
+      alert(t('downloadError'));
     } finally {
       setDownloading(false);
     }
@@ -56,25 +59,25 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
-        <p className="font-bold text-lg">Trasa</p>
+        <p className="font-bold text-lg">{t('heading')}</p>
       </div>
 
       <div className="flex items-center gap-2">
-        <p className="text-sm">Dystans: {Math.round(route.distance)}m</p>
-        <p className="text-sm ml-2">Nowe trasy: {Math.round(route.total_new)}m</p>
-        <p className="text-sm ml-2">Stare trasy: {Math.round(route.total_old)}m</p>
-        <p className="text-sm ml-2">Procent nowych: {Math.round(route.percent_of_new)}%</p>
+        <p className="text-sm">{t('distance', { distance: Math.round(route.distance) })}</p>
+        <p className="text-sm ml-2">{t('newRoads', { value: Math.round(route.total_new) })}</p>
+        <p className="text-sm ml-2">{t('oldRoads', { value: Math.round(route.total_old) })}</p>
+        <p className="text-sm ml-2">{t('percentNew', { percent: Math.round(route.percent_of_new) })}</p>
 
         <button
           className="text-blue-500 hover:text-blue-700"
           onClick={handleDownload}
-          title="Pobierz GPX"
+          title={t('downloadGpx')}
           disabled={downloading}
         >
           <FontAwesomeIcon icon={faDownload} size="lg" />
         </button>
 
-        <button className="text-red-500 hover:text-red-700" onClick={onRemove} title="Usuń trasę">
+        <button className="text-red-500 hover:text-red-700" onClick={onRemove} title={t('deleteRoute')}>
           <FontAwesomeIcon icon={faTrash} size="lg" />
         </button>
       </div>
@@ -107,7 +110,7 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {Math.round(e.distance)}m
+                {t('segmentDistance', { distance: Math.round(e.distance) })}
               </div>
             )}
           </div>
@@ -116,14 +119,14 @@ const RouteDetils: React.FC<RouteDetilsProps> = ({ route, onRemove }) => {
 
       <div className="flex" style={{ height: '200px' }}>
         <div>
-          <p className="text-2xl font-bold mb-4">Profil wysokości</p>
-          <p>Całkowity wznos: {route.total_gain}</p>
-          <p>Całkowity spadek: {route.total_lose}</p>
+          <p className="text-2xl font-bold mb-4">{t('elevationHeading')}</p>
+          <p>{t('totalAscent', { value: route.total_gain })}</p>
+          <p>{t('totalDescent', { value: route.total_lose })}</p>
         </div>
         {elevation.length > 0 ? (
           <ElevationChart elevation={elevation} />
         ) : (
-          <p className="text-sm text-zinc-500">Brak danych wysokości</p>
+          <p className="text-sm text-zinc-500">{t('noElevationData')}</p>
         )}
       </div>
     </div>

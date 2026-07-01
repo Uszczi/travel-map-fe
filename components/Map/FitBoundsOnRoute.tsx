@@ -15,7 +15,7 @@ export default function FitBoundsOnRoute({ rec }: Props) {
     if (!rec) return;
 
     const [east, north, west, south] = rec;
-    const center = [(south + north) / 2, (east + west) / 2];
+    const center: L.LatLngTuple = [(south + north) / 2, (east + west) / 2];
 
     let raf = 0;
 

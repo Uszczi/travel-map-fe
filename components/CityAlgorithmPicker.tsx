@@ -7,7 +7,8 @@ import type { Algorithm } from '@/components/types';
 import { useMapStore } from '@/src/store/useMapStore';
 
 export default function CityAlgorithmPicker() {
-  const t = useTranslations();
+  const tOptions = useTranslations('routeOptions');
+  const tCity = useTranslations('cityAlgorithmPicker');
 
   const start = useMapStore((s) => s.start);
   const setQuery = useMapStore((s) => s.setQuery);
@@ -28,7 +29,7 @@ export default function CityAlgorithmPicker() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
         {/* City search */}
         <div className="relative flex-1">
-          <label className="mb-1 block text-sm font-semibold">{t('routeOptions_LocationPicker_start_label')}</label>
+          <label className="mb-1 block text-sm font-semibold">{tOptions('locationPicker.start.label')}</label>
           <input
             type="search"
             value={start.query}
@@ -36,10 +37,10 @@ export default function CityAlgorithmPicker() {
             onKeyDown={(e) => {
               if (e.key === 'Enter' && canSearch) geocode('start');
             }}
-            placeholder="Warszawa"
+            placeholder={tCity('searchPlaceholder')}
             className="w-full border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40 dark:bg-zinc-700"
             inputMode="search"
-            aria-label="Wyszukaj miasto"
+            aria-label={tCity('searchAriaLabel')}
           />
 
           {start.error && <p className="mt-1 text-xs text-red-600">{start.error}</p>}
@@ -63,16 +64,16 @@ export default function CityAlgorithmPicker() {
 
         {/* Algorithm */}
         <div className="flex flex-col gap-1">
-          <label className="text-sm font-semibold">{t('routeOptions_AlgorithmPicker_legend')}</label>
+          <label className="text-sm font-semibold">{tOptions('algorithmPicker.legend')}</label>
           <select
             value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value as Algorithm)}
             className="border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40 dark:bg-zinc-700"
           >
-            <option value="dfs">{t('routeOptions_AlgorithmPicker_dfs_label')}</option>
-            <option value="astar">{t('routeOptions_AlgorithmPicker_astar_label')}</option>
-            <option value="random">{t('routeOptions_AlgorithmPicker_random_label')}</option>
-            <option value="allstreet">{t('routeOptions_AlgorithmPicker_allstreet_label')}</option>
+            <option value="dfs">{tOptions('algorithmPicker.dfs.label')}</option>
+            <option value="astar">{tOptions('algorithmPicker.astar.label')}</option>
+            <option value="random">{tOptions('algorithmPicker.random.label')}</option>
+            <option value="allstreet">{tOptions('algorithmPicker.allstreet.label')}</option>
           </select>
         </div>
       </div>
@@ -80,8 +81,8 @@ export default function CityAlgorithmPicker() {
       {generationError && <p className="text-xs text-red-600">{generationError}</p>}
 
       <GenerateButton
-        label={t('routeOptions_GenerateButton_label')}
-        loadingLabel={t('routeOptions_GenerateButton_LoadingLabel')}
+        label={tOptions('generateButton.label')}
+        loadingLabel={tOptions('generateButton.loadingLabel')}
         loading={isGenerating}
         onClick={() => getResult()}
       />

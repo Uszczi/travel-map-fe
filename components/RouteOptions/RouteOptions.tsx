@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function RouteOptions({ onCollapse, isCollapsed = false }: Props) {
-  const t = useTranslations();
+  const t = useTranslations('routeOptions');
 
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -56,7 +56,7 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
       ].join(' ')}
     >
       <header className="mt-2 mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold tracking-wide">{t('routeOptions_label')}</h2>
+        <h2 className="text-lg font-semibold tracking-wide">{t('label')}</h2>
 
         {/* Guzik do zwinięcia panelu */}
         <button
@@ -64,7 +64,7 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
           onClick={onCollapse}
           aria-controls="route-options-aside"
           aria-expanded={!isCollapsed}
-          aria-label="Zwiń panel opcji"
+          aria-label={t('collapseAriaLabel')}
           className="inline-flex items-center gap-2  border px-3 py-1.5 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring"
         >
           <span className="sm:hidden inline-flex">
@@ -73,12 +73,12 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
           <span className="hidden sm:inline-flex">
             <FontAwesomeIcon icon={faAnglesLeft} className="h-4 w-4" />
           </span>
-          <span className="hidden sm:inline">Zwiń</span>
+          <span className="hidden sm:inline">{t('collapse')}</span>
         </button>
       </header>
 
       <LocationPicker
-        legend={t('routeOptions_LocationPicker_start_label')}
+        legend={t('locationPicker.start.label')}
         which="start"
         point={start}
         setPoint={setStart}
@@ -86,19 +86,19 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
       />
 
       <LocationPicker
-        legend={t('routeOptions_LocationPicker_end_label')}
+        legend={t('locationPicker.end.label')}
         which="end"
         point={end}
         setPoint={setEnd}
         setOtherPoint={setStart}
       />
 
-      <AlgorithmPicker legend={t('routeOptions_AlgorithmPicker_legend')} value={algorithm} onChange={setAlgorithm} />
+      <AlgorithmPicker legend={t('algorithmPicker.legend')} value={algorithm} onChange={setAlgorithm} />
 
-      <DistancePicker legend={t('routeOptions_Distance_legend')} value={distance} onChange={setDistance} />
+      <DistancePicker legend={t('distance.legend')} value={distance} onChange={setDistance} />
 
       <AdditionalPicker
-        legend={t('routeOptions_AdditionalPicker_label')}
+        legend={t('additionalPicker.label')}
         preferNewRoads={preferNew}
         setPreferNewRoads={setPreferNew}
       />
@@ -106,8 +106,8 @@ export default function RouteOptions({ onCollapse, isCollapsed = false }: Props)
       {generationError && <p className="text-xs text-red-600">{generationError}</p>}
 
       <GenerateButton
-        label={t('routeOptions_GenerateButton_label')}
-        loadingLabel={t('routeOptions_GenerateButton_LoadingLabel')}
+        label={t('generateButton.label')}
+        loadingLabel={t('generateButton.loadingLabel')}
         loading={isGenerating}
         onClick={async () => {
           if (isGenerating) return;

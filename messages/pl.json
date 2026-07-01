@@ -1,31 +1,332 @@
 {
-  "navbar_home_title": "Strona główna",
-  "navbar_map_title": "Mapa",
-  "navbar_language": "Language",
-  "navbar_light_theme": "Jasny",
-  "navbar_dark_theme": "Ciemny",
-  "routeOptions_label": "Ustawienia trasy",
-  "routeOptions_LocationPicker_start_label": "Punkt początkowy",
-  "routeOptions_LocationPicker_end_label": "Punkt końcowy",
-  "routeOptions_LocationPicker_search_button": "Szukaj",
-  "routeOptions_LocationPicker_loading_search_button": "Szukam...",
-  "routeOptions_LocationPicker_select_on_map_button": "Wybierz na mapie",
-  "routeOptions_LocationPicker_cancel_select_on_map_button": "Anuluj",
-  "routeOptions_AdditionalPicker_label": "Dodatkowe opcję",
-  "routeOptions_AdditionalPicker_button": "Preferuj nowe drogi",
-  "routeOptions_AdditionalPicker_tip": "Podczas wyznaczania trasy staraj się unikać wcześniej odwiedzone drogi.",
-  "routeOptions_AlgorithmPicker_legend": "Algorytm",
-  "routeOptions_AlgorithmPicker_dfs_label": "DFS",
-  "routeOptions_AlgorithmPicker_allstreet_label": "Wszystkie drogi",
-  "routeOptions_AlgorithmPicker_random_label": "Losowy",
-  "routeOptions_AlgorithmPicker_astar_label": "A*",
-  "routeOptions_AlgorithmPicker_dfs_tooltip": "DFS — przeszukiwanie w głąb",
-  "routeOptions_AlgorithmPicker_random_tooltip": "Losowy — eksploracja/perturbacje",
-  "routeOptions_AlgorithmPicker_astar_tooltip": "A* — algorytm A-star (heurystyczny)",
-  "routeOptions_Distance_legend": "Dystans",
-  "routeOptions_GenerateButton_label": "Wygeneruj trasę",
-  "routeOptions_GenerateButton_LoadingLabel": "Generowanie...",
-  "common_LabeledSwitch_on": "włączone",
-  "common_LabeledSwitch_off": "wyłączone",
-  "map_DisplayVisitedButton_label": "Wyświetl odwiedzone drogi"
+  "navbar": {
+    "home": { "title": "Strona główna" },
+    "map": { "title": "Mapa" },
+    "language": "Język",
+    "theme": { "light": "Jasny", "dark": "Ciemny" },
+    "brand": "Cover City Travel",
+    "langLabel": { "pl": "PL", "en": "EN" },
+    "langAriaLabel": { "pl": "Polski", "en": "Angielski" },
+    "languageGroupAriaLabel": "Język",
+    "mobile": { "openMenu": "Otwórz menu", "closeMenu": "Zamknij menu" }
+  },
+  "themeToggle": { "switchTheme": "Przełącz motyw" },
+  "routeOptions": {
+    "label": "Ustawienia trasy",
+    "collapse": "Zwiń",
+    "collapseAriaLabel": "Zwiń panel opcji",
+    "locationPicker": {
+      "start": { "label": "Punkt początkowy" },
+      "end": { "label": "Punkt końcowy" },
+      "searchButton": "Szukaj",
+      "loadingSearchButton": "Szukam...",
+      "selectOnMapButton": "Wybierz na mapie",
+      "cancelSelectOnMapButton": "Anuluj",
+      "searchPlaceholder": "np. Plac Zamkowy, Warszawa",
+      "searchAriaLabel": "Wyszukaj miejsce",
+      "clearAriaLabel": "Wyczyść",
+      "searchButtonTitle": "Wyszukaj",
+      "selectedCoords": "Wybrane: {lat}, {lng}"
+    },
+    "additionalPicker": {
+      "label": "Opcje dodatkowe",
+      "button": "Preferuj nowe drogi",
+      "tip": "Podczas wyznaczania trasy staraj się unikać wcześniej odwiedzonych dróg."
+    },
+    "algorithmPicker": {
+      "legend": "Algorytm",
+      "groupAriaLabel": "Wybór algorytmu",
+      "dfs": { "label": "DFS", "tooltip": "DFS — przeszukiwanie w głąb" },
+      "allstreet": { "label": "Wszystkie drogi", "tooltip": "AllStreet — eksploracja/perturbacje" },
+      "random": { "label": "Losowy", "tooltip": "Losowy — eksploracja/perturbacje" },
+      "astar": { "label": "A*", "tooltip": "A* — algorytm A-star (heurystyczny)" }
+    },
+    "distance": {
+      "legend": "Dystans",
+      "rangeHint": "{min}–{max} km",
+      "decrementTitle": "- {step} km",
+      "decrementAriaLabel": "Zmniejsz o {step} km",
+      "sliderAriaLabel": "Wybór odległości w kilometrach",
+      "sliderValueText": "{current} kilometrów",
+      "inputAriaLabel": "Wpisz odległość w km",
+      "unit": "km",
+      "incrementTitle": "+ {step} km",
+      "incrementAriaLabel": "Zwiększ o {step} km",
+      "preset": "{km} km"
+    },
+    "generateButton": {
+      "label": "Wygeneruj trasę",
+      "loadingLabel": "Generowanie..."
+    }
+  },
+  "cityAlgorithmPicker": {
+    "searchPlaceholder": "Warszawa",
+    "searchAriaLabel": "Wyszukaj miasto"
+  },
+  "common": {
+    "labeledSwitch": { "on": "włączone", "off": "wyłączone" }
+  },
+  "map": {
+    "displayVisitedButton": { "label": "Wyświetl odwiedzone drogi" },
+    "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+    "toggleAnimation": { "disable": "Wyłącz animację", "enable": "Włącz animację" }
+  },
+  "mapWithSidebar": {
+    "collapsePanel": "Zwiń panel",
+    "expandPanel": "Rozwiń panel",
+    "collapsedLabel": "Ustawienia trasy"
+  },
+  "routeDetails": {
+    "heading": "Trasa",
+    "distance": "Dystans: {distance}m",
+    "newRoads": "Nowe drogi: {value}m",
+    "oldRoads": "Stare drogi: {value}m",
+    "percentNew": "Procent nowych: {percent}%",
+    "downloadGpx": "Pobierz GPX",
+    "deleteRoute": "Usuń trasę",
+    "downloadError": "Błąd podczas pobierania GPX",
+    "segmentDistance": "{distance}m",
+    "elevationHeading": "Profil wysokości",
+    "totalAscent": "Całkowity wznos: {value}",
+    "totalDescent": "Całkowity spadek: {value}",
+    "noElevationData": "Brak danych wysokości"
+  },
+  "elevationChart": {
+    "point": "Punkt {index}",
+    "datasetLabel": "Wysokość (m n.p.m.)",
+    "yAxisTitle": "Wysokość (m)"
+  },
+  "home": {
+    "heroTitle": "Odwiedź każdą ulicę w wybranym mieście.",
+    "heroSubtitle": "To aplikacja demonstracyjna do eksploracji przezemnie algorytmów grafowych i map.",
+    "heroDescription": "Wybierz miasto z listy poniżej. Zobacz, jak możesz przebiec wszystkie ulice w mieście.",
+    "section2Title": "Trudno odwiedzić każdą ulicę w mieście za jednym razem.",
+    "section2Description": "Ta mapa pozwala wybrać dystans i punkt startowy — będzie preferować ulice, które nie były jeszcze odwiedzone.",
+    "section2Note": "Możesz zaimportować swoje dane — nic nie jest zapisywane na serwerze."
+  },
+  "auth": {
+    "login": {
+      "heading": "Zaloguj się",
+      "subtitle": "Miło Cię znowu widzieć. Wróć na mapę i generuj nowe trasy.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jan.kowalski@example.com",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "••••••••",
+      "showPassword": "Pokaż hasło",
+      "hidePassword": "Ukryj hasło",
+      "rememberMe": "Zapamiętaj mnie",
+      "forgotPassword": "Nie pamiętasz hasła?",
+      "loadingLabel": "Logowanie…",
+      "submitLabel": "Zaloguj się",
+      "separator": "albo",
+      "stravaOauth": "Kontynuuj ze Stravą",
+      "googleOauth": "Kontynuuj z Google",
+      "noAccountPrefix": "Nie masz konta? ",
+      "registerLink": "Zarejestruj się",
+      "unknownError": "Nieznany błąd",
+      "invalid": "Nieprawidłowy e-mail lub hasło."
+    },
+    "register": {
+      "heading": "Załóż konto",
+      "subtitle": "Dołącz i odkrywaj nowe trasy z travel‑map.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jan.kowalski@example.com",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Min. 8 znaków, litera duża/mała i cyfra.",
+      "confirmLabel": "Powtórz hasło",
+      "confirmPlaceholder": "••••••••",
+      "passwordMismatch": "Hasła nie są identyczne.",
+      "acceptTerms": "Akceptuję <terms>Regulamin</terms> oraz <privacy>Politykę Prywatności</privacy>.",
+      "loadingLabel": "Zakładanie konta…",
+      "submitLabel": "Utwórz konto",
+      "separator": "albo",
+      "stravaOauth": "Kontynuuj ze Stravą",
+      "googleOauth": "Kontynuuj z Google",
+      "hasAccountPrefix": "Masz już konto? ",
+      "loginLink": "Zaloguj się",
+      "unknownError": "Nieznany błąd",
+      "email_used": "Ten e-mail jest już zarejestrowany.",
+      "successMessage": "Konto utworzone. Sprawdź pocztę, aby potwierdzić adres e-mail."
+    },
+    "resetRequest": {
+      "title": "Zresetuj hasło",
+      "intro": "Podaj swój e-mail, a wyślemy Ci link do resetowania hasła.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jan.kowalski@example.com",
+      "submitLabel": "Wyślij link resetujący",
+      "loadingLabel": "Wysyłanie…",
+      "successGeneric": "Jeśli konto o podanym adresie istnieje, otrzymasz wiadomość z linkiem do resetu hasła.",
+      "backToLoginPrefix": "Pamiętasz hasło?",
+      "backToLogin": "Wróć do logowania"
+    },
+    "resetConfirm": {
+      "title": "Ustaw nowe hasło",
+      "intro": "Wybierz silne hasło, aby zabezpieczyć swoje konto.",
+      "passwordLabel": "Nowe hasło",
+      "confirmLabel": "Powtórz hasło",
+      "passwordHint": "Min. 8 znaków, litera duża/mała i cyfra.",
+      "showPassword": "Pokaż hasło",
+      "hidePassword": "Ukryj hasło",
+      "mismatch": "Hasła nie są identyczne.",
+      "submitLabel": "Ustaw hasło",
+      "success": "Hasło zostało zmienione. Możesz się teraz zalogować.",
+      "missingToken": "Brak tokenu resetu.",
+      "backToLoginPrefix": "Gotowy do logowania?",
+      "backToLogin": "Wróć do logowania"
+    }
+  },
+  "account": {
+    "title": "Moje konto",
+    "errors": { "generic": "Coś poszło nie tak." },
+    "providers": { "google": "Google", "strava": "Strava" },
+    "profile": {
+      "section": "Informacje ogólne",
+      "name": "Imię",
+      "namePlaceholder": "Twoje imię",
+      "email": "E-mail",
+      "save": "Zapisz zmiany",
+      "saved": "Profil zaktualizowany."
+    },
+    "security": {
+      "section": "Bezpieczeństwo",
+      "current": "Aktualne hasło",
+      "new": "Nowe hasło",
+      "confirm": "Potwierdź nowe hasło",
+      "save": "Zmień hasło",
+      "hint": "Min. 8 znaków, litera duża/mała i cyfra.",
+      "mismatch": "Hasła nie są identyczne.",
+      "passwordChanged": "Hasło zostało zmienione."
+    },
+    "connections": {
+      "section": "Połączone konta",
+      "connected": "Połączone",
+      "disconnected": "Niepołączone",
+      "link": "Połącz",
+      "unlink": "Odłącz",
+      "unlinked": "Odłączono {provider}."
+    },
+    "danger": {
+      "section": "Strefa niebezpieczna",
+      "description": "Po usunięciu konta nie ma odwrotu. Wykonaj tę operację tylko wtedy, gdy jesteś pewien.",
+      "arm": "Usuń konto",
+      "cancel": "Anuluj",
+      "delete": "Potwierdź usunięcie"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Polityka Prywatności",
+      "intro": "Niniejsza Polityka Prywatności wyjaśnia, jak zbieramy, wykorzystujemy i chronimy Twoje dane osobowe podczas korzystania z travel‑map.",
+      "toc": "Spis treści",
+      "lastUpdated": "Ostatnia aktualizacja: 2025-01-01",
+      "sections": {
+        "admin": "Administrator danych",
+        "dataCategories": "Kategorie danych",
+        "purposes": "Cele przetwarzania",
+        "legalBases": "Podstawy prawne",
+        "retention": "Okres przechowywania",
+        "recipients": "Odbiorcy",
+        "transfers": "Przekazywanie danych",
+        "rights": "Twoje prawa",
+        "cookies": "Pliki cookie",
+        "security": "Bezpieczeństwo",
+        "changes": "Zmiany polityki",
+        "contact": "Kontakt"
+      },
+      "text": {
+        "admin": [
+          "Administratorem Twoich danych osobowych jest operator serwisu travel‑map. Skontaktować się z nami możesz poprzez dane wskazane na końcu tej strony."
+        ],
+        "dataCategories": [
+          "Przetwarzamy Twój adres e-mail oraz — jeśli je połączysz — dane pochodzące z usług zewnętrznych, takich jak Google lub Strava.",
+          "Zbieramy również podstawowe dane techniczne (np. adres IP, typ przeglądarki) niezbędne do działania serwisu."
+        ],
+        "purposes": [
+          "Wykorzystujemy Twoje dane w celu świadczenia usługi, uwierzytelniania oraz ulepszania aplikacji."
+        ],
+        "legalBases": [
+          "W zależności od rodzaju danych podstawą przetwarzania jest Twoja zgoda, nasz uzasadniony interes lub niezbędność do wykonania umowy."
+        ],
+        "retention": [
+          "Przechowujemy Twoje dane tak długo, jak długo Twoje konto jest aktywne, a po jego usunięciu — jedynie w zakresie wymaganym przez prawo."
+        ],
+        "recipients": [
+          "Udostępniamy dane wyłącznie dostawcom niezbędnym do działania serwisu (hosting, uwierzytelnianie). Dane tras pozostają na naszym serwerze."
+        ],
+        "transfers": [
+          "Jeżeli dostawca znajduje się poza EOG, zapewniamy odpowiednie zabezpieczenia dla takiego przekazania."
+        ],
+        "rights": [
+          "Masz prawo dostępu, sprostowania, usunięcia, ograniczenia i przenoszenia swoich danych, a także wniesienia sprzeciwu wobec przetwarzania."
+        ],
+        "cookies": [
+          "Używamy wyłącznie niezbędnych plików cookie, wymaganych do uwierzytelniania i zapisu preferencji (np. motyw, język)."
+        ],
+        "security": [
+          "Stosujemy odpowiednie środki techniczne i organizacyjne w celu ochrony Twoich danych."
+        ],
+        "changes": [
+          "Możemy aktualizować tę politykę. O istotnych zmianach poinformujemy w aplikacji."
+        ],
+        "contact": [
+          "Masz pytania? Skontaktuj się z nami za pomocą danych na stronie projektu."
+        ]
+      }
+    },
+    "terms": {
+      "title": "Regulamin",
+      "intro": "Korzystając z travel‑map akceptujesz niniejszy regulamin.",
+      "toc": "Spis treści",
+      "lastUpdated": "Ostatnia aktualizacja: 2025-01-01",
+      "sections": {
+        "general": "Postanowienia ogólne",
+        "services": "Usługi",
+        "account": "Konto",
+        "content": "Treści",
+        "liability": "Odpowiedzialność",
+        "tech": "Wymagania techniczne",
+        "termination": "Zakończenie",
+        "changes": "Zmiany regulaminu",
+        "law": "Prawo właściwe",
+        "contact": "Kontakt"
+      },
+      "text": {
+        "general": [
+          "Niniejszy regulamin określa zasady korzystania z aplikacji travel‑map oraz powiązanych usług."
+        ],
+        "services": [
+          "Aplikacja pomaga planować i eksplorować trasy w wybranych miastach. Dostępność i zakres funkcji mogą się zmieniać."
+        ],
+        "account": [
+          "Jesteś odpowiedzialny za zachowanie poufności swoich danych logowania oraz za działania wykonane na Twoim koncie."
+        ],
+        "content": [
+          "Zachowujesz prawa do dostarczanych danych. Udzielasz nam ograniczonej licencji na ich przetwarzanie w celu świadczenia usługi."
+        ],
+        "liability": [
+          "Usługa świadczona jest w stanie „takim, jaka jest”. Nie ponosimy odpowiedzialności za szkody pośrednie lub wtórne wynikające z korzystania z niej."
+        ],
+        "tech": [
+          "Do korzystania wymagana jest nowoczesna przeglądarka internetowa oraz połączenie z Internetem."
+        ],
+        "termination": [
+          "Możesz w dowolnym momencie usunąć swoje konto. Zastrzegamy prawo do zawieszenia kont naruszających regulamin."
+        ],
+        "changes": [
+          "Możemy zmieniać niniejszy regulamin. Dalsze korzystanie z usługi oznacza akceptację zaktualizowanego regulaminu."
+        ],
+        "law": [
+          "Regulamin podlega właściwemu prawu jurysdykcji operatora."
+        ],
+        "contact": [
+          "W sprawach dotyczących regulaminu skontaktuj się z nami poprzez stronę projektu."
+        ]
+      }
+    }
+  },
+  "store": {
+    "generationError": "Nie udało się wygenerować trasy.",
+    "geocodeError": "Błąd wyszukiwania."
+  }
 }

@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 
 export default function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
-  const t = useTranslations();
+  const tNav = useTranslations('navbar');
+  const tToggle = useTranslations('themeToggle');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function ThemeToggleButton() {
     return (
       <button
         className={`flex items-center gap-x-2  px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer`}
-        aria-label="Przełącz motyw"
+        aria-label={tToggle('switchTheme')}
       >
         <span className="text-sm min-w-[6ch]" />
       </button>
@@ -30,11 +31,9 @@ export default function ThemeToggleButton() {
     <button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       className={`flex items-center gap-x-2  px-2 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer`}
-      aria-label="Przełącz motyw"
+      aria-label={tToggle('switchTheme')}
     >
-      <span className="text-sm min-w-[6ch]">
-        {resolvedTheme === 'dark' ? t('navbar_light_theme') : t('navbar_dark_theme')}
-      </span>
+      <span className="text-sm min-w-[6ch]">{resolvedTheme === 'dark' ? tNav('theme.light') : tNav('theme.dark')}</span>
 
       <FontAwesomeIcon icon={resolvedTheme === 'dark' ? faSun : faMoon} className="h-4 w-4" />
     </button>

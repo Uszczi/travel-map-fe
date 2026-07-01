@@ -7,7 +7,6 @@ import { notFound } from 'next/navigation';
 import '@/app/globals.css';
 import ClientNavbar from '@/components/Navbar/ClientNavbar';
 
-import type { Locale } from '../locales';
 import { locales } from '../locales';
 
 config.autoAddCss = false;
@@ -28,7 +27,7 @@ async function loadMessages(locale: string) {
   }
 }
 
-export default async function RootLayout(props: { children: React.ReactNode; params: Promise<{ locale: Locale }> }) {
+export default async function RootLayout(props: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await props.params;
   const messages = await loadMessages(locale);
 

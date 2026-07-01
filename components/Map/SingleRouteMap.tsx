@@ -1,6 +1,7 @@
 'use client';
 
 import 'leaflet/dist/leaflet.css';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
@@ -21,6 +22,7 @@ const routeToPositions = (r: RouteInterface): [number, number][] => {
 const DEFAULT_CENTER: [number, number] = [51.6101241, 19.1999532];
 
 export default function Map() {
+  const t = useTranslations('map');
   const startSec = useMapStore((s) => s.start);
   const endSec = useMapStore((s) => s.end);
   const setCoords = useMapStore((s) => s.setCoords);
@@ -84,10 +86,7 @@ export default function Map() {
   return (
     <div className="w-full flex flex-col min-h-[600px] h-[600px]">
       <MapContainer center={DEFAULT_CENTER} zoom={13} className="w-full h-full">
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={t('attribution')} />
 
         <CenterMap center={start} fallback={DEFAULT_CENTER} />
         <FitBoundsOnRoute rec={lastRec} />
@@ -115,7 +114,7 @@ export default function Map() {
           onClick={() => setAnimationEnabled(!animationEnabled)}
           className="px-4 py-1.5 text-sm font-medium border rounded hover:bg-gray-50 active:translate-y-px transition-transform"
         >
-          {animationEnabled ? 'Wyłącz animację' : 'Włącz animację'}
+          {animationEnabled ? t('toggleAnimation.disable') : t('toggleAnimation.enable')}
         </button>
       </div>
     </div>

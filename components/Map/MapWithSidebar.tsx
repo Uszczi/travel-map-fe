@@ -2,6 +2,7 @@
 
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
@@ -14,6 +15,7 @@ import RouteDetils from '../RouteDetails';
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
 
 export default function MapWithSidebar() {
+  const t = useTranslations('mapWithSidebar');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const routes = useMapStore((s) => s.results);
 
@@ -54,8 +56,8 @@ export default function MapWithSidebar() {
           type="button"
           onClick={() => setIsSidebarOpen((v) => !v)}
           aria-controls="route-options-aside"
-          aria-label={isSidebarOpen ? 'Zwiń panel' : 'Rozwiń panel'}
-          title={isSidebarOpen ? 'Zwiń panel' : 'Rozwiń panel'}
+          aria-label={isSidebarOpen ? t('collapsePanel') : t('expandPanel')}
+          title={isSidebarOpen ? t('collapsePanel') : t('expandPanel')}
           className={[
             'flex',
             'absolute right-0 top-0 h-full w-[44px]',
@@ -80,7 +82,7 @@ export default function MapWithSidebar() {
                 'leading-none',
               ].join(' ')}
             >
-              RouteOptions
+              {t('collapsedLabel')}
             </span>
 
             {/* Ikona strzałki */}

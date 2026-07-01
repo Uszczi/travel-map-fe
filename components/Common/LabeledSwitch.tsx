@@ -20,11 +20,8 @@ export default function LabeledSwitch({
   className,
   disabled,
 }: LabeledSwitchProps) {
-  const t = useTranslations();
-  const title = useMemo(
-    () => `${label} – ${checked ? t('common_LabeledSwitch_on') : t('common_LabeledSwitch_off')}`,
-    [label, checked, t],
-  );
+  const t = useTranslations('common.labeledSwitch');
+  const title = useMemo(() => `${label} – ${checked ? t('on') : t('off')}`, [label, checked, t]);
 
   return (
     <div role="group" aria-label={label} className={['w-full  border p-3 dark:bg-zinc-900', className ?? ''].join(' ')}>

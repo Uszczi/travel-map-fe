@@ -1,6 +1,5 @@
 'use client';
 
-// TODO refactor this
 import { faBars, faGlobe, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocale, useTranslations } from 'next-intl';
@@ -12,7 +11,7 @@ import ThemeToggleButton from '@/components/Navbar/ThemeToggleButton';
 import Portal from '@/components/Portal';
 
 export default function Navbar() {
-  const t = useTranslations();
+  const t = useTranslations('navbar');
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -26,6 +25,7 @@ export default function Navbar() {
     router.push(nextPath);
   };
 
+  const base = useMemo(() => `/${locale}`, [locale]);
   const isActive = (href: string) => {
     if (!pathname) return false;
     if (href === base) {
@@ -33,11 +33,13 @@ export default function Navbar() {
     }
     return pathname === href || pathname.startsWith(`${href}/`);
   };
-  const base = useMemo(() => `/${locale}`, [locale]);
+  // Preserved for future active-state styling
+  void isActive;
   const links = [
-    { href: `${base}`, label: t('navbar_home_title') },
-    { href: `${base}/mapa`, label: t('navbar_map_title') },
+    { href: `${base}`, label: t('home.title') },
+    { href: `${base}/mapa`, label: t('map.title') },
   ];
+  void links;
 
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden';
@@ -56,18 +58,22 @@ export default function Navbar() {
         <nav className="mx-auto container flex h-20 items-center justify-between px-5">
           {/* Logo */}
           <Link href={base} className="font-bold tracking-tight text-xl">
-            Cover City Travel
+            {t('brand')}
           </Link>
 
           {/* Language */}
           <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2 select-none mr-4" role="group" aria-label="Language">
+            <div
+              className="flex items-center gap-2 select-none mr-4"
+              role="group"
+              aria-label={t('languageGroupAriaLabel')}
+            >
               <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80 pointer-events-none" aria-hidden />
 
               <button
                 type="button"
                 onClick={() => switchLocale('pl')}
-                aria-label="Polski"
+                aria-label={t('langAriaLabel.pl')}
                 className={`
                   relative text-sm cursor-pointer px-3 py-2  transition
                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
@@ -83,7 +89,7 @@ export default function Navbar() {
                   ${locale === 'pl' ? 'font-semibold bg-zinc-100 dark:bg-zinc-800 dark:text-white' : 'opacity-70 hover:opacity-100'}
                 `}
               >
-                PL
+                {t('langLabel.pl')}
               </button>
 
               <span className="opacity-30 pointer-events-none">/</span>
@@ -91,7 +97,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => switchLocale('en')}
-                aria-label="English"
+                aria-label={t('langAriaLabel.en')}
                 className={`
                   relative text-sm cursor-pointer px-2 py-1  transition
                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
@@ -107,7 +113,7 @@ export default function Navbar() {
                   ${locale === 'en' ? 'font-semibold bg-zinc-100 dark:bg-zinc-800 dark:text-white' : 'opacity-70 hover:opacity-100'}
                 `}
               >
-                EN
+                {t('langLabel.en')}
               </button>
             </div>
 
@@ -118,7 +124,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(true)}
             className=" p-2 ring-offset-2 transition hover:bg-zinc-100 focus-visible:ring-2 md:hidden dark:hover:bg-zinc-900"
-            aria-label="Open menu"
+            aria-label={t('mobile.openMenu')}
           >
             <FontAwesomeIcon icon={faBars} className="h-5 w-5" />
           </button>
@@ -137,7 +143,7 @@ export default function Navbar() {
                   type="button"
                   onClick={() => setOpen(false)}
                   className=" p-2 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-700 hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-white"
-                  aria-label="Close menu"
+                  aria-label={t('mobile.closeMenu')}
                 >
                   <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
                 </button>
@@ -147,23 +153,25 @@ export default function Navbar() {
                 <div className="flex cursor-pointer">
                   <div className="flex items-center gap-2">
                     <FontAwesomeIcon icon={faGlobe} className="h-4 w-4 opacity-80" />
-                    <span className="text-sm">{t('navbar_language')}</span>
+                    <span className="text-sm">{t('language')}</span>
                   </div>
                   <div className="flex items-center gap-2 ml-8">
                     <button
                       type="button"
                       onClick={() => switchLocale('pl')}
+                      aria-label={t('langAriaLabel.pl')}
                       className={`text-sm ${locale === 'pl' ? 'font-semibold' : 'opacity-70'} hover:opacity-100`}
                     >
-                      PL
+                      {t('langLabel.pl')}
                     </button>
                     <span className="opacity-30">/</span>
                     <button
                       type="button"
                       onClick={() => switchLocale('en')}
+                      aria-label={t('langAriaLabel.en')}
                       className={`text-sm ${locale === 'en' ? 'font-semibold' : 'opacity-70'} hover:opacity-100`}
                     >
-                      EN
+                      {t('langLabel.en')}
                     </button>
                   </div>
                 </div>

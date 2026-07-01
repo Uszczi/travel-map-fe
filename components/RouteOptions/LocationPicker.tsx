@@ -19,7 +19,7 @@ type Props = {
 const DISABLE_SEARCH_BUTTON = true;
 
 export default function LocationPicker({ className, legend, which, point, setOtherPoint, setPoint }: Props) {
-  const t = useTranslations();
+  const t = useTranslations('routeOptions.locationPicker');
 
   const setQuery = useMapStore((s) => s.setQuery);
   const geocode = useMapStore((s) => s.geocode);
@@ -69,19 +69,18 @@ export default function LocationPicker({ className, legend, which, point, setOth
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && canSearch) geocode(which);
               }}
-              placeholder="np. Plac Zamkowy, Warszawa"
+              placeholder={t('searchPlaceholder')}
               className="w-full  border dark:bg-zinc-700 px-3 py-2 pr-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40"
               inputMode="search"
-              aria-label="Wyszukaj miejsce"
+              aria-label={t('searchAriaLabel')}
             />
 
             {(point.query || point.coords) && (
               <button
                 type="button"
-                // onClick={() => setQuery(which, '')}
                 onClick={clear}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
-                aria-label="Wyczyść"
+                aria-label={t('clearAriaLabel')}
               >
                 <FontAwesomeIcon icon={faTimes} size="sm" />
               </button>
@@ -90,20 +89,16 @@ export default function LocationPicker({ className, legend, which, point, setOth
 
           <button
             type="button"
-            // disabled={!canSearch || point.loading}
             disabled={DISABLE_SEARCH_BUTTON}
             onClick={DISABLE_SEARCH_BUTTON ? undefined : () => geocode(which)}
             className={[
               'relative group inline-flex items-center justify-center gap-1.5 px-3 py-2.5  min-w-14',
               'border transition-transform duration-100 active:translate-y-px cursor-not-allowed',
-              // !canSearch || point.loading ? 'opacity-60 cursor-not-allowed' : '',
               DISABLE_SEARCH_BUTTON ? 'opacity-60 cursor-not-allowed' : '',
             ].join(' ')}
-            title="Wyszukaj"
+            title={t('searchButtonTitle')}
           >
-            {point.loading
-              ? t('routeOptions_LocationPicker_loading_search_button')
-              : t('routeOptions_LocationPicker_search_button')}
+            {point.loading ? t('loadingSearchButton') : t('searchButton')}
           </button>
         </div>
 
@@ -141,14 +136,15 @@ export default function LocationPicker({ className, legend, which, point, setOth
                 : '',
             ].join(' ')}
           >
-            {isPicking
-              ? t('routeOptions_LocationPicker_cancel_select_on_map_button')
-              : t('routeOptions_LocationPicker_select_on_map_button')}
+            {isPicking ? t('cancelSelectOnMapButton') : t('selectOnMapButton')}
           </button>
 
           {point.coords && (
             <span className="text-sm">
-              Wybrane: {point.coords.lat.toFixed(5)}, {point.coords.lng.toFixed(5)}
+              {t('selectedCoords', {
+                lat: point.coords.lat.toFixed(5),
+                lng: point.coords.lng.toFixed(5),
+              })}
             </span>
           )}
         </div>

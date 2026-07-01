@@ -10,6 +10,7 @@ import {
   PointElement,
   Tooltip,
 } from 'chart.js';
+import { useTranslations } from 'next-intl';
 import { Line } from 'react-chartjs-2';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Filler, Tooltip, Legend);
@@ -19,13 +20,15 @@ type Props = {
 };
 
 export default function ElevationChart({ elevation }: Props) {
-  const labels = elevation.map((_, i) => `Punkt ${i + 1}`);
+  const t = useTranslations('elevationChart');
+
+  const labels = elevation.map((_, i) => t('point', { index: i + 1 }));
 
   const data = {
     labels,
     datasets: [
       {
-        label: 'Wysokość (m n.p.m.)',
+        label: t('datasetLabel'),
         data: elevation,
         fill: true,
         borderColor: 'rgb(75, 192, 192)',
@@ -48,7 +51,7 @@ export default function ElevationChart({ elevation }: Props) {
       y: {
         title: {
           display: true,
-          text: 'Wysokość (m)',
+          text: t('yAxisTitle'),
         },
       },
     },

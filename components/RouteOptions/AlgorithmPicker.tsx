@@ -37,16 +37,16 @@ const ShuffleIcon = () => (
 );
 
 export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, className }) => {
-  const t = useTranslations();
+  const t = useTranslations('routeOptions.algorithmPicker');
 
   const [selected, setSelected] = useState<Algorithm>(value);
   useEffect(() => setSelected(value), [value]);
 
-  const items: { key: Algorithm; label: string; Icon: React.FC }[] = [
-    { key: 'dfs', label: 'DFS', Icon: TreeIcon },
-    { key: 'astar', label: 'A*', Icon: StarIcon },
-    { key: 'random', label: 'Losowy', Icon: ShuffleIcon },
-    { key: 'allstreet', label: 'Wszystkie', Icon: ShuffleIcon },
+  const items: { key: Algorithm; Icon: React.FC }[] = [
+    { key: 'dfs', Icon: TreeIcon },
+    { key: 'astar', Icon: StarIcon },
+    { key: 'random', Icon: ShuffleIcon },
+    { key: 'allstreet', Icon: ShuffleIcon },
   ];
 
   const cycle = (dir: 1 | -1) => {
@@ -63,7 +63,7 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
       <div
         className="flex gap-2"
         role="radiogroup"
-        aria-label="Wybór algorytmu"
+        aria-label={t('groupAriaLabel')}
         onKeyDown={(e) => {
           if (e.key === 'ArrowRight') {
             e.preventDefault();
@@ -75,8 +75,9 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
           }
         }}
       >
-        {items.map(({ key, label, Icon }) => {
+        {items.map(({ key, Icon }) => {
           const isActive = selected === key;
+          const label = t(`${key}.label`);
           return (
             <button
               key={key}
@@ -100,14 +101,14 @@ export const AlgorithmPicker: React.FC<Props> = ({ legend, value, onChange, clas
             >
               <Icon />
               <span aria-hidden="true" className="text-[13px] opacity-90">
-                {t(`routeOptions_AlgorithmPicker_${key}_label`)}
+                {label}
               </span>
 
               <span
                 role="tooltip"
                 className="pointer-events-none absolute left-24 bottom-full mb-2 -translate-x-1/2 whitespace-nowrap  border border-zinc-800 bg-zinc-900 px-2 py-1.5 text-xs text-zinc-200 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 z-40"
               >
-                {t(`routeOptions_AlgorithmPicker_${key}_tooltip`)}
+                {t(`${key}.tooltip`)}
                 <span className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 bg-zinc-900 border-r border-b border-zinc-800" />
               </span>
             </button>

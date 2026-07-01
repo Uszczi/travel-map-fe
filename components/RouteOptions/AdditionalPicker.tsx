@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function AdditionalPicker({ className, legend, preferNewRoads, setPreferNewRoads }: Props) {
-  const t = useTranslations();
+  const t = useTranslations('routeOptions.additionalPicker');
 
   const checkboxId = 'prefer-new-roads';
   const hintId = 'prefer-new-roads-hint';
@@ -36,9 +36,9 @@ export default function AdditionalPicker({ className, legend, preferNewRoads, se
           />
 
           <div>
-            <div className="font-medium">{t('routeOptions_AdditionalPicker_button')}</div>
+            <div className="font-medium">{t('button')}</div>
             <p id={hintId} className="text-sm text-zinc-500 dark:text-zinc-400">
-              {t('routeOptions_AdditionalPicker_tip')}
+              {t('tip')}
             </p>
           </div>
         </label>
