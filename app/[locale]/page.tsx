@@ -11,6 +11,7 @@ import LocationPicker from '@/components/RouteOptions/LocationPicker';
 import { useMapStore } from '@/src/store/useMapStore';
 
 const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
+const SingleRouteMap = dynamic(() => import('@/components/Map/SingleRouteMap'), { ssr: false });
 
 export default function Home() {
   const t = useTranslations();
@@ -54,7 +55,8 @@ export default function Home() {
         <h4>You can import your data, nothing is stored on the server.</h4>
       </div>
       <div className="mx-auto w-full max-w-3xl mt-8">
-        <Map />
+        <SingleRouteMap />
+
         <div className="mt-4 px-2 space-y-4">
           <LocationPicker
             legend={t('routeOptions_LocationPicker_start_label')}
