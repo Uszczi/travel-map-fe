@@ -246,7 +246,7 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
         sec.method = 'search';
         sec.query = item.label;
         sec.coords = { lat: item.lat, lng: item.lng };
-        sec.boundingbox = item.boundingbox ? clampBbox(item.boundingbox) : undefined;
+        sec.boundingbox = item.boundingbox ? clampBbox(item.boundingbox, item.lng, item.lat) : undefined;
         sec.awaitingClick = false;
         sec.results = [];
       }),
@@ -312,7 +312,9 @@ export const createRouteOptionsSlice: StateCreator<RouteOptionsStore, [['zustand
           sec.error = null;
           sec.query = label;
           sec.coords = { lat: Number(item.lat), lng: Number(item.lng) };
-          sec.boundingbox = item.boundingbox ? clampBbox(item.boundingbox) : undefined;
+          sec.boundingbox = item.boundingbox
+            ? clampBbox(item.boundingbox, Number(item.lng), Number(item.lat))
+            : undefined;
           sec.results = [];
         }),
         false,

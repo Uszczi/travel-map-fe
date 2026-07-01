@@ -6,13 +6,14 @@ import { Marker, Rectangle } from 'react-leaflet';
 
 import { clampBbox } from '@/src/services/geocode';
 import type { BoundingBox } from '@/src/services/geocode';
-import type { Which } from '@/src/store/routeOptionsSlice';
+import type { LatLng, Which } from '@/src/store/routeOptionsSlice';
 import { useMapStore } from '@/src/store/useMapStore';
 
 interface Props {
   bbox: BoundingBox;
   color: string;
   which: Which;
+  pinCoords?: LatLng;
 }
 
 function createCornerIcon(color: string) {
@@ -33,7 +34,7 @@ function createCenterDragIcon() {
   });
 }
 
-export default function DraggableResizableBbox({ bbox, color, which }: Props) {
+export default function DraggableResizableBbox({ bbox, color, which, pinCoords }: Props) {
   const bboxRef = useRef(bbox);
   bboxRef.current = bbox;
 
@@ -48,8 +49,8 @@ export default function DraggableResizableBbox({ bbox, color, which }: Props) {
   );
 
   const center: [number, number] = useMemo(
-    () => [(bbox.south + bbox.north) / 2, (bbox.west + bbox.east) / 2],
-    [bbox.south, bbox.north, bbox.west, bbox.east],
+    () => (pinCoords ? [pinCoords.lat, pinCoords.lng] : [(bbox.south + bbox.north) / 2, (bbox.west + bbox.east) / 2]),
+    [pinCoords, bbox.south, bbox.north, bbox.west, bbox.east],
   );
 
   const corners: [number, number][] = useMemo(
@@ -71,12 +72,16 @@ export default function DraggableResizableBbox({ bbox, color, which }: Props) {
       const halfLng = (b.east - b.west) / 2;
       setter(
         'boundingbox',
-        clampBbox({
-          south: c.lat - halfLat,
-          north: c.lat + halfLat,
-          west: c.lng - halfLng,
-          east: c.lng + halfLng,
-        }),
+        clampBbox(
+          {
+            south: c.lat - halfLat,
+            north: c.lat + halfLat,
+            west: c.lng - halfLng,
+            east: c.lng + halfLng,
+          },
+          c.lng,
+          c.lat,
+        ),
       );
     },
     [setter],
@@ -87,15 +92,15 @@ export default function DraggableResizableBbox({ bbox, color, which }: Props) {
       const marker = e.target as L.Marker;
       const pos = marker.getLatLng();
       const b = bboxRef.current;
-      setter(
-        'boundingbox',
-        clampBbox({
-          south: index < 2 ? pos.lat : b.south,
-          north: index >= 2 ? pos.lat : b.north,
-          west: index % 2 === 0 ? pos.lng : b.west,
-          east: index % 2 === 1 ? pos.lng : b.east,
-        }),
-      );
+      const newBbox = {
+        south: index < 2 ? pos.lat : b.south,
+        north: index >= 2 ? pos.lat : b.north,
+        west: index % 2 === 0 ? pos.lng : b.west,
+        east: index % 2 === 1 ? pos.lng : b.east,
+      };
+      const centerLat = (newBbox.south + newBbox.north) / 2;
+      const centerLng = (newBbox.west + newBbox.east) / 2;
+      setter('boundingbox', clampBbox(newBbox, centerLng, centerLat));
     },
     [setter],
   );

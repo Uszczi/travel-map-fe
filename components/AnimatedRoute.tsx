@@ -40,7 +40,7 @@ type AnimatedRouteProps = {
   skipCounter?: number;
 };
 
-const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true, speed = 500, skipCounter = 0 }) => {
+const AnimatedRoute: React.FC<AnimatedRouteProps> = ({ route, focused = true, speed = 50, skipCounter = 0 }) => {
   const map = useMap();
   const polylineRef = useRef<L.Polyline | null>(null);
 

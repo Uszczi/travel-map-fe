@@ -5,23 +5,25 @@ export interface BoundingBox {
   east: number;
 }
 
-export const MAX_BBOX_SIZE = 0.1; // degrees
+export const MAX_BBOX_SIZE = 0.2; // degrees
 
-export function clampBbox(bbox: BoundingBox): BoundingBox {
+export function clampBbox(bbox: BoundingBox, start_x?: number, start_y?: number): BoundingBox {
   let { south, north, west, east } = bbox;
 
   const latSpan = north - south;
   if (latSpan > MAX_BBOX_SIZE) {
-    const mid = (south + north) / 2;
-    south = mid - MAX_BBOX_SIZE / 2;
-    north = mid + MAX_BBOX_SIZE / 2;
+    // start_y is lat, start_x is lng
+    const centerLat = start_y ?? (south + north) / 2;
+    south = centerLat - MAX_BBOX_SIZE / 2;
+    north = centerLat + MAX_BBOX_SIZE / 2;
   }
 
   const lngSpan = east - west;
   if (lngSpan > MAX_BBOX_SIZE) {
-    const mid = (west + east) / 2;
-    west = mid - MAX_BBOX_SIZE / 2;
-    east = mid + MAX_BBOX_SIZE / 2;
+    // start_x is lng, start_y is lat
+    const centerLng = start_x ?? (west + east) / 2;
+    west = centerLng - MAX_BBOX_SIZE / 2;
+    east = centerLng + MAX_BBOX_SIZE / 2;
   }
 
   return { south, north, west, east };

@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import CityAlgorithmPicker from '@/components/CityAlgorithmPicker';
 import AlgorithmPicker from '@/components/RouteOptions/AlgorithmPicker';
+import DistancePicker from '@/components/RouteOptions/DistancePicker';
 import GenerateButton from '@/components/RouteOptions/GenerateButton';
 import LocationPicker from '@/components/RouteOptions/LocationPicker';
 import { useMapStore } from '@/src/store/useMapStore';
@@ -18,6 +19,8 @@ export default function Home() {
   const tHome = useTranslations('home');
 
   const start = useMapStore((s) => s.start);
+  const distance = useMapStore((s) => s.distance);
+  const setDistance = useMapStore((s) => s.setDistance);
   const setStart = useMapStore((s) => s.setStart);
   const setEnd = useMapStore((s) => s.setEnd);
   const algorithm = useMapStore((s) => s.algorithm);
@@ -65,6 +68,9 @@ export default function Home() {
             value={algorithm}
             onChange={setAlgorithm}
           />
+
+          <DistancePicker legend={t('routeOptions.distance.legend')} value={distance} onChange={setDistance} />
+
           <GenerateButton
             label={t('routeOptions.generateButton.label')}
             loadingLabel={t('routeOptions.generateButton.loadingLabel')}

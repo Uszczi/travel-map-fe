@@ -98,8 +98,22 @@ export default function Map() {
         {end && <Marker position={end} icon={endIcon} />}
         {tempPosition && <Marker position={tempPosition} icon={selecting === 'start' ? startIcon : endIcon} />}
 
-        {startSec.boundingbox && <DraggableResizableBbox bbox={startSec.boundingbox} color="#22c55e" which="start" />}
-        {endSec.boundingbox && <DraggableResizableBbox bbox={endSec.boundingbox} color="#ef4444" which="end" />}
+        {startSec.boundingbox && (
+          <DraggableResizableBbox
+            bbox={startSec.boundingbox}
+            color="#22c55e"
+            which="start"
+            pinCoords={startSec.coords}
+          />
+        )}
+        {endSec.boundingbox && (
+          <DraggableResizableBbox
+            bbox={endSec.boundingbox}
+            color="#ef4444"
+            which="end"
+            pinCoords={endSec.coords}
+          />
+        )}
 
         {routes.map((r, i) => {
           const isFocused = i === routes.length - 1;
