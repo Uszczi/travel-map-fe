@@ -98,7 +98,7 @@
   },
   "home": {
     "heroTitle": "Odwiedź każdą ulicę w wybranym mieście.",
-    "heroSubtitle": "To aplikacja demonstracyjna do eksploracji przezemnie algorytmów grafowych i map.",
+    "heroSubtitle": "To aplikacja demonstracyjna do eksploracji przeze mnie algorytmów grafowych i map.",
     "heroDescription": "Wyszukaj miasto poniżej. Zobacz, jak możesz przebiec wszystkie ulice w mieście.",
     "warning": "To jest aplikacja demonstracyjna. Nie należy jej używać w produkcji. Jest nadal w fazie rozwoju i może zawierać błędy.",
     "section2Title": "Trudno odwiedzić każdą ulicę w mieście za jednym razem.",
