@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Travel Map Frontend
 
-## Getting Started
+A modern travel and route-mapping application built with **Next.js 15**, **React 19**, and **TypeScript**. This frontend communicates with a separate backend API to provide interactive map visualization and route planning features.
 
-First, run the development server:
+## Features
+
+- Interactive map visualization powered by Leaflet and react-leaflet
+- Multi-language support (Polish and English)
+- Route planning and optimization
+- Responsive design with Tailwind CSS
+- Static site generation with dynamic routes
+- Client-side state management with Zustand
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **UI Library**: React 19
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Maps**: Leaflet with react-leaflet
+- **State Management**: Zustand
+- **Internationalization**: next-intl
+- **Linting**: ESLint
+- **Code Formatting**: Prettier with import sorting
+- **Build Tool**: Turbopack (development)
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- npm or your preferred package manager
+
+## Setup
+
+1. Clone the repository and install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Create environment file from template:
+   ```bash
+   cp example.env .env
+   ```
+
+3. Configure `NEXT_PUBLIC_API_URL` in `.env` to point to your backend API
+
+## Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser. The application will redirect to `/pl` by default.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The app supports hot module reloading—changes will be reflected immediately.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Building
 
-## Learn More
+Create an optimized production build:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Note**: The build process injects `NEXT_PUBLIC_GIT_COMMIT` from git, so it must run inside a git checkout.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Linting & Type Checking
 
-## Deploy on Vercel
+Format and lint code:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check TypeScript types:
+
+```bash
+npx tsc --noEmit
+```
+
+## Project Structure
+
+- `app/[locale]/` — App Router routes with locale support (`pl`, `en`)
+- `components/` — Reusable React components
+- `src/store/` — Zustand state management (mapStore, tokenStore)
+- `src/services/` — API client (api.ts, auth.ts)
+- `messages/` — Translation files per locale
+- `deployment/` — Docker and deployment configuration
+- `i18n/` — Internationalization setup
+
+## Architecture Notes
+
+- **Localization**: Routes use `app/[locale]/` structure. The layout is `force-static` and loads messages via `NextIntlClientProvider`.
+- **Maps**: Leaflet is loaded dynamically with SSR disabled to keep it client-only.
+- **State**: Single Zustand store with slices for maps, generation, and route options.
+- **API**: All backend calls use `ApiService` and `AuthService` from `src/services/`.
+
+## Deployment
+
+The application includes Docker support for production deployment:
+
+```bash
+cd deployment
+./deploy.sh
+```
+
+See `deployment/` for Docker configuration and deployment scripts.
+
+## Code Conventions
+
+- **Path Alias**: `@/*` maps to repository root (e.g., `@/components/`, `@/src/`)
+- **Imports**: Organized by `@/*` first, then relative imports (enforced by Prettier)
+- **Language**: UI strings, comments, and labels often use Polish to match the surrounding codebase
+- **ESLint**: Legacy `.eslintrc.json` format (not flat config)
+- **Prettier**: Single quotes, printWidth 120, trailing commas enabled
+
+## Contributing
+
+Follow the established code conventions and ensure tests pass before submitting changes.
