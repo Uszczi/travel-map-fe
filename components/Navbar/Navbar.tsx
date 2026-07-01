@@ -120,7 +120,7 @@ export default function Navbar() {
             <ThemeToggleButton />
 
             <a
-              href="https://github.com"
+              href="https://github.com/Uszczi/travel-map-fe"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -191,7 +191,7 @@ export default function Navbar() {
                 <ThemeToggleButton />
                 <div>
                   <a
-                    href="https://github.com"
+                    href="https://github.com/Uszczi/travel-map-fe"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub"
